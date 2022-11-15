@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 14 nov. 2022 19:37:49 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="dbentremarcas" name="modelos.Usuario" optimistic-lock="version" table="usuario">
+    <id name="idUsuario" type="java.lang.Integer">
+      <column name="id_usuario"/>
+      <generator class="identity"/>
+    </id>
+    <property name="usuario" type="string">
+      <column length="55" name="usuario" not-null="true"/>
+    </property>
+    <property name="password" type="string">
+      <column length="55" name="password" not-null="true"/>
+    </property>
+    <property name="admin" type="java.lang.Boolean">
+      <column name="admin"/>
+    </property>
+  </class>
+</hibernate-mapping>

@@ -5,12 +5,17 @@
  */
 package hibernate.utils;
 
-import entidades.Talla;
-import entidades.Usuario;
+import modelos.Cliente;
+import modelos.Marca;
+import modelos.Producto;
+import modelos.Talla;
+import modelos.Usuario;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -51,25 +56,35 @@ public class OperacionesCRUD {
         terminarOperacion();
     }
 
-    public Usuario obtenerObject(int id) {
-        Usuario object = null;
+
+
+    public Producto obtenerProducto(int id) {
+        Producto object = null;
         iniciarOperacion();
-        object = (Usuario)session.get(Usuario.class, id);
+        object = (Producto) session.get(Producto.class, id);
         terminarOperacion();
         return object;
     }
- 
-    public List<Usuario> listUsuario() {
-        
-        List<Usuario> listObjects = null;
+
+
+
+    public List<Marca> listMarca() {
+        List<Marca> listMarca = null;
         iniciarOperacion();
-        listObjects = session.createQuery("from Usuario").list();
+        listMarca = session.createQuery("from Marca").list();
         terminarOperacion();
-        return listObjects;
+        return listMarca;
     }
-    
+
+    public List<Producto> listProducto() {
+        List<Producto> listProducto = null;
+        iniciarOperacion();
+        listProducto = session.createQuery("from Producto").list();
+        terminarOperacion();
+        return listProducto;
+    }
+
     public List<Talla> listTalla() {
-        
         List<Talla> listObjects = null;
         iniciarOperacion();
         listObjects = session.createQuery(" from Talla").list();
@@ -77,4 +92,11 @@ public class OperacionesCRUD {
         return listObjects;
     }
 
+    public List<Cliente> listCliente() {
+        List<Cliente> listCliente = null;
+        iniciarOperacion();
+        listCliente = session.createQuery("from Cliente").list();
+        terminarOperacion();
+        return listCliente;
+    }
 }

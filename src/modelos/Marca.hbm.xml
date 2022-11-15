@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 14 nov. 2022 19:37:49 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="dbentremarcas" name="modelos.Marca" optimistic-lock="version" table="marca">
+    <id name="idMarca" type="java.lang.Integer">
+      <column name="id_marca"/>
+      <generator class="identity"/>
+    </id>
+    <property name="nombreMarca" type="string">
+      <column name="nombre_marca" not-null="true"/>
+    </property>
+    <property name="pais" type="string">
+      <column name="pais"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="productos" table="producto">
+      <key>
+        <column name="id_marca"/>
+      </key>
+      <one-to-many class="modelos.Producto"/>
+    </set>
+  </class>
+</hibernate-mapping>
