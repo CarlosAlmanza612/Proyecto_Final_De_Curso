@@ -51,7 +51,7 @@ public class ProductoBean {
         terminarOperacion();
     }
 
-    public Producto obtenerUsuario(int id) {
+    public Producto obtenerProducto(int id) {
         Producto producto = null;
         iniciarOperacion();
         producto = (Producto) session.get(Producto.class, id);

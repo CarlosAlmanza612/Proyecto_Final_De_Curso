@@ -88,8 +88,6 @@ public class VentanaCrearProducto extends Fondo {
         jLabel1 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        txtID = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listMarca = new javax.swing.JList<>();
@@ -133,25 +131,11 @@ public class VentanaCrearProducto extends Fondo {
                 txtNombreKeyReleased(evt);
             }
         });
-        add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 70, -1));
+        add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 70, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Nombre");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel3.setText("Codigo");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, -1, -1));
-
-        txtID.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtIDKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtIDKeyTyped(evt);
-            }
-        });
-        add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 70, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Marca");
@@ -187,7 +171,7 @@ public class VentanaCrearProducto extends Fondo {
                 checkDisponibleActionPerformed(evt);
             }
         });
-        add(checkDisponible, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, -1));
+        add(checkDisponible, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setText("Costo de Compra");
@@ -279,7 +263,9 @@ public class VentanaCrearProducto extends Fondo {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-
+        
+        
+        
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void checkDisponibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkDisponibleActionPerformed
@@ -287,21 +273,6 @@ public class VentanaCrearProducto extends Fondo {
 
 
     }//GEN-LAST:event_checkDisponibleActionPerformed
-
-    private void txtIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyTyped
-        // TODO add your handling code here:
-        int key = evt.getKeyChar();
-
-        boolean numeros = key >= 48 && key <= 57;
-
-        if (!numeros) {
-            evt.consume();
-        }
-
-        if (txtID.getText().trim().length() == 10) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtIDKeyTyped
 
     private void txtCostoDelPesoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtCostoDelPesoPropertyChange
         // TODO add your handling code here:
@@ -349,10 +320,6 @@ public class VentanaCrearProducto extends Fondo {
         habilitarBotonRegistrar();
     }//GEN-LAST:event_txtNombreKeyReleased
 
-    private void txtIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyReleased
-        habilitarBotonRegistrar();
-    }//GEN-LAST:event_txtIDKeyReleased
-
     private void listTallaValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listTallaValueChanged
         habilitarBotonRegistrar();
     }//GEN-LAST:event_listTallaValueChanged
@@ -375,7 +342,6 @@ public class VentanaCrearProducto extends Fondo {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -390,7 +356,6 @@ public class VentanaCrearProducto extends Fondo {
     private javax.swing.JTextField txtCostoDeCompra;
     private javax.swing.JTextField txtCostoDelPeso;
     private javax.swing.JTextField txtCostoTotal;
-    private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPeso;
     private javax.swing.JTextField txtPrecioDeVenta;
@@ -402,7 +367,6 @@ public void resetForm() {
         txtCostoDelPeso.setText("");
         txtCostoDeCompra.setText("");
         txtTipoDeCambio.setText("");
-        txtID.setText("");
         txtNombre.setText("");
         listTalla.clearSelection();
         listMarca.clearSelection();
@@ -411,22 +375,9 @@ public void resetForm() {
         btnRegistrar.setEnabled(false);
     }
 
-    /*  public void cargarTabla() {
-        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
-        dtm.setColumnCount(0);
-        dtm.addColumn("Codigo");
-        dtm.addColumn("Nombre");
-        dtm.addColumn("Talla");
-        dtm.addColumn("Marca");
-        dtm.addColumn("Precio");
-        dtm.addColumn("Disponible");
-        dtm.setRowCount(0);
-     
-
-    }*/
     public void habilitarBotonRegistrar() {
-        if (!txtNombre.getText().isEmpty() && !txtID.getText().isEmpty()
-                && !txtPeso.getText().isEmpty()) {
+        if (!txtNombre.getText().isEmpty() && !txtPeso.getText().isEmpty() && !txtTipoDeCambio.getText().isEmpty()
+                && !txtCostoDeCompra.getText().isEmpty()) {
             btnRegistrar.setEnabled(true);
         } else {
             btnRegistrar.setEnabled(false);

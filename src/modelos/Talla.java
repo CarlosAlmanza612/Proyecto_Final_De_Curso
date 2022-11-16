@@ -3,6 +3,7 @@ package modelos;
 
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -27,6 +28,30 @@ public class Talla  implements java.io.Serializable {
        this.idTalla = idTalla;
        this.nombreTalla = nombreTalla;
        this.productos = productos;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Talla other = (Talla) obj;
+        if (!Objects.equals(this.nombreTalla, other.nombreTalla)) {
+            return false;
+        }
+        return true;
     }
    
     public int getIdTalla() {

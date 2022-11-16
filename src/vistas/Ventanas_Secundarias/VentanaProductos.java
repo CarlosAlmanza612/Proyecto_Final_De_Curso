@@ -5,6 +5,7 @@
  */
 package vistas.Ventanas_Secundarias;
 
+import controladores.ProductoBean;
 import controladores.UsuarioBean;
 import modelos.Usuario;
 import vistas.Fondo;
@@ -12,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
+import modelos.Producto;
 import vistas.VentanasPrincipales.VentanaAdmin;
 
 public class VentanaProductos extends Fondo {
@@ -71,6 +73,11 @@ public class VentanaProductos extends Fondo {
         add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 266, -1, -1));
 
         jButton2.setText("Registrar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 266, -1, -1));
 
         jButton3.setText("Modificar");
@@ -94,20 +101,33 @@ public class VentanaProductos extends Fondo {
         i.setSize(603, 402);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        frame.remove(this);
+        VentanaCrearProducto productos = new VentanaCrearProducto(frame);
+        frame.getContentPane().add(productos);
+        frame.setSize(603, 402);
+        productos.setVisible(true);
+        productos.setSize(603, 402);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     public void cargarProductos() {
-        UsuarioBean op = new UsuarioBean();
-        List listUsuarios = op.listUsuario();
+        ProductoBean op = new ProductoBean();
+        List listProductos = op.listProducto();
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Id");
-        modelo.addColumn("Usuario");
-        modelo.addColumn("Administrador");
-        Iterator it = listUsuarios.iterator();
+        modelo.addColumn("Codigo");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Talla");
+        modelo.addColumn("Precio");
+        Iterator it = listProductos.iterator();
         while (it.hasNext()) {
-            Usuario u = (Usuario) it.next();
-            Object[] fila = new Object[3];
-            fila[0] = u.getIdUsuario();
-            fila[1] = u.getUsuario();
-            fila[2] = u.getAdmin();
+            Producto p = (Producto) it.next();
+            Object[] fila = new Object[4];
+            fila[0] = p.getCodigo();
+            fila[1] = p.getNombre();
+            fila[2] = p.getTalla();
+            fila[3] = p.getPrecioDeVenta();
             modelo.addRow(fila);
         }
         jTable1.setModel(modelo);

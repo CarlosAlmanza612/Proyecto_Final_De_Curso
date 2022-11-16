@@ -5,13 +5,16 @@
  */
 package vistas.Ventanas_Secundarias;
 
+import controladores.TallaBean;
 import controladores.UsuarioBean;
 import modelos.Usuario;
 import vistas.Fondo;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelos.Talla;
 import vistas.VentanasPrincipales.VentanaAdmin;
 
 public class VentanaTallas extends Fondo {
@@ -25,7 +28,7 @@ public class VentanaTallas extends Fondo {
     public VentanaTallas(JFrame jframe) {
         initComponents();
         frame = jframe;
-        cargarProductos();
+        cargarTallas();
     }
 
     /**
@@ -40,9 +43,8 @@ public class VentanaTallas extends Fondo {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnRegistrar = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -67,16 +69,23 @@ public class VentanaTallas extends Fondo {
                 jButton1ActionPerformed(evt);
             }
         });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 266, -1, -1));
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, -1, -1));
 
-        jButton2.setText("Registrar");
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 266, -1, -1));
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 270, -1, -1));
 
-        jButton3.setText("Modificar");
-        add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(214, 266, -1, -1));
-
-        jButton4.setText("Eliminar");
-        add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(307, 266, -1, -1));
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
+        add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 270, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -90,30 +99,62 @@ public class VentanaTallas extends Fondo {
         i.setSize(603, 402);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void cargarProductos() {
-        UsuarioBean op = new UsuarioBean();
-        List listUsuarios = op.listUsuario();
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        String nombre;
+        nombre = JOptionPane.showInputDialog("Ingrese el codigo de la talla que desea eliminar");
+        if (nombre!=null&&!nombre.isEmpty()) {
+            if (nombre.matches("[0-9]*")) {
+                int codigo = Integer.parseInt(nombre);
+                TallaBean t = new TallaBean();
+                Talla talla = t.obtenerTalla(codigo);
+                if (talla != null) {
+                    t.eliminarTalla(talla);
+                    JOptionPane.showMessageDialog(null, "Talla Eliminada Correctamente");
+                    cargarTallas();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Codigo no existente, ingrese un codigo correcto", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese un codigo correcto", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+
+        String nombre;
+        nombre = JOptionPane.showInputDialog("Ingrese el nombre de la Talla que desea crear");
+       TallaBean tallaBean = new TallaBean();
+        List<Talla> users = (List<Talla>) tallaBean.listTallas();
+        if (nombre != null && !nombre.isEmpty()) {
+            
+            TallaBean t = new TallaBean();
+            Talla talla = new Talla(nombre);
+            t.guardarTalla(talla);
+            cargarTallas();
+        }
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+    public void cargarTallas() {
+        TallaBean t = new TallaBean();
+        List lisTallas = t.listTallas();
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Id");
-        modelo.addColumn("Usuario");
-        modelo.addColumn("Administrador");
-        Iterator it = listUsuarios.iterator();
+        modelo.addColumn("Codigo");
+        modelo.addColumn("Talla");
+        Iterator it = lisTallas.iterator();
         while (it.hasNext()) {
-            Usuario u = (Usuario) it.next();
-            Object[] fila = new Object[3];
-            fila[0] = u.getIdUsuario();
-            fila[1] = u.getUsuario();
-            fila[2] = u.getAdmin();
+            Talla u = (Talla) it.next();
+            Object[] fila = new Object[2];
+            fila[0] = u.getIdTalla();
+            fila[1] = u.getNombreTalla();
             modelo.addRow(fila);
         }
         jTable1.setModel(modelo);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

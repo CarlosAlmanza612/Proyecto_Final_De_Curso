@@ -50,7 +50,7 @@ public class MarcaBean {
 
 
 
-    public Marca obtenerUsuario(int id) {
+    public Marca obtenerMarca(int id) {
         Marca object = null;
         iniciarOperacion();
         object = (Marca) session.get(Marca.class, id);
@@ -58,7 +58,7 @@ public class MarcaBean {
         return object;
     }
 
-    public List<Marca> listUsuario() {
+    public List<Marca> listMarca() {
         List<Marca> listObjects = null;
         iniciarOperacion();
         listObjects = session.createQuery("from Marca").list();

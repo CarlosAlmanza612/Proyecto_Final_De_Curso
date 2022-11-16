@@ -43,6 +43,7 @@ JFrame frame = new JFrame();
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -57,11 +58,21 @@ JFrame frame = new JFrame();
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jButton1.setText("Volver Atras");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jButton1)
+                .addContainerGap(290, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap(12, Short.MAX_VALUE)
@@ -70,7 +81,10 @@ JFrame frame = new JFrame();
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(247, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(30, 30, 30))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap(12, Short.MAX_VALUE)
@@ -78,6 +92,17 @@ JFrame frame = new JFrame();
                     .addContainerGap(196, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        frame.remove(this);
+        VentanaCrearUsuario usuario = new VentanaCrearUsuario(frame);
+        frame.getContentPane().add(usuario);
+        frame.setSize(603, 402);
+        usuario.setVisible(true);
+        usuario.setSize(603, 402);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 public void cargarUsuarios() {
         UsuarioBean op = new UsuarioBean();
@@ -100,6 +125,7 @@ public void cargarUsuarios() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

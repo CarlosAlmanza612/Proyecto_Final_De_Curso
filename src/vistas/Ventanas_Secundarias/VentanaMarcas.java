@@ -5,13 +5,18 @@
  */
 package vistas.Ventanas_Secundarias;
 
+import controladores.MarcaBean;
+import controladores.TallaBean;
 import controladores.UsuarioBean;
 import modelos.Usuario;
 import vistas.Fondo;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelos.Marca;
+import modelos.Talla;
 import vistas.VentanasPrincipales.VentanaAdmin;
 
 public class VentanaMarcas extends Fondo {
@@ -25,7 +30,7 @@ public class VentanaMarcas extends Fondo {
     public VentanaMarcas(JFrame jframe) {
         initComponents();
         frame = jframe;
-        cargarProductos();
+        cargarMarcas();
     }
 
     /**
@@ -40,9 +45,8 @@ public class VentanaMarcas extends Fondo {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnRegistrar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -69,14 +73,21 @@ public class VentanaMarcas extends Fondo {
         });
         add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 266, -1, -1));
 
-        jButton2.setText("Registrar");
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 266, -1, -1));
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
+        add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 266, -1, -1));
 
-        jButton3.setText("Modificar");
-        add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(214, 266, -1, -1));
-
-        jButton4.setText("Eliminar");
-        add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(307, 266, -1, -1));
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(214, 266, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -90,30 +101,73 @@ public class VentanaMarcas extends Fondo {
         i.setSize(603, 402);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void cargarProductos() {
-        UsuarioBean op = new UsuarioBean();
-        List listUsuarios = op.listUsuario();
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+
+        boolean noExiste = true;
+        String nombre;
+        nombre = JOptionPane.showInputDialog("Ingrese el nombre de la Marca que desea crear");
+        MarcaBean tallaBean = new MarcaBean();
+        List<Marca> users = (List<Marca>) tallaBean.listMarca();
+        if (nombre != null && !nombre.isEmpty()) {
+            for (int i = 0; i < users.size(); i++) {
+                if (users.get(i).getNombreMarca().equalsIgnoreCase(nombre)) {
+                    JOptionPane.showMessageDialog(null, "La marca ya existe ", "Error", JOptionPane.ERROR_MESSAGE);
+                    noExiste = false;
+                }
+            }
+            if (noExiste) {
+                MarcaBean t = new MarcaBean();
+                Marca marca = new Marca(nombre);
+                t.guardarMarca(marca);
+                cargarMarcas();
+                JOptionPane.showMessageDialog(null, "Marca agregada correctamente");
+            }
+
+        }
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        String nombre;
+        nombre = JOptionPane.showInputDialog("Ingrese el codigo de la Marca que desea eliminar");
+        if (nombre != null && !nombre.isEmpty()) {
+            if (nombre.matches("[0-9]*")) {
+                int codigo = Integer.parseInt(nombre);
+                MarcaBean t = new MarcaBean();
+                Marca talla = t.obtenerMarca(codigo);
+                if (talla != null) {
+                    t.eliminarMarca(talla);
+                    JOptionPane.showMessageDialog(null, "Marca Eliminada Correctamente");
+                    cargarMarcas();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Codigo no existente, ingrese un codigo correcto", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese un codigo correcto", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    public void cargarMarcas() {
+        MarcaBean t = new MarcaBean();
+        List lisMarcas = t.listMarca();
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Id");
-        modelo.addColumn("Usuario");
-        modelo.addColumn("Administrador");
-        Iterator it = listUsuarios.iterator();
+        modelo.addColumn("Codigo");
+        modelo.addColumn("Marca");
+        Iterator it = lisMarcas.iterator();
         while (it.hasNext()) {
-            Usuario u = (Usuario) it.next();
-            Object[] fila = new Object[3];
-            fila[0] = u.getIdUsuario();
-            fila[1] = u.getUsuario();
-            fila[2] = u.getAdmin();
+            Marca u = (Marca) it.next();
+            Object[] fila = new Object[2];
+            fila[0] = u.getIdMarca();
+            fila[1] = u.getNombreMarca();
             modelo.addRow(fila);
         }
         jTable1.setModel(modelo);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

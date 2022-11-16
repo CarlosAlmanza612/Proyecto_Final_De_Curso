@@ -53,7 +53,7 @@ public class TallaBean {
 
 
 
-    public Talla obtenerUsuario(int id) {
+    public Talla obtenerTalla(int id) {
         Talla object = null;
         iniciarOperacion();
         object = (Talla) session.get(Talla.class, id);
@@ -61,7 +61,7 @@ public class TallaBean {
         return object;
     }
 
-    public List<Talla> listUsuario() {
+    public List<Talla> listTallas() {
         List<Talla> listObjects = null;
         iniciarOperacion();
         listObjects = session.createQuery("from Talla").list();
