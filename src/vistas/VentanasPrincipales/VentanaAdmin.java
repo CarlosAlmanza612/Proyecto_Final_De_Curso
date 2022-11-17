@@ -11,6 +11,8 @@ import vistas.Ventanas_Secundarias.VentanaClientes;
 import vistas.Ventanas_Secundarias.VentanaMarcas;
 import vistas.Ventanas_Secundarias.VentanaProductos;
 import vistas.Ventanas_Secundarias.VentanaTallas;
+import vistas.Ventanas_Secundarias.VentanaUsuarios;
+import vistas.Ventanas_Secundarias.VentanaVentas;
 
 /**
  *
@@ -20,15 +22,11 @@ public class VentanaAdmin extends Fondo {
 
     JFrame frame = new JFrame();
 
-    /**
-     * Creates new form VentanaUsuario
-     */
     public VentanaAdmin() {
         initComponents();
     }
 
     public VentanaAdmin(JFrame jframe) {
-
         initComponents();
         frame = jframe;
     }
@@ -158,7 +156,7 @@ public class VentanaAdmin extends Fondo {
         // TODO add your handling code here:
         this.setVisible(false);
         frame.remove(this);
-        VentanaCrearUsuario usuario = new VentanaCrearUsuario(frame);
+        VentanaUsuarios usuario = new VentanaUsuarios(frame);
         frame.getContentPane().add(usuario);
         frame.setSize(603, 402);
         usuario.setVisible(true);
@@ -202,7 +200,7 @@ public class VentanaAdmin extends Fondo {
         // TODO add your handling code here:
         this.setVisible(false);
         frame.remove(this);
-        VentanaCrearUsuario usuario = new VentanaCrearUsuario(frame);
+        VentanaVentas usuario = new VentanaVentas(frame);
         frame.getContentPane().add(usuario);
         frame.setSize(603, 402);
         usuario.setVisible(true);

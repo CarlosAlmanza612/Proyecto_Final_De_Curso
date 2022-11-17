@@ -7,9 +7,11 @@ package controladores;
 
 import java.util.List;
 import modelos.Marca;
+import modelos.Talla;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -57,7 +59,13 @@ public class MarcaBean {
         terminarOperacion();
         return object;
     }
-
+    public Marca buscarMarca(String nombre_Marca) {
+        Marca marc = null;
+        iniciarOperacion();
+        marc = (Marca) session.createCriteria(Marca.class).add(Restrictions.eq("nombreMarca", nombre_Marca)).uniqueResult();
+        terminarOperacion();
+        return marc;
+    }
     public List<Marca> listMarca() {
         List<Marca> listObjects = null;
         iniciarOperacion();

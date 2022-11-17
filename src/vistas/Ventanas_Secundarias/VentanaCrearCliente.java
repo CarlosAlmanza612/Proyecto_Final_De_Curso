@@ -6,7 +6,6 @@ package vistas.Ventanas_Secundarias;
 
 import controladores.UsuarioBean;
 import modelos.Usuario;
-import vistas.VentanasPrincipales.VentanaAdmin;
 import hibernate.utils.OperacionesCRUD;
 import java.util.List;
 import javax.swing.JFrame;
@@ -17,18 +16,18 @@ import vistas.Fondo;
  *
  * @author Usuario
  */
-public class VentanaCrearUsuario extends Fondo {
+public class VentanaCrearCliente extends Fondo {
 
     JFrame frame = new JFrame();
 
     /**
      * Creates new form VentanaUsuario
      */
-    public VentanaCrearUsuario() {
+    public VentanaCrearCliente() {
         initComponents();
     }
 
-    public VentanaCrearUsuario(JFrame jframe) {
+    public VentanaCrearCliente(JFrame jframe) {
 
         initComponents();
         frame = jframe;

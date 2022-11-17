@@ -17,18 +17,18 @@ import javax.swing.table.DefaultTableModel;
 import modelos.Talla;
 import vistas.VentanasPrincipales.VentanaAdmin;
 
-public class VentanaVentas extends Fondo {
+public class VentanaUsuarios extends Fondo {
 
     JFrame frame = new JFrame();
 
-    public VentanaVentas() {
+    public VentanaUsuarios() {
         initComponents();
     }
 
-    public VentanaVentas(JFrame jframe) {
+    public VentanaUsuarios(JFrame jframe) {
         initComponents();
         frame = jframe;
-        cargarTallas();
+        cargarUsuarios();
     }
 
     /**
@@ -101,16 +101,16 @@ public class VentanaVentas extends Fondo {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         String nombre;
-        nombre = JOptionPane.showInputDialog("Ingrese el codigo de la talla que desea eliminar");
+        nombre = JOptionPane.showInputDialog("Ingrese el codigo del usuario que desea eliminar");
         if (nombre!=null&&!nombre.isEmpty()) {
             if (nombre.matches("[0-9]*")) {
                 int codigo = Integer.parseInt(nombre);
-                TallaBean t = new TallaBean();
-                Talla talla = t.obtenerTalla(codigo);
-                if (talla != null) {
-                    t.eliminarTalla(talla);
-                    JOptionPane.showMessageDialog(null, "Talla Eliminada Correctamente");
-                    cargarTallas();
+                UsuarioBean t = new UsuarioBean();
+                Usuario usuario = t.obtenerUsuario(codigo);
+                if (usuario != null) {
+                    t.eliminarUsuario(usuario);
+                    JOptionPane.showMessageDialog(null, "Usuario Eliminado Correctamente");
+                    cargarUsuarios();
                 } else {
                     JOptionPane.showMessageDialog(null, "Codigo no existente, ingrese un codigo correcto", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -121,34 +121,32 @@ public class VentanaVentas extends Fondo {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-
-        String nombre;
-        nombre = JOptionPane.showInputDialog("Ingrese el nombre de la Talla que desea crear");
-       TallaBean tallaBean = new TallaBean();
-        List<Talla> users = (List<Talla>) tallaBean.listTallas();
-        if (nombre != null && !nombre.isEmpty()) {
-            
-            TallaBean t = new TallaBean();
-            Talla talla = new Talla(nombre);
-            t.guardarTalla(talla);
-            cargarTallas();
-        }
+        this.setVisible(false);
+        frame.remove(this);
+        VentanaCrearUsuario i = new VentanaCrearUsuario(frame);
+        frame.getContentPane().add(i);
+        frame.setSize(603, 402);
+        i.setVisible(true);
+        i.setSize(603, 402);
     }//GEN-LAST:event_btnRegistrarActionPerformed
-    public void cargarTallas() {
-        TallaBean t = new TallaBean();
-        List lisTallas = t.listTallas();
+public void cargarUsuarios() {
+        UsuarioBean op = new UsuarioBean();
+        List listUsuarios = op.listUsuario();
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Codigo");
-        modelo.addColumn("Talla");
-        Iterator it = lisTallas.iterator();
+        modelo.addColumn("Id");
+        modelo.addColumn("Usuario");
+        modelo.addColumn("Administrador");
+        Iterator it = listUsuarios.iterator();
         while (it.hasNext()) {
-            Talla u = (Talla) it.next();
-            Object[] fila = new Object[2];
-            fila[0] = u.getIdTalla();
-            fila[1] = u.getNombreTalla();
+            Usuario u = (Usuario) it.next();
+            Object[] fila = new Object[3];
+            fila[0] = u.getIdUsuario();
+            fila[1] = u.getUsuario();
+            fila[2] = u.getAdmin();
             modelo.addRow(fila);
         }
         jTable1.setModel(modelo);
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

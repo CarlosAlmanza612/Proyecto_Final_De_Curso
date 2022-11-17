@@ -6,9 +6,7 @@
 package controladores;
 
 import java.util.List;
-import javax.swing.JOptionPane;
 import modelos.Talla;
-import modelos.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -59,6 +57,13 @@ public class TallaBean {
         object = (Talla) session.get(Talla.class, id);
         terminarOperacion();
         return object;
+    }
+    public Talla buscarTalla(String nombre_talla) {
+        Talla user = null;
+        iniciarOperacion();
+        user = (Talla) session.createCriteria(Talla.class).add(Restrictions.eq("nombreTalla", nombre_talla)).uniqueResult();
+        terminarOperacion();
+        return user;
     }
 
     public List<Talla> listTallas() {

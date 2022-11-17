@@ -5,6 +5,7 @@
  */
 package vistas.Ventanas_Secundarias;
 
+import controladores.ClienteBean;
 import controladores.UsuarioBean;
 import modelos.Usuario;
 import vistas.Fondo;
@@ -12,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
+import modelos.Cliente;
 import vistas.VentanasPrincipales.VentanaAdmin;
 
 public class VentanaClientes extends Fondo {
@@ -70,6 +72,11 @@ public class VentanaClientes extends Fondo {
         add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 266, -1, -1));
 
         jButton2.setText("Registrar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 266, -1, -1));
 
         jButton3.setText("Modificar");
@@ -90,20 +97,28 @@ public class VentanaClientes extends Fondo {
         i.setSize(603, 402);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     public void cargarProductos() {
-        UsuarioBean op = new UsuarioBean();
-        List listUsuarios = op.listUsuario();
+        ClienteBean op = new ClienteBean();
+        List listUsuarios = op.listCliente();
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Id");
-        modelo.addColumn("Usuario");
-        modelo.addColumn("Administrador");
+        modelo.addColumn("Codigo");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Telefono");
+        modelo.addColumn("Ciudad");
         Iterator it = listUsuarios.iterator();
         while (it.hasNext()) {
-            Usuario u = (Usuario) it.next();
-            Object[] fila = new Object[3];
-            fila[0] = u.getIdUsuario();
-            fila[1] = u.getUsuario();
-            fila[2] = u.getAdmin();
+            Cliente u = (Cliente) it.next();
+            Object[] fila = new Object[4];
+            fila[0] = u.getCodCliente();
+            fila[1] = u.getNombre();
+            fila[2] = u.getTelefono();
+            fila[3] = u.getCiudad();
             modelo.addRow(fila);
         }
         jTable1.setModel(modelo);

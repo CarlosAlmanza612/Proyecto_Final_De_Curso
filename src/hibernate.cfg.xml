@@ -46,6 +46,7 @@ Contributor(s):
     <property name="hibernate.connection.url">jdbc:mariadb://localhost:3306/dbentremarcas</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root</property>
+    <property name="show_sql">true</property>
     <mapping resource="modelos/Talla.hbm.xml"/>
     <mapping resource="modelos/Producto.hbm.xml"/>
     <mapping resource="modelos/Usuario.hbm.xml"/>

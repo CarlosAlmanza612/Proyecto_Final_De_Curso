@@ -37,7 +37,7 @@ public class Producto implements java.io.Serializable {
         this.ventas = ventas;
     }
 
-    public Producto(Marca marca, Talla talla, String nombre, Double costoDeCompra, Double peso, Double costoDelPeso, Double costoTotal, Double precioDeVenta, Double tipoDeCambio, Boolean disponible, Set ventas) {
+    public Producto(Marca marca, Talla talla, String nombre, Double costoDeCompra, Double peso, Double costoDelPeso, Double costoTotal, Double precioDeVenta, Double tipoDeCambio, Boolean disponible) {
 
         this.marca = marca;
         this.talla = talla;

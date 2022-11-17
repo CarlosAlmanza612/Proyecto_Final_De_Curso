@@ -5,7 +5,9 @@
  */
 package vistas.Ventanas_Secundarias;
 
+import controladores.MarcaBean;
 import controladores.ProductoBean;
+import controladores.TallaBean;
 import controladores.UsuarioBean;
 import modelos.Usuario;
 import vistas.Fondo;
@@ -13,7 +15,9 @@ import java.util.Iterator;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
+import modelos.Marca;
 import modelos.Producto;
+import modelos.Talla;
 import vistas.VentanasPrincipales.VentanaAdmin;
 
 public class VentanaProductos extends Fondo {
@@ -84,6 +88,11 @@ public class VentanaProductos extends Fondo {
         add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(214, 266, -1, -1));
 
         jButton4.setText("Eliminar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(307, 266, -1, -1));
 
         jButton5.setText("Buscar Producto");
@@ -112,24 +121,43 @@ public class VentanaProductos extends Fondo {
         productos.setSize(603, 402);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     public void cargarProductos() {
         ProductoBean op = new ProductoBean();
-        List listProductos = op.listProducto();
+        TallaBean tb=new TallaBean();
+        MarcaBean mb=new MarcaBean();
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Codigo");
         modelo.addColumn("Nombre");
         modelo.addColumn("Talla");
+        modelo.addColumn("Marca");
         modelo.addColumn("Precio");
-        Iterator it = listProductos.iterator();
-        while (it.hasNext()) {
-            Producto p = (Producto) it.next();
-            Object[] fila = new Object[4];
+        List listaProductos = op.listProducto();
+        for (Iterator iterator = listaProductos.iterator(); iterator.hasNext();){
+           Producto p= (Producto) iterator.next();
+           
+           Talla t= p.getTalla();
+           Marca m=p.getMarca();
+           int id=t.getIdTalla();
+           int id_marca=m.getIdMarca();
+           Talla talla=tb.obtenerTalla(id);
+           Marca marca=mb.obtenerMarca(id_marca);
+     // String talla = listaProductos.get(i).getTalla().getNombreTalla();
+     //  String marca = listaProductos.get(i).getMarca().getNombreMarca();
+            Object[] fila = new Object[5];
             fila[0] = p.getCodigo();
             fila[1] = p.getNombre();
-            fila[2] = p.getTalla();
-            fila[3] = p.getPrecioDeVenta();
+            fila[2] = talla.getNombreTalla();
+            fila[3] = marca.getNombreMarca();
+            fila[4] = p.getPrecioDeVenta();
             modelo.addRow(fila);
         }
+
         jTable1.setModel(modelo);
     }
 

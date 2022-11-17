@@ -4,25 +4,33 @@
  */
 package vistas.Ventanas_Secundarias;
 
+import controladores.MarcaBean;
+import controladores.ProductoBean;
+import controladores.TallaBean;
+import controladores.UsuarioBean;
 import java.time.Clock;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelos.Marca;
+import modelos.Producto;
+import modelos.Talla;
+import modelos.Usuario;
 import vistas.Fondo;
+import vistas.VentanasPrincipales.VentanaAdmin;
 
 /**
  *
- * @author Usuario
+ * @author Carlos Halberth Almanza Lopez
  */
 public class VentanaCrearProducto extends Fondo {
 
     JFrame frame = new JFrame();
 
-    /**
-     * Creates new form Venta
-     */
     public VentanaCrearProducto() {
         initComponents();
     }
@@ -39,47 +47,25 @@ public class VentanaCrearProducto extends Fondo {
     public void cargarListaDeTallas() {
         DefaultListModel dtm = new DefaultListModel();
         dtm.removeAllElements();
-        ArrayList<String> tallas = new ArrayList<>();
-        tallas.add("XS");
-        tallas.add("S");
-        tallas.add("M");
-        tallas.add("L");
-        tallas.add("XL");
-        tallas.add("2XL");
-        for (int i = 0; i < tallas.size(); i++) {
-            dtm.addElement(tallas.get(i));
+        TallaBean op = new TallaBean();
+        List<Talla> listTallas = op.listTallas();
+        for (int i = 0; i < listTallas.size(); i++) {
+            dtm.addElement(listTallas.get(i).getNombreTalla());
         }
         listTalla.setModel(dtm);
-
     }
 
     public void cargarListaDeMarcas() {
         DefaultListModel dtm = new DefaultListModel();
         dtm.removeAllElements();
-        ArrayList<String> marcas = new ArrayList<>();
-        marcas.add("SHEIN");
-        marcas.add("SPRINGFIELD");
-        marcas.add("BERSHKA");
-        marcas.add("ROWME");
-        for (int i = 0; i < marcas.size(); i++) {
-            dtm.addElement(marcas.get(i));
+        MarcaBean op = new MarcaBean();
+        List<Marca> listMarcas = op.listMarca();
+        for (int i = 0; i < listMarcas.size(); i++) {
+            dtm.addElement(listMarcas.get(i).getNombreMarca());
         }
         listMarca.setModel(dtm);
-
     }
 
-    /*  public void cargarFabricantes() {
-        String consultaFabricantes = "SELECT NOMBRE FROM FABRICANTES";
-        ArrayList<String[]> strings = mi.ConsultaSQL(consultaFabricantes);
-        DefaultListModel dtm = new DefaultListModel();
-        dtm.removeAllElements();
-        for (int i = 0; i < strings.size(); i++) {
-            dtm.addElement(strings.get(i)[0]);
-        }
-        jList1.setModel(dtm);
-    }
-
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -178,6 +164,9 @@ public class VentanaCrearProducto extends Fondo {
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, -1, -1));
 
         txtCostoDeCompra.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCostoDeCompraFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtCostoDeCompraFocusLost(evt);
             }
@@ -218,6 +207,11 @@ public class VentanaCrearProducto extends Fondo {
 
         txtPrecioDeVenta.setEditable(false);
         txtPrecioDeVenta.setEnabled(false);
+        txtPrecioDeVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPrecioDeVentaKeyReleased(evt);
+            }
+        });
         add(txtPrecioDeVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 220, 70, -1));
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
@@ -231,6 +225,14 @@ public class VentanaCrearProducto extends Fondo {
         add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 300, 50));
         add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 80, -1));
 
+        txtTipoDeCambio.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtTipoDeCambioFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtTipoDeCambioFocusLost(evt);
+            }
+        });
         txtTipoDeCambio.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtTipoDeCambioKeyReleased(evt);
@@ -239,8 +241,16 @@ public class VentanaCrearProducto extends Fondo {
         add(txtTipoDeCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 110, 80, -1));
 
         txtPeso.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtPesoFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtPesoFocusLost(evt);
+            }
+        });
+        txtPeso.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                txtPesoPropertyChange(evt);
             }
         });
         txtPeso.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -259,18 +269,44 @@ public class VentanaCrearProducto extends Fondo {
         add(btnResetear, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 300, 80, -1));
 
         jButton1.setText("Volver Atras");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        
-        
-        
+        ProductoBean pb = new ProductoBean();
+        TallaBean tb = new TallaBean();
+        MarcaBean mb = new MarcaBean();
+
+        Talla talla;
+        Marca marca;
+        Double peso = Double.parseDouble(txtPeso.getText());
+        Double costoDeCompra = Double.parseDouble(txtCostoDeCompra.getText());
+        Double costoDelPeso = Double.parseDouble(txtCostoDelPeso.getText());
+        Double costoTotal = Double.parseDouble(txtCostoTotal.getText());
+        Double precioDeVenta = Double.parseDouble(txtPrecioDeVenta.getText());
+        Double tipoDeCambio = Double.parseDouble(txtTipoDeCambio.getText());
+        String nombre = txtNombre.getText();
+        String tallaNombre = listTalla.getSelectedValue();
+        String marcaNombre = listMarca.getSelectedValue();
+        Boolean disponible = checkDisponible.isSelected();
+        talla = tb.buscarTalla(tallaNombre);
+        marca = mb.buscarMarca(marcaNombre);
+        Producto producto = new Producto(marca, talla, nombre, costoDeCompra,peso, costoDelPeso, costoTotal, precioDeVenta, tipoDeCambio, disponible);
+        if(producto!=null){            
+        pb.guardarProducto(producto);
+        JOptionPane.showMessageDialog(null, " Producto creado con exito", "", WIDTH);
+        }else{
+            JOptionPane.showMessageDialog(null, " Producto no creado", "", WIDTH);
+        }
+
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void checkDisponibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkDisponibleActionPerformed
-        // TODO add your handling code here:
-
 
     }//GEN-LAST:event_checkDisponibleActionPerformed
 
@@ -332,6 +368,48 @@ public class VentanaCrearProducto extends Fondo {
         habilitarBotonRegistrar();
     }//GEN-LAST:event_txtPesoKeyReleased
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+                this.setVisible(false);
+        frame.remove(this);
+        VentanaProductos i = new VentanaProductos(frame);
+        frame.getContentPane().add(i);
+        frame.setSize(603, 402);
+        i.setVisible(true);
+        i.setSize(603, 402);
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtPrecioDeVentaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioDeVentaKeyReleased
+        // TODO add your handling code here:
+        habilitarBotonRegistrar();
+    }//GEN-LAST:event_txtPrecioDeVentaKeyReleased
+
+    private void txtPesoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPesoFocusGained
+        // TODO add your handling code here:
+        habilitarBotonRegistrar();
+    }//GEN-LAST:event_txtPesoFocusGained
+
+    private void txtCostoDeCompraFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCostoDeCompraFocusGained
+        // TODO add your handling code here:
+        habilitarBotonRegistrar();
+    }//GEN-LAST:event_txtCostoDeCompraFocusGained
+
+    private void txtTipoDeCambioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoDeCambioFocusGained
+        // TODO add your handling code here:
+        habilitarBotonRegistrar();
+    }//GEN-LAST:event_txtTipoDeCambioFocusGained
+
+    private void txtPesoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtPesoPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPesoPropertyChange
+
+    private void txtTipoDeCambioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoDeCambioFocusLost
+        // TODO add your handling code here:
+        habilitarBotonRegistrar();
+    }//GEN-LAST:event_txtTipoDeCambioFocusLost
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrar;
@@ -377,7 +455,7 @@ public void resetForm() {
 
     public void habilitarBotonRegistrar() {
         if (!txtNombre.getText().isEmpty() && !txtPeso.getText().isEmpty() && !txtTipoDeCambio.getText().isEmpty()
-                && !txtCostoDeCompra.getText().isEmpty()) {
+                && !txtCostoDeCompra.getText().isEmpty() && !txtPrecioDeVenta.getText().isEmpty()) {
             btnRegistrar.setEnabled(true);
         } else {
             btnRegistrar.setEnabled(false);

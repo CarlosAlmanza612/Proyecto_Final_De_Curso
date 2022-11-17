@@ -5,8 +5,11 @@
  */
 package hibernate.utils;
 
-import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 /**
  * Hibernate Utility class with a convenient method to get Session Factory
@@ -17,19 +20,22 @@ import org.hibernate.SessionFactory;
 public class HibernateUtil {
 
     private static final SessionFactory sessionFactory;
-    
+
     static {
         try {
             // Create the SessionFactory from standard (hibernate.cfg.xml) 
             // config file.
-            sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
-        } catch (Throwable ex) {
-            // Log the exception. 
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
+            Configuration configuration = new Configuration();
+            StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
+            builder.applySettings(configuration.getProperties());
+            ServiceRegistry serviceRegistry = builder.build();
+            sessionFactory = configuration.configure().buildSessionFactory(serviceRegistry);
+        } catch (HibernateException he) {
+            System.err.println("Ocurrió un error en la inicialización de la SessionFactory: " + he);
+            throw new ExceptionInInitializerError(he);
         }
     }
-    
+
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }

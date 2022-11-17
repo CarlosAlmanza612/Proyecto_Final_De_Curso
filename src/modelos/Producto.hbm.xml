@@ -7,10 +7,10 @@
       <column name="codigo"/>
       <generator class="identity"/>
     </id>
-    <many-to-one class="modelos.Marca" fetch="select" name="marca">
+    <many-to-one class="modelos.Marca" fetch="join" name="marca">
       <column name="id_marca"/>
     </many-to-one>
-    <many-to-one class="modelos.Talla" fetch="select" name="talla">
+    <many-to-one class="modelos.Talla" fetch="join" name="talla">
       <column name="id_talla"/>
     </many-to-one>
     <property name="nombre" type="string">
