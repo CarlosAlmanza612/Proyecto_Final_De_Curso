@@ -66,8 +66,8 @@ public class TallaBean {
         return user;
     }
 
-    public List<Talla> listTallas() {
-        List<Talla> listObjects = null;
+    public List listTallas() {
+        List listObjects = null;
         iniciarOperacion();
         listObjects = session.createQuery("from Talla").list();
         terminarOperacion();

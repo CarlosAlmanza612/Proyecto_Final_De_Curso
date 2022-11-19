@@ -147,8 +147,6 @@ public class VentanaProductos extends Fondo {
            int id_marca=m.getIdMarca();
            Talla talla=tb.obtenerTalla(id);
            Marca marca=mb.obtenerMarca(id_marca);
-     // String talla = listaProductos.get(i).getTalla().getNombreTalla();
-     //  String marca = listaProductos.get(i).getMarca().getNombreMarca();
             Object[] fila = new Object[5];
             fila[0] = p.getCodigo();
             fila[1] = p.getNombre();

@@ -5,18 +5,11 @@
  */
 package controladores;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import javax.swing.JOptionPane;
-import modelos.Marca;
 import modelos.Producto;
-import modelos.Talla;
-import modelos.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -63,28 +56,11 @@ public class ProductoBean {
         return producto;
     }
 
-    public List<Producto> listProducto() {
+    public List listProducto() {
         iniciarOperacion();
-        List<Producto> listaProductos = (List<Producto>)session.createQuery("from Producto").list();
+        List listaProductos = (List<Producto>)session.createQuery("from Producto").list();
         terminarOperacion();
         return listaProductos;
     }
-    public ArrayList listProducto2() {
-        iniciarOperacion();
-        ArrayList lista=new ArrayList();
-        List listaProductos = session.createQuery("from Producto").list();
-        for (Iterator iterator = listaProductos.iterator(); iterator.hasNext();){
-           Producto p= (Producto) iterator.next();
-           Talla t= p.getTalla();
-           Marca m=p.getMarca();
-           lista.add(p.getCodigo());
-           lista.add(p.getNombre());           
-           lista.add(t.getNombreTalla());
-           lista.add(m.getNombreMarca());
-           lista.add(p.getPrecioDeVenta());
-       }
-        terminarOperacion();
-        return lista;
-    }
-    
+
 }

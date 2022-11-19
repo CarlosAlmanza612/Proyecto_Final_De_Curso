@@ -7,7 +7,6 @@ package controladores;
 
 import java.util.List;
 import modelos.Marca;
-import modelos.Talla;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -66,8 +65,8 @@ public class MarcaBean {
         terminarOperacion();
         return marc;
     }
-    public List<Marca> listMarca() {
-        List<Marca> listObjects = null;
+    public List listMarca() {
+        List listObjects = null;
         iniciarOperacion();
         listObjects = session.createQuery("from Marca").list();
         terminarOperacion();

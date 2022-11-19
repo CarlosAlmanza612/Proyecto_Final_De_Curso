@@ -6,14 +6,10 @@
 package controladores;
 
 import java.util.List;
-import javax.swing.JOptionPane;
 import modelos.Cliente;
-import modelos.Marca;
-import modelos.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -62,8 +58,8 @@ public class ClienteBean {
         return cliente;
     }
 
-    public List<Cliente> listCliente() {
-        List<Cliente> listClientes = null;
+    public List listCliente() {
+        List listClientes = null;
         iniciarOperacion();
         listClientes = session.createQuery("from Cliente").list();
         terminarOperacion();

@@ -10,7 +10,6 @@ import modelos.Venta;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -57,8 +56,8 @@ public class VentaBean {
         return object;
     }
 
-    public List<Venta> listVenta() {
-        List<Venta> listObjects = null;
+    public List listVenta() {
+        List listObjects = null;
         iniciarOperacion();
         listObjects = session.createQuery("from Venta").list();
         terminarOperacion();

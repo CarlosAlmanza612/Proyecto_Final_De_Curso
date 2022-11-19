@@ -6,8 +6,6 @@
 package controladores;
 
 import java.util.List;
-import javax.swing.JOptionPane;
-import modelos.Producto;
 import modelos.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
