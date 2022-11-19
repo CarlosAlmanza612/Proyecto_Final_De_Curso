@@ -4,12 +4,16 @@
  */
 package vistas.Ventanas_Secundarias;
 
+import controladores.ClienteBean;
 import controladores.UsuarioBean;
 import modelos.Usuario;
 import hibernate.utils.OperacionesCRUD;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import modelos.Cliente;
+import modelos.Talla;
 import vistas.Fondo;
 
 /**
@@ -31,7 +35,8 @@ public class VentanaCrearCliente extends Fondo {
 
         initComponents();
         frame = jframe;
-        btnCrearUsuario.setEnabled(false);
+        btnCrearCliente.setEnabled(false);
+        cargarComboBox();
     }
 
     /**
@@ -43,43 +48,44 @@ public class VentanaCrearCliente extends Fondo {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnCrearUsuario = new javax.swing.JButton();
-        txtUsuario = new javax.swing.JTextField();
-        checkAdmin = new javax.swing.JCheckBox();
+        btnCrearCliente = new javax.swing.JButton();
+        txtTelefono = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtPass = new javax.swing.JPasswordField();
         jButton2 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        comboCiudad = new javax.swing.JComboBox<>();
+        txtUsuario1 = new javax.swing.JTextField();
+        txtApellidos1 = new javax.swing.JTextField();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnCrearUsuario.setText("Crear Usuario");
-        btnCrearUsuario.addActionListener(new java.awt.event.ActionListener() {
+        btnCrearCliente.setText("Crear Cliente");
+        btnCrearCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCrearUsuarioActionPerformed(evt);
+                btnCrearClienteActionPerformed(evt);
             }
         });
-        add(btnCrearUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, -1, -1));
+        add(btnCrearCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, -1));
 
-        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtUsuarioKeyReleased(evt);
+                txtTelefonoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
             }
         });
-        add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 80, -1));
-
-        checkAdmin.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        checkAdmin.setText("Administrador");
-        add(checkAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+        add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 80, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Usuario");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel2.setText("Password");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
-        add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 80, -1));
+        jLabel2.setText("Ciudad");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
 
         jButton2.setText("Volver atras");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -87,34 +93,73 @@ public class VentanaCrearCliente extends Fondo {
                 jButton2ActionPerformed(evt);
             }
         });
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
+        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setText("Apellidos");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel4.setText("Telefono");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
+
+        comboCiudad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        add(comboCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, -1, -1));
+
+        txtUsuario1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsuario1ActionPerformed(evt);
+            }
+        });
+        txtUsuario1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtUsuario1KeyReleased(evt);
+            }
+        });
+        add(txtUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 80, -1));
+
+        txtApellidos1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtApellidos1KeyReleased(evt);
+            }
+        });
+        add(txtApellidos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 80, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUsuarioActionPerformed
-        // TODO add your handling code here:
-        
-        String nombre = txtUsuario.getText();
-        char[] arrayC = txtPass.getPassword();
-        String password = new String(arrayC);
-        boolean admin = checkAdmin.isSelected();
-        if(verificarUsuario(txtUsuario.getText())){
-        Usuario usuario = new Usuario( nombre, password, admin);
-        OperacionesCRUD op = new OperacionesCRUD();
-        op.guardarObject(usuario);
-        JOptionPane.showMessageDialog(null, " Usuario creado con exito", "", WIDTH);
+    private void btnCrearClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearClienteActionPerformed
+        String nombre = txtUsuario1.getText();
+        String apellidos = txtApellidos1.getText();
+        int telefono = Integer.parseInt(txtTelefono.getText());
+        String ciudad = comboCiudad.getSelectedItem().toString();
+        ClienteBean cb = new ClienteBean();
+        List listClientes = cb.listCliente(nombre);
+        boolean existe = false;
+        if (listClientes != null) {
+            for (Iterator iterator = listClientes.iterator(); iterator.hasNext();) {
+                Cliente cl = (Cliente) iterator.next();
+                System.out.println(cl.getApellidos());
+                System.out.println(cl.getCiudad());
+                if (cl.getApellidos().equalsIgnoreCase(apellidos) && cl.getCiudad().equals(ciudad)) {
+                    if (cl.getDisponible()) {
+                        existe = true;
+                    } else {
+                        JOptionPane.showMessageDialog(null, " Cualquiera creado con exito", "", WIDTH);
+                    }
+                }
+            }
+            if (existe) {
+                JOptionPane.showMessageDialog(null, " Usuario creado con exito", "", WIDTH);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, " Cliente creado con exito", "", WIDTH);
         }
-        
-        txtUsuario.setText("");
-        txtPass.setText("");
-        checkAdmin.setSelected(false);
-        btnCrearUsuario.setEnabled(false);
 
-    }//GEN-LAST:event_btnCrearUsuarioActionPerformed
+    }//GEN-LAST:event_btnCrearClienteActionPerformed
 
-    private void txtUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyReleased
+    private void txtTelefonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyReleased
         // TODO add your handling code here:
         habilitarBoton();
-    }//GEN-LAST:event_txtUsuarioKeyReleased
+    }//GEN-LAST:event_txtTelefonoKeyReleased
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -126,32 +171,58 @@ public class VentanaCrearCliente extends Fondo {
         i.setVisible(true);
         i.setSize(603, 402);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtUsuario1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuario1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsuario1KeyReleased
+
+    private void txtUsuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuario1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsuario1ActionPerformed
+
+    private void txtApellidos1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidos1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtApellidos1KeyReleased
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        int key = evt.getKeyChar();
+
+        boolean numeros = key >= 48 && key <= 57;
+
+        if (!numeros) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
     public void habilitarBoton() {
-        if (!txtUsuario.getText().isEmpty()) {
-            btnCrearUsuario.setEnabled(true);
+        if (!txtTelefono.getText().isEmpty()) {
+            btnCrearCliente.setEnabled(true);
         } else {
-            btnCrearUsuario.setEnabled(false);
+            btnCrearCliente.setEnabled(false);
         }
     }
 
-   public boolean verificarUsuario(String nombre){
-       UsuarioBean op = new UsuarioBean();
-        List<Usuario> users = (List<Usuario>) op.listUsuario();
-        for (int i = 0; i < users.size(); i++) {
-            if(users.get(i).getUsuario().equalsIgnoreCase(nombre)){
-                JOptionPane.showMessageDialog(null, " El usuario ya Existe, porfavor intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
-        }
-        return true;
-   }
+    public void cargarComboBox() {
+        comboCiudad.removeAllItems();
+        comboCiudad.addItem("Pando");
+        comboCiudad.addItem("Beni");
+        comboCiudad.addItem("Potosi");
+        comboCiudad.addItem("Santa Cruz");
+        comboCiudad.addItem("Oruro");
+        comboCiudad.addItem("La Paz");
+        comboCiudad.addItem("Sucre");
+        comboCiudad.addItem("Tarija");
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCrearUsuario;
-    private javax.swing.JCheckBox checkAdmin;
+    private javax.swing.JButton btnCrearCliente;
+    private javax.swing.JComboBox<String> comboCiudad;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPasswordField txtPass;
-    private javax.swing.JTextField txtUsuario;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JTextField txtApellidos1;
+    private javax.swing.JTextField txtTelefono;
+    private javax.swing.JTextField txtUsuario1;
     // End of variables declaration//GEN-END:variables
 }
