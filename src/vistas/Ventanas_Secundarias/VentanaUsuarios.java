@@ -5,7 +5,7 @@
  */
 package vistas.Ventanas_Secundarias;
 
-import controladores.TallaBean;
+import controladores.ClienteBean;
 import controladores.UsuarioBean;
 import modelos.Usuario;
 import vistas.Fondo;
@@ -14,7 +14,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelos.Talla;
+import modelos.Cliente;
 import vistas.VentanasPrincipales.VentanaAdmin;
 
 public class VentanaUsuarios extends Fondo {
@@ -89,7 +89,6 @@ public class VentanaUsuarios extends Fondo {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
         this.setVisible(false);
         frame.remove(this);
         VentanaAdmin i = new VentanaAdmin(frame);
@@ -100,15 +99,16 @@ public class VentanaUsuarios extends Fondo {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        String nombre;
-        nombre = JOptionPane.showInputDialog("Ingrese el codigo del usuario que desea eliminar");
-        if (nombre!=null&&!nombre.isEmpty()) {
-            if (nombre.matches("[0-9]*")) {
-                int codigo = Integer.parseInt(nombre);
+        String id;
+        id = JOptionPane.showInputDialog("Ingrese el codigo del usuario que desea eliminar");
+        if (id != null && !id.isEmpty()) {
+            if (id.matches("[0-9]*")) {
+                int codigo = Integer.parseInt(id);
                 UsuarioBean t = new UsuarioBean();
-                Usuario usuario = t.obtenerUsuario(codigo);
-                if (usuario != null) {
-                    t.eliminarUsuario(usuario);
+                Usuario cl = t.obtenerUsuario(codigo);
+                if (cl != null && cl.getDisponible()) {
+                    cl.setDisponible(false);
+                    t.actualizarUsuario(cl);
                     JOptionPane.showMessageDialog(null, "Usuario Eliminado Correctamente");
                     cargarUsuarios();
                 } else {
@@ -129,24 +129,24 @@ public class VentanaUsuarios extends Fondo {
         i.setVisible(true);
         i.setSize(603, 402);
     }//GEN-LAST:event_btnRegistrarActionPerformed
-public void cargarUsuarios() {
+    public void cargarUsuarios() {
         UsuarioBean op = new UsuarioBean();
         List listUsuarios = op.listUsuario();
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Id");
         modelo.addColumn("Usuario");
         modelo.addColumn("Administrador");
-        Iterator it = listUsuarios.iterator();
-        while (it.hasNext()) {
-            Usuario u = (Usuario) it.next();
-            Object[] fila = new Object[3];
-            fila[0] = u.getIdUsuario();
-            fila[1] = u.getUsuario();
-            fila[2] = u.getAdmin();
-            modelo.addRow(fila);
+        for (Iterator iterator = listUsuarios.iterator(); iterator.hasNext();) {
+            Usuario u = (Usuario) iterator.next();
+            if (u.getDisponible()) {
+                Object[] fila = new Object[3];
+                fila[0] = u.getIdUsuario();
+                fila[1] = u.getUsuario();
+                fila[2] = u.getAdmin();
+                modelo.addRow(fila);
+            }
         }
         jTable1.setModel(modelo);
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

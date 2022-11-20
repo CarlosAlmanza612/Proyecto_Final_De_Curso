@@ -65,10 +65,17 @@ public class UsuarioBean {
         return object;
     }
 
-    public List<Usuario> listUsuario() {
-        List<Usuario> listObjects = null;
+    public List listUsuario() {
+        List listObjects = null;
         iniciarOperacion();
         listObjects = session.createQuery("from Usuario").list();
+        terminarOperacion();
+        return listObjects;
+    }
+        public List listUsuario(String usuario) {
+        List listObjects = null;
+        iniciarOperacion();
+        listObjects = session.createQuery("from Usuario where usuario= '"+usuario+"'").list();
         terminarOperacion();
         return listObjects;
     }

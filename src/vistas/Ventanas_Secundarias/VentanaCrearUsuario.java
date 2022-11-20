@@ -5,6 +5,7 @@
 package vistas.Ventanas_Secundarias;
 
 import controladores.UsuarioBean;
+import java.util.Iterator;
 import modelos.Usuario;
 import java.util.List;
 import javax.swing.JFrame;
@@ -90,18 +91,32 @@ public class VentanaCrearUsuario extends Fondo {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUsuarioActionPerformed
-        // TODO add your handling code here:
-        UsuarioBean ub=new UsuarioBean();
+        UsuarioBean ub = new UsuarioBean();
         String nombre = txtUsuario.getText();
         char[] arrayC = txtPass.getPassword();
         String password = new String(arrayC);
         boolean admin = checkAdmin.isSelected();
-        if(verificarUsuario(txtUsuario.getText())){
-        Usuario usuario = new Usuario( nombre, password, admin);
-        ub.guardarUsuario(usuario);
-        JOptionPane.showMessageDialog(null, " Usuario creado con exito", "", WIDTH);
+        List listUsuario=ub.listUsuario(nombre);
+        if (listUsuario != null) {
+            for (Iterator iterator = listUsuario.iterator(); iterator.hasNext();) {
+                Usuario u = (Usuario) iterator.next();
+                if (u.getUsuario().equalsIgnoreCase(nombre)&&u.getPassword().equalsIgnoreCase(password)) {
+                    if (u.getDisponible()) {
+                        JOptionPane.showMessageDialog(null, "El Usuario ya existe", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        u.setDisponible(true);
+                        ub.actualizarUsuario(u);
+                        JOptionPane.showMessageDialog(null, " Usuario creado con exito", "", WIDTH);
+                    }
+                }
+            }
+        } else {
+            {
+                Usuario usuario = new Usuario(nombre, password, admin);
+                ub.guardarUsuario(usuario);
+                JOptionPane.showMessageDialog(null, " Usuario creado con exito", "", WIDTH);
+            }
         }
-        
         txtUsuario.setText("");
         txtPass.setText("");
         checkAdmin.setSelected(false);
@@ -132,17 +147,6 @@ public class VentanaCrearUsuario extends Fondo {
         }
     }
 
-   public boolean verificarUsuario(String nombre){
-       UsuarioBean op = new UsuarioBean();
-        List<Usuario> users = (List<Usuario>) op.listUsuario();
-        for (int i = 0; i < users.size(); i++) {
-            if(users.get(i).getUsuario().equalsIgnoreCase(nombre)){
-                JOptionPane.showMessageDialog(null, " El usuario ya Existe, porfavor intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
-        }
-        return true;
-   }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearUsuario;
     private javax.swing.JCheckBox checkAdmin;
