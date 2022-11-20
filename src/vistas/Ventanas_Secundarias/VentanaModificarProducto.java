@@ -24,18 +24,53 @@ import vistas.Fondo;
 public class VentanaModificarProducto extends Fondo {
 
     JFrame frame = new JFrame();
+    int id;
 
     public VentanaModificarProducto() {
         initComponents();
     }
 
-    public VentanaModificarProducto(JFrame jframe) {
+    public VentanaModificarProducto(JFrame jframe, int id) {
         initComponents();
         btnRegistrar.setEnabled(false);
         frame = jframe;
+        this.id = id;
         cargarTallas();
         cargarMarcas();
-//        cargarTabla();
+        cargarDatosAModificar(id);
+    }
+
+    public void cargarDatosAModificar(int id) {
+        ProductoBean pb = new ProductoBean();
+        TallaBean tb = new TallaBean();
+        MarcaBean mb = new MarcaBean();
+        Producto p = pb.obtenerProducto(id);
+        Marca m=p.getMarca();
+        Talla t = p.getTalla();
+        int idMarca=m.getIdMarca();
+        int idTalla = t.getIdTalla();
+        Marca marca=mb.obtenerMarca(idMarca);
+        Talla talla = tb.obtenerTalla(idTalla);
+        txtNombre.setText(p.getNombre());
+        checkDisponible.setSelected(p.getDisponible());
+        txtTipoDeCambio.setText(String.valueOf(p.getTipoDeCambio()));
+        txtCostoDeCompra.setText(String.valueOf(p.getCostoDeCompra()));
+        txtPeso.setText(String.valueOf(p.getPeso()));
+        txtCostoDelPeso.setText(String.valueOf(p.getCostoDelPeso()));
+        txtCostoTotal.setText(String.valueOf(p.getCostoTotal()));
+        txtPrecioDeVenta.setText(String.valueOf(p.getPrecioDeVenta()));
+        DefaultListModel dtt = (DefaultListModel) listTalla.getModel();
+        for (int i = 0; i < dtt.size(); i++) {
+            if (dtt.get(i).equals(talla.getNombreTalla())) {
+                listTalla.setSelectedIndex(i);
+            }
+        }
+        DefaultListModel dtm = (DefaultListModel) listMarca.getModel();
+        for (int i = 0; i < dtm.size(); i++) {
+            if (dtm.get(i).equals(marca.getNombreMarca())) {
+                listMarca.setSelectedIndex(i);
+            }
+        }
     }
 
     public void cargarTallas() {
@@ -63,7 +98,8 @@ public class VentanaModificarProducto extends Fondo {
                 dtm.addElement(u.getNombreMarca());
             }
         }
-        listTalla.setModel(dtm);
+        listMarca.setModel(dtm);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -309,8 +345,7 @@ public class VentanaModificarProducto extends Fondo {
         Boolean disponible = checkDisponible.isSelected();
         talla = tb.buscarTalla(tallaNombre);
         marca = mb.buscarMarca(marcaNombre);
-        
-        
+
         Producto producto = new Producto(marca, talla, nombre, costoDeCompra, peso, costoDelPeso, costoTotal, precioDeVenta, tipoDeCambio, disponible);
         if (producto != null) {
             pb.guardarProducto(producto);

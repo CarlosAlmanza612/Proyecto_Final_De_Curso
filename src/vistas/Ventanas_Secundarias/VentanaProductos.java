@@ -13,6 +13,7 @@ import vistas.Fondo;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.Marca;
 import modelos.Producto;
@@ -90,6 +91,11 @@ public class VentanaProductos extends Fondo {
         add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 266, -1, -1));
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
         add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(214, 266, -1, -1));
 
         btnEliminar.setText("Eliminar");
@@ -116,7 +122,7 @@ public class VentanaProductos extends Fondo {
     }//GEN-LAST:event_btnVolverAtrasActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
+
         this.setVisible(false);
         frame.remove(this);
         VentanaCrearProducto productos = new VentanaCrearProducto(frame);
@@ -127,20 +133,52 @@ public class VentanaProductos extends Fondo {
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-        
-        
+        String nombre;
+        nombre = JOptionPane.showInputDialog("Ingrese el codigo del Producto que desea eliminar");
+        if (nombre != null && !nombre.isEmpty()) {
+            if (nombre.matches("[0-9]*")) {
+                int codigo = Integer.parseInt(nombre);
+                ProductoBean t = new ProductoBean();
+                Producto p = t.obtenerProducto(codigo);
+                if (p != null && p.getDisponible()) {
+                    p.setDisponible(false);
+                    t.actualizarProducto(p);
+                    JOptionPane.showMessageDialog(null, "Producto Eliminado Correctamente");
+                    cargarProductos();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Codigo no existente, ingrese un codigo correcto", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese un codigo correcto", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-     btnModificar.setEnabled(true);
+        btnModificar.setEnabled(true);
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        this.setVisible(false);
+        frame.remove(this);
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        String dato = String.valueOf(dtm.getValueAt(jTable1.getSelectedRow(), 0));
+        int id = Integer.parseInt(dato);
+
+        VentanaModificarProducto productos = new VentanaModificarProducto(frame, id);
+        frame.getContentPane().add(productos);
+        frame.setSize(603, 402);
+        productos.setVisible(true);
+        productos.setSize(603, 402);
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     public void cargarProductos() {
         DecimalFormat df = new DecimalFormat("#");
         ProductoBean op = new ProductoBean();
-        TallaBean tb=new TallaBean();
-        MarcaBean mb=new MarcaBean();
+        TallaBean tb = new TallaBean();
+        MarcaBean mb = new MarcaBean();
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Codigo");
         modelo.addColumn("Nombre");
@@ -148,22 +186,24 @@ public class VentanaProductos extends Fondo {
         modelo.addColumn("Marca");
         modelo.addColumn("Precio");
         List listaProductos = op.listProducto();
-        for (Iterator iterator = listaProductos.iterator(); iterator.hasNext();){
-           Producto p= (Producto) iterator.next();
-           
-           Talla t= p.getTalla();
-           Marca m=p.getMarca();
-           int id=t.getIdTalla();
-           int id_marca=m.getIdMarca();
-           Talla talla=tb.obtenerTalla(id);
-           Marca marca=mb.obtenerMarca(id_marca);
-            Object[] fila = new Object[5];
-            fila[0] = p.getCodigo();
-            fila[1] = p.getNombre();
-            fila[2] = talla.getNombreTalla();
-            fila[3] = marca.getNombreMarca();
-            fila[4] = df.format(p.getPrecioDeVenta());
-            modelo.addRow(fila);
+        for (Iterator iterator = listaProductos.iterator(); iterator.hasNext();) {
+            Producto p = (Producto) iterator.next();
+            Talla t = p.getTalla();
+            Marca m = p.getMarca();
+            int id = t.getIdTalla();
+            int id_marca = m.getIdMarca();
+            Talla talla = tb.obtenerTalla(id);
+            Marca marca = mb.obtenerMarca(id_marca);
+            if (p.getDisponible()) {
+                Object[] fila = new Object[5];
+                fila[0] = p.getCodigo();
+                fila[1] = p.getNombre();
+                fila[2] = talla.getNombreTalla();
+                fila[3] = marca.getNombreMarca();
+                fila[4] = df.format(p.getPrecioDeVenta());
+                modelo.addRow(fila);
+            }
+
         }
 
         jTable1.setModel(modelo);
