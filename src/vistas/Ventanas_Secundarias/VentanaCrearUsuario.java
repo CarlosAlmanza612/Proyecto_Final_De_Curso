@@ -6,8 +6,6 @@ package vistas.Ventanas_Secundarias;
 
 import controladores.UsuarioBean;
 import modelos.Usuario;
-import vistas.VentanasPrincipales.VentanaAdmin;
-import hibernate.utils.OperacionesCRUD;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -93,15 +91,14 @@ public class VentanaCrearUsuario extends Fondo {
 
     private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUsuarioActionPerformed
         // TODO add your handling code here:
-        
+        UsuarioBean ub=new UsuarioBean();
         String nombre = txtUsuario.getText();
         char[] arrayC = txtPass.getPassword();
         String password = new String(arrayC);
         boolean admin = checkAdmin.isSelected();
         if(verificarUsuario(txtUsuario.getText())){
         Usuario usuario = new Usuario( nombre, password, admin);
-        OperacionesCRUD op = new OperacionesCRUD();
-        op.guardarObject(usuario);
+        ub.guardarUsuario(usuario);
         JOptionPane.showMessageDialog(null, " Usuario creado con exito", "", WIDTH);
         }
         

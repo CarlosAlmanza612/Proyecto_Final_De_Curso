@@ -5,14 +5,10 @@
 package vistas.VentanasPrincipales;
 
 import modelos.Producto;
-import modelos.Usuario;
 import vistas.Fondo;
-import hibernate.utils.OperacionesCRUD;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -106,16 +102,6 @@ public class VentanaVendedor extends Fondo {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        OperacionesCRUD op = new OperacionesCRUD();
-        int id=Integer.parseInt(txtIdProducto.getText());
-        List<Producto> productos = (List<Producto>) op.listProducto();
-        for (Producto producto : productos) {
-            if (producto.getCodigo()==id) {
-                filtrarProducto(id);
-            }
-        }
-        
-
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtIdProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdProductoActionPerformed
@@ -127,7 +113,7 @@ public class VentanaVendedor extends Fondo {
         txtIdProducto.setText("");
     }//GEN-LAST:event_txtIdProductoFocusGained
 
-    public void cargarTablaProductos() {
+ /*   public void cargarTablaProductos() {
         OperacionesCRUD op = new OperacionesCRUD();
         List<Producto> productos = (List<Producto>) op.listProducto();
         DefaultTableModel modelo = new DefaultTableModel();
@@ -148,7 +134,7 @@ public class VentanaVendedor extends Fondo {
         jTable1.setModel(modelo);
 
     }
-        public void filtrarProducto(int id) {
+/*        public void filtrarProducto(int id) {
         OperacionesCRUD op = new OperacionesCRUD();
         Producto producto =(Producto) op.obtenerProducto(id);
         DefaultTableModel modelo = new DefaultTableModel();
@@ -164,7 +150,7 @@ public class VentanaVendedor extends Fondo {
             modelo.addRow(fila);
         jTable1.setModel(modelo);
 
-    }
+    }*/
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton jButton1;

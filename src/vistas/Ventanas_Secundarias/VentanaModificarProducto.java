@@ -12,7 +12,6 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import modelos.Marca;
 import modelos.Producto;
 import modelos.Talla;
@@ -22,15 +21,15 @@ import vistas.Fondo;
  *
  * @author Carlos Halberth Almanza Lopez
  */
-public class VentanaCrearProducto extends Fondo {
+public class VentanaModificarProducto extends Fondo {
 
     JFrame frame = new JFrame();
 
-    public VentanaCrearProducto() {
+    public VentanaModificarProducto() {
         initComponents();
     }
 
-    public VentanaCrearProducto(JFrame jframe) {
+    public VentanaModificarProducto(JFrame jframe) {
         initComponents();
         btnRegistrar.setEnabled(false);
         frame = jframe;
@@ -64,7 +63,7 @@ public class VentanaCrearProducto extends Fondo {
                 dtm.addElement(u.getNombreMarca());
             }
         }
-        listMarca.setModel(dtm);
+        listTalla.setModel(dtm);
     }
 
     @SuppressWarnings("unchecked")
@@ -295,6 +294,7 @@ public class VentanaCrearProducto extends Fondo {
         ProductoBean pb = new ProductoBean();
         TallaBean tb = new TallaBean();
         MarcaBean mb = new MarcaBean();
+
         Talla talla;
         Marca marca;
         Double peso = Double.parseDouble(txtPeso.getText());
@@ -309,40 +309,14 @@ public class VentanaCrearProducto extends Fondo {
         Boolean disponible = checkDisponible.isSelected();
         talla = tb.buscarTalla(tallaNombre);
         marca = mb.buscarMarca(marcaNombre);
-        boolean noExiste = true;
-        List listProductos = pb.listProducto(nombre);
-        if (listProductos != null) {
-            for (Iterator iterator = listProductos.iterator(); iterator.hasNext();) {
-                Producto u = (Producto) iterator.next();
-                Talla t = u.getTalla();
-                Marca m = u.getMarca();
-                int id = t.getIdTalla();
-                int id_marca = m.getIdMarca();
-                Talla tP = tb.obtenerTalla(id);
-                Marca mP = mb.obtenerMarca(id_marca);
-                if (tP.getNombreTalla().equalsIgnoreCase(tallaNombre) && mP.getNombreMarca().equalsIgnoreCase(marcaNombre)) {
-                    if (u.getDisponible()) {
-                        noExiste = false;
-                        JOptionPane.showMessageDialog(null, "El Producto ya existe", "Error", JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        u.setDisponible(true);
-                        pb.actualizarProducto(u);
-                        resetForm();
-                        JOptionPane.showMessageDialog(null, " Producto Creado con exito", "", WIDTH);
-                    }
-                }
-            }
-            if (noExiste) {
-                Producto producto = new Producto(marca, talla, nombre, costoDeCompra, peso, costoDelPeso, costoTotal, precioDeVenta, tipoDeCambio, disponible);
-                pb.guardarProducto(producto);
-                resetForm();
-                JOptionPane.showMessageDialog(null, " Producto kreado con exito", "", WIDTH);
-            }
-        } else {
-            Producto producto = new Producto(marca, talla, nombre, costoDeCompra, peso, costoDelPeso, costoTotal, precioDeVenta, tipoDeCambio, disponible);
+        
+        
+        Producto producto = new Producto(marca, talla, nombre, costoDeCompra, peso, costoDelPeso, costoTotal, precioDeVenta, tipoDeCambio, disponible);
+        if (producto != null) {
             pb.guardarProducto(producto);
-            resetForm();
             JOptionPane.showMessageDialog(null, " Producto creado con exito", "", WIDTH);
+        } else {
+            JOptionPane.showMessageDialog(null, " Producto no creado", "", WIDTH);
         }
 
     }//GEN-LAST:event_btnRegistrarActionPerformed

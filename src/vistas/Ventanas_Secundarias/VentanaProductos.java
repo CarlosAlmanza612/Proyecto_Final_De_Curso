@@ -8,8 +8,7 @@ package vistas.Ventanas_Secundarias;
 import controladores.MarcaBean;
 import controladores.ProductoBean;
 import controladores.TallaBean;
-import controladores.UsuarioBean;
-import modelos.Usuario;
+import java.text.DecimalFormat;
 import vistas.Fondo;
 import java.util.Iterator;
 import java.util.List;
@@ -32,6 +31,7 @@ public class VentanaProductos extends Fondo {
         initComponents();
         frame = jframe;
         cargarProductos();
+        btnModificar.setEnabled(false);
     }
 
     /**
@@ -45,10 +45,10 @@ public class VentanaProductos extends Fondo {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnVolverAtras = new javax.swing.JButton();
+        btnRegistrar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -64,42 +64,47 @@ public class VentanaProductos extends Fondo {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 64, 375, 191));
 
-        jButton1.setText("Volver Atras");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnVolverAtras.setText("Volver Atras");
+        btnVolverAtras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnVolverAtrasActionPerformed(evt);
             }
         });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 266, -1, -1));
+        add(btnVolverAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 266, -1, -1));
 
-        jButton2.setText("Registrar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnRegistrarActionPerformed(evt);
             }
         });
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 266, -1, -1));
+        add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 266, -1, -1));
 
-        jButton3.setText("Modificar");
-        add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(214, 266, -1, -1));
+        btnModificar.setText("Modificar");
+        add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(214, 266, -1, -1));
 
-        jButton4.setText("Eliminar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
-        add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(307, 266, -1, -1));
+        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(307, 266, -1, -1));
 
         jButton5.setText("Buscar Producto");
         add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 35, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnVolverAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverAtrasActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         frame.remove(this);
@@ -108,9 +113,9 @@ public class VentanaProductos extends Fondo {
         frame.setSize(603, 402);
         i.setVisible(true);
         i.setSize(603, 402);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnVolverAtrasActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         frame.remove(this);
@@ -119,15 +124,20 @@ public class VentanaProductos extends Fondo {
         frame.setSize(603, 402);
         productos.setVisible(true);
         productos.setSize(603, 402);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         
         
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+     btnModificar.setEnabled(true);
+    }//GEN-LAST:event_jTable1MouseClicked
 
     public void cargarProductos() {
+        DecimalFormat df = new DecimalFormat("#");
         ProductoBean op = new ProductoBean();
         TallaBean tb=new TallaBean();
         MarcaBean mb=new MarcaBean();
@@ -152,7 +162,7 @@ public class VentanaProductos extends Fondo {
             fila[1] = p.getNombre();
             fila[2] = talla.getNombreTalla();
             fila[3] = marca.getNombreMarca();
-            fila[4] = p.getPrecioDeVenta();
+            fila[4] = df.format(p.getPrecioDeVenta());
             modelo.addRow(fila);
         }
 
@@ -160,10 +170,10 @@ public class VentanaProductos extends Fondo {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnRegistrar;
+    private javax.swing.JButton btnVolverAtras;
     private javax.swing.JButton jButton5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

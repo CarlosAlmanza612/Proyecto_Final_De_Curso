@@ -58,9 +58,16 @@ public class ProductoBean {
 
     public List listProducto() {
         iniciarOperacion();
-        List listaProductos = (List<Producto>)session.createQuery("from Producto").list();
+        List listaProductos = (List<Producto>) session.createQuery("from Producto").list();
         terminarOperacion();
         return listaProductos;
     }
 
+    public List listProducto(String nombre) {
+        List listProducto = null;
+        iniciarOperacion();
+        listProducto = session.createQuery("from Producto where nombre= '" + nombre + "'").list();
+        terminarOperacion();
+        return listProducto;
+    }
 }

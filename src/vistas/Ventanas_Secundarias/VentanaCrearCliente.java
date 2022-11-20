@@ -5,15 +5,11 @@
 package vistas.Ventanas_Secundarias;
 
 import controladores.ClienteBean;
-import controladores.UsuarioBean;
-import modelos.Usuario;
-import hibernate.utils.OperacionesCRUD;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import modelos.Cliente;
-import modelos.Talla;
 import vistas.Fondo;
 
 /**
