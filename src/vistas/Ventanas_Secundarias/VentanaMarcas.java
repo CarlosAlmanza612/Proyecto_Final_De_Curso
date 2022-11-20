@@ -102,40 +102,38 @@ public class VentanaMarcas extends Fondo {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-
-        boolean noExiste = true;
         String nombre;
-        nombre = JOptionPane.showInputDialog("Ingrese el nombre de la Marca que desea crear");
-        MarcaBean tallaBean = new MarcaBean();
-        List<Marca> users = (List<Marca>) tallaBean.listMarca();
-        if (nombre != null && !nombre.isEmpty()) {
-            for (int i = 0; i < users.size(); i++) {
-                if (users.get(i).getNombreMarca().equalsIgnoreCase(nombre)) {
-                    JOptionPane.showMessageDialog(null, "La marca ya existe ", "Error", JOptionPane.ERROR_MESSAGE);
-                    noExiste = false;
-                }
-            }
-            if (noExiste) {
-                MarcaBean t = new MarcaBean();
-                Marca marca = new Marca(nombre);
-                t.guardarMarca(marca);
+        nombre = JOptionPane.showInputDialog("Ingrese el nombre de la Talla que desea crear");
+        MarcaBean tb = new MarcaBean();
+        Marca t = tb.buscarMarca(nombre);
+        if (t != null) {
+            if (!t.getDisponible()) {
+                t.setDisponible(true);
+                tb.actualizarMarca(t);
                 cargarMarcas();
-                JOptionPane.showMessageDialog(null, "Marca agregada correctamente");
+                JOptionPane.showMessageDialog(null, "Marca creada Correctamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "La Marca ya existe", "Error", JOptionPane.ERROR_MESSAGE);
             }
-
+        } else {
+            Marca nueva = new Marca(nombre);
+            tb.guardarMarca(nueva);
+            cargarMarcas();
+            JOptionPane.showMessageDialog(null, "Marca Creada Correctamente");
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         String nombre;
-        nombre = JOptionPane.showInputDialog("Ingrese el codigo de la Marca que desea eliminar");
+        nombre = JOptionPane.showInputDialog("Ingrese el codigo de la talla que desea eliminar");
         if (nombre != null && !nombre.isEmpty()) {
             if (nombre.matches("[0-9]*")) {
                 int codigo = Integer.parseInt(nombre);
                 MarcaBean t = new MarcaBean();
-                Marca talla = t.obtenerMarca(codigo);
-                if (talla != null) {
-                    t.eliminarMarca(talla);
+                Marca marca = t.obtenerMarca(codigo);
+                if (marca != null && marca.getDisponible()) {
+                    marca.setDisponible(false);
+                    t.actualizarMarca(marca);
                     JOptionPane.showMessageDialog(null, "Marca Eliminada Correctamente");
                     cargarMarcas();
                 } else {
@@ -153,16 +151,18 @@ public class VentanaMarcas extends Fondo {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Codigo");
         modelo.addColumn("Marca");
-        Iterator it = lisMarcas.iterator();
-        while (it.hasNext()) {
-            Marca u = (Marca) it.next();
-            Object[] fila = new Object[2];
-            fila[0] = u.getIdMarca();
-            fila[1] = u.getNombreMarca();
-            modelo.addRow(fila);
+        for (Iterator iterator = lisMarcas.iterator(); iterator.hasNext();) {
+            Marca u = (Marca) iterator.next();
+            if (u.getDisponible()) {
+                Object[] fila = new Object[2];
+                fila[0] = u.getIdMarca();
+                fila[1] = u.getNombreMarca();
+                modelo.addRow(fila);
+            }
         }
         jTable1.setModel(modelo);
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;

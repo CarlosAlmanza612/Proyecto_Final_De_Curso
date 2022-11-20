@@ -10,6 +10,7 @@ import modelos.Cliente;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -48,8 +49,6 @@ public class ClienteBean {
         terminarOperacion();
     }
 
-
-
     public Cliente obtenerCliente(int id) {
         Cliente cliente = null;
         iniciarOperacion();
@@ -58,10 +57,25 @@ public class ClienteBean {
         return cliente;
     }
 
+    public Cliente buscarCliente(String nombre_Cliente) {
+        Cliente cliente = null;
+        iniciarOperacion();
+        cliente = (Cliente) session.createCriteria(Cliente.class).add(Restrictions.eq("nombre", nombre_Cliente)).uniqueResult();
+        terminarOperacion();
+        return cliente;
+    }
+
     public List listCliente() {
         List listClientes = null;
         iniciarOperacion();
         listClientes = session.createQuery("from Cliente").list();
+        terminarOperacion();
+        return listClientes;
+    }
+        public List listCliente(String nombre) {
+        List listClientes = null;
+        iniciarOperacion();
+        listClientes = session.createQuery("from Cliente where nombre= '"+nombre+"'").list();
         terminarOperacion();
         return listClientes;
     }

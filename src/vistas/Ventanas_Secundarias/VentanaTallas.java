@@ -6,8 +6,6 @@
 package vistas.Ventanas_Secundarias;
 
 import controladores.TallaBean;
-import controladores.UsuarioBean;
-import modelos.Usuario;
 import vistas.Fondo;
 import java.util.Iterator;
 import java.util.List;
@@ -102,13 +100,14 @@ public class VentanaTallas extends Fondo {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         String nombre;
         nombre = JOptionPane.showInputDialog("Ingrese el codigo de la talla que desea eliminar");
-        if (nombre!=null&&!nombre.isEmpty()) {
+        if (nombre != null && !nombre.isEmpty()) {
             if (nombre.matches("[0-9]*")) {
                 int codigo = Integer.parseInt(nombre);
                 TallaBean t = new TallaBean();
                 Talla talla = t.obtenerTalla(codigo);
-                if (talla != null) {
-                    t.eliminarTalla(talla);
+                if (talla != null && talla.getDisponible()) {
+                    talla.setDisponible(false);
+                    t.actualizarTalla(talla);
                     JOptionPane.showMessageDialog(null, "Talla Eliminada Correctamente");
                     cargarTallas();
                 } else {
@@ -124,14 +123,22 @@ public class VentanaTallas extends Fondo {
 
         String nombre;
         nombre = JOptionPane.showInputDialog("Ingrese el nombre de la Talla que desea crear");
-       TallaBean tallaBean = new TallaBean();
-        List<Talla> users = (List<Talla>) tallaBean.listTallas();
-        if (nombre != null && !nombre.isEmpty()) {
-            
-            TallaBean t = new TallaBean();
-            Talla talla = new Talla(nombre);
-            t.guardarTalla(talla);
+        TallaBean tb = new TallaBean();
+        Talla t = tb.buscarTalla(nombre);
+        if (t != null) {
+            if (!t.getDisponible()) {
+                t.setDisponible(true);
+                tb.actualizarTalla(t);
+                cargarTallas();
+                JOptionPane.showMessageDialog(null, "Talla creada Correctamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "La Talla ya existe", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            Talla nueva = new Talla(nombre);
+            tb.guardarTalla(nueva);
             cargarTallas();
+            JOptionPane.showMessageDialog(null, "Talla Creada Correctamente");
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
     public void cargarTallas() {
@@ -140,16 +147,18 @@ public class VentanaTallas extends Fondo {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Codigo");
         modelo.addColumn("Talla");
-        Iterator it = lisTallas.iterator();
-        while (it.hasNext()) {
-            Talla u = (Talla) it.next();
-            Object[] fila = new Object[2];
-            fila[0] = u.getIdTalla();
-            fila[1] = u.getNombreTalla();
-            modelo.addRow(fila);
+        for (Iterator iterator = lisTallas.iterator(); iterator.hasNext();) {
+            Talla u = (Talla) iterator.next();
+            if (u.getDisponible()) {
+                Object[] fila = new Object[2];
+                fila[0] = u.getIdTalla();
+                fila[1] = u.getNombreTalla();
+                modelo.addRow(fila);
+            }
         }
         jTable1.setModel(modelo);
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;

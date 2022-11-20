@@ -1,32 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 14 nov. 2022 19:37:49 by Hibernate Tools 4.3.1 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-nov-2022 22:23:16 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="dbentremarcas" name="modelos.Venta" optimistic-lock="version" table="venta">
-    <id name="codVenta" type="java.lang.Integer">
-      <column name="cod_venta"/>
-      <generator class="identity"/>
-    </id>
-    <many-to-one class="modelos.Cliente" fetch="select" name="cliente">
-      <column name="cod_cliente"/>
-    </many-to-one>
-    <many-to-one class="modelos.Producto" fetch="select" name="producto">
-      <column name="cod_producto" not-null="true"/>
-    </many-to-one>
-    <property name="fecha" type="timestamp">
-      <column length="19" name="fecha"/>
-    </property>
-    <property name="online" type="java.lang.Boolean">
-      <column name="online"/>
-    </property>
-    <property name="ciudad" type="string">
-      <column name="ciudad"/>
-    </property>
-    <property name="costoDeEnvio" type="java.lang.Integer">
-      <column name="costoDeEnvio"/>
-    </property>
-    <property name="estado" type="java.lang.Boolean">
-      <column name="estado"/>
-    </property>
-  </class>
+    <class name="modelos.Venta" table="venta" catalog="dbentremarcas" optimistic-lock="version">
+        <id name="codVenta" type="java.lang.Integer">
+            <column name="cod_venta" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cliente" class="modelos.Cliente" fetch="select">
+            <column name="cod_cliente" />
+        </many-to-one>
+        <many-to-one name="producto" class="modelos.Producto" fetch="select">
+            <column name="cod_producto" />
+        </many-to-one>
+        <property name="fecha" type="timestamp">
+            <column name="fecha" length="19" />
+        </property>
+        <property name="online" type="java.lang.Boolean">
+            <column name="online" />
+        </property>
+        <property name="ciudad" type="string">
+            <column name="ciudad" />
+        </property>
+        <property name="costoDeEnvio" type="java.lang.Integer">
+            <column name="costoDeEnvio" />
+        </property>
+        <property name="estado" type="java.lang.Boolean">
+            <column name="estado" />
+        </property>
+    </class>
 </hibernate-mapping>

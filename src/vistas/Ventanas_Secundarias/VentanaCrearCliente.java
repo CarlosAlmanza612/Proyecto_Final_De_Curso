@@ -165,7 +165,7 @@ public class VentanaCrearCliente extends Fondo {
         // TODO add your handling code here:
         this.setVisible(false);
         frame.remove(this);
-        VentanaUsuarios i = new VentanaUsuarios(frame);
+        VentanaClientes i = new VentanaClientes(frame);
         frame.getContentPane().add(i);
         frame.setSize(603, 402);
         i.setVisible(true);

@@ -42,8 +42,7 @@ public class VentanaClientes extends Fondo {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnRegistrar = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -69,21 +68,18 @@ public class VentanaClientes extends Fondo {
                 jButton1ActionPerformed(evt);
             }
         });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 266, -1, -1));
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, -1));
 
-        jButton2.setText("Registrar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnRegistrarActionPerformed(evt);
             }
         });
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 266, -1, -1));
-
-        jButton3.setText("Modificar");
-        add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(214, 266, -1, -1));
+        add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, -1, -1));
 
         jButton4.setText("Eliminar");
-        add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(307, 266, -1, -1));
+        add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -97,11 +93,17 @@ public class VentanaClientes extends Fondo {
         i.setSize(603, 402);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+
+        this.setVisible(false);
+        frame.remove(this);
+        VentanaCrearCliente cl = new VentanaCrearCliente(frame);
+        frame.getContentPane().add(cl);
+        frame.setSize(603, 402);
+        cl.setVisible(true);
+        cl.setSize(603, 402);
+
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
     public void cargarProductos() {
         ClienteBean op = new ClienteBean();
@@ -125,9 +127,8 @@ public class VentanaClientes extends Fondo {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

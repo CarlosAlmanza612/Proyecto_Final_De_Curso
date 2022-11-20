@@ -1,5 +1,5 @@
 package modelos;
-// Generated 14 nov. 2022 19:37:49 by Hibernate Tools 4.3.1
+// Generated 19-nov-2022 22:23:16 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -11,31 +11,29 @@ import java.util.Set;
 public class Marca  implements java.io.Serializable {
 
 
-     private int idMarca;
+     private Integer idMarca;
      private String nombreMarca;
-     private String pais;
+     private Boolean disponible=true;
      private Set productos = new HashSet(0);
 
     public Marca() {
     }
 
 	
-    public Marca( String nombreMarca) {
-        
+    public Marca(String nombreMarca) {
         this.nombreMarca = nombreMarca;
     }
-    public Marca( String nombreMarca, String pais, Set productos) {
-       
+    public Marca(String nombreMarca, Boolean disponible, Set productos) {
        this.nombreMarca = nombreMarca;
-       this.pais = pais;
+       this.disponible = disponible;
        this.productos = productos;
     }
    
-    public int getIdMarca() {
+    public Integer getIdMarca() {
         return this.idMarca;
     }
     
-    public void setIdMarca(int idMarca) {
+    public void setIdMarca(Integer idMarca) {
         this.idMarca = idMarca;
     }
     public String getNombreMarca() {
@@ -45,12 +43,13 @@ public class Marca  implements java.io.Serializable {
     public void setNombreMarca(String nombreMarca) {
         this.nombreMarca = nombreMarca;
     }
-    public String getPais() {
-        return this.pais;
+
+    public Boolean getDisponible() {
+        return this.disponible;
     }
     
-    public void setPais(String pais) {
-        this.pais = pais;
+    public void setDisponible(Boolean disponible) {
+        this.disponible = disponible;
     }
     public Set getProductos() {
         return this.productos;

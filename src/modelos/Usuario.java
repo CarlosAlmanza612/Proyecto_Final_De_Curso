@@ -1,5 +1,5 @@
 package modelos;
-// Generated 14 nov. 2022 19:37:49 by Hibernate Tools 4.3.1
+// Generated 19-nov-2022 22:23:16 by Hibernate Tools 4.3.1
 
 
 
@@ -13,19 +13,22 @@ public class Usuario  implements java.io.Serializable {
      private String usuario;
      private String password;
      private Boolean admin;
+     private Boolean disponible=true;
 
     public Usuario() {
     }
 
 	
-    public Usuario(String usuario, String password) {
+    public Usuario(String usuario, String password,Boolean admin) {
         this.usuario = usuario;
         this.password = password;
+        this.admin=admin;
     }
-    public Usuario(String usuario, String password, Boolean admin) {
+    public Usuario(String usuario, String password, Boolean admin, Boolean disponible) {
        this.usuario = usuario;
        this.password = password;
        this.admin = admin;
+       this.disponible = disponible;
     }
    
     public Integer getIdUsuario() {
@@ -55,6 +58,13 @@ public class Usuario  implements java.io.Serializable {
     
     public void setAdmin(Boolean admin) {
         this.admin = admin;
+    }
+    public Boolean getDisponible() {
+        return this.disponible;
+    }
+    
+    public void setDisponible(Boolean disponible) {
+        this.disponible = disponible;
     }
 
 

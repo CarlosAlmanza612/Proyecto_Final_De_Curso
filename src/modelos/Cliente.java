@@ -1,5 +1,5 @@
 package modelos;
-// Generated 14 nov. 2022 19:37:49 by Hibernate Tools 4.3.1
+// Generated 19-nov-2022 22:23:16 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -11,11 +11,12 @@ import java.util.Set;
 public class Cliente  implements java.io.Serializable {
 
 
-     private int codCliente;
+     private Integer codCliente;
      private String nombre;
      private String apellidos;
      private Integer telefono;
      private String ciudad;
+     private Boolean disponible=true;
      private Set ventas = new HashSet(0);
 
     public Cliente() {
@@ -23,24 +24,22 @@ public class Cliente  implements java.io.Serializable {
 
 	
     public Cliente(String nombre, String ciudad) {
-
         this.nombre = nombre;
         this.ciudad = ciudad;
+        
     }
-    public Cliente(String nombre, String apellidos, Integer telefono, String ciudad, Set ventas) {
-      
+    public Cliente(String nombre, String apellidos, Integer telefono, String ciudad) {
        this.nombre = nombre;
        this.apellidos = apellidos;
        this.telefono = telefono;
        this.ciudad = ciudad;
-       this.ventas = ventas;
     }
    
-    public int getCodCliente() {
+    public Integer getCodCliente() {
         return this.codCliente;
     }
     
-    public void setCodCliente(int codCliente) {
+    public void setCodCliente(Integer codCliente) {
         this.codCliente = codCliente;
     }
     public String getNombre() {
@@ -70,6 +69,13 @@ public class Cliente  implements java.io.Serializable {
     
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
+    }
+    public Boolean getDisponible() {
+        return this.disponible;
+    }
+    
+    public void setDisponible(Boolean disponible) {
+        this.disponible = disponible;
     }
     public Set getVentas() {
         return this.ventas;

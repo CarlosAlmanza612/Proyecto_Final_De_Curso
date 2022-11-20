@@ -1,9 +1,8 @@
 package modelos;
-// Generated 14 nov. 2022 19:37:49 by Hibernate Tools 4.3.1
+// Generated 19-nov-2022 22:23:16 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -12,53 +11,29 @@ import java.util.Set;
 public class Talla  implements java.io.Serializable {
 
 
-     private int idTalla;
+     private Integer idTalla;
      private String nombreTalla;
+     private Boolean disponible=true;
      private Set productos = new HashSet(0);
 
     public Talla() {
     }
 
 	
-    public Talla( String nombreTalla) {
-       
+    public Talla(String nombreTalla) {
         this.nombreTalla = nombreTalla;
     }
-    public Talla(int idTalla, String nombreTalla, Set productos) {
-       this.idTalla = idTalla;
+    public Talla(String nombreTalla, Boolean disponible, Set productos) {
        this.nombreTalla = nombreTalla;
+       this.disponible = disponible;
        this.productos = productos;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Talla other = (Talla) obj;
-        if (!Objects.equals(this.nombreTalla, other.nombreTalla)) {
-            return false;
-        }
-        return true;
-    }
    
-    public int getIdTalla() {
+    public Integer getIdTalla() {
         return this.idTalla;
     }
     
-    public void setIdTalla(int idTalla) {
+    public void setIdTalla(Integer idTalla) {
         this.idTalla = idTalla;
     }
     public String getNombreTalla() {
@@ -67,6 +42,13 @@ public class Talla  implements java.io.Serializable {
     
     public void setNombreTalla(String nombreTalla) {
         this.nombreTalla = nombreTalla;
+    }
+    public Boolean getDisponible() {
+        return this.disponible;
+    }
+    
+    public void setDisponible(Boolean disponible) {
+        this.disponible = disponible;
     }
     public Set getProductos() {
         return this.productos;

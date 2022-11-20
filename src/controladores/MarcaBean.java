@@ -65,7 +65,7 @@ public class MarcaBean {
         terminarOperacion();
         return marc;
     }
-    public List listMarca() {
+        public List listMarca() {
         List listObjects = null;
         iniciarOperacion();
         listObjects = session.createQuery("from Marca").list();
