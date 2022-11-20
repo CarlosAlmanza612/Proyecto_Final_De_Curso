@@ -45,11 +45,11 @@ public class VentanaModificarProducto extends Fondo {
         TallaBean tb = new TallaBean();
         MarcaBean mb = new MarcaBean();
         Producto p = pb.obtenerProducto(id);
-        Marca m=p.getMarca();
+        Marca m = p.getMarca();
         Talla t = p.getTalla();
-        int idMarca=m.getIdMarca();
+        int idMarca = m.getIdMarca();
         int idTalla = t.getIdTalla();
-        Marca marca=mb.obtenerMarca(idMarca);
+        Marca marca = mb.obtenerMarca(idMarca);
         Talla talla = tb.obtenerTalla(idTalla);
         txtNombre.setText(p.getNombre());
         checkDisponible.setSelected(p.getDisponible());
@@ -99,7 +99,6 @@ public class VentanaModificarProducto extends Fondo {
             }
         }
         listMarca.setModel(dtm);
-
     }
 
     @SuppressWarnings("unchecked")
@@ -136,7 +135,7 @@ public class VentanaModificarProducto extends Fondo {
         setBackground(new java.awt.Color(153, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnRegistrar.setText("Registrar");
+        btnRegistrar.setText("Listo");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarActionPerformed(evt);
@@ -330,7 +329,6 @@ public class VentanaModificarProducto extends Fondo {
         ProductoBean pb = new ProductoBean();
         TallaBean tb = new TallaBean();
         MarcaBean mb = new MarcaBean();
-
         Talla talla;
         Marca marca;
         Double peso = Double.parseDouble(txtPeso.getText());
@@ -345,14 +343,20 @@ public class VentanaModificarProducto extends Fondo {
         Boolean disponible = checkDisponible.isSelected();
         talla = tb.buscarTalla(tallaNombre);
         marca = mb.buscarMarca(marcaNombre);
+        Producto p = pb.obtenerProducto(id);
+        p.setTalla(talla);
+        p.setMarca(marca);
+        p.setCostoDeCompra(costoDeCompra);
+        p.setCostoDelPeso(costoDelPeso);
+        p.setCostoTotal(costoTotal);
+        p.setPeso(peso);
+        p.setPrecioDeVenta(precioDeVenta);
+        p.setTipoDeCambio(tipoDeCambio);
+        p.setNombre(nombre);
+        p.setDisponible(disponible);
+        pb.actualizarProducto(p);
+        volverAtras();
 
-        Producto producto = new Producto(marca, talla, nombre, costoDeCompra, peso, costoDelPeso, costoTotal, precioDeVenta, tipoDeCambio, disponible);
-        if (producto != null) {
-            pb.guardarProducto(producto);
-            JOptionPane.showMessageDialog(null, " Producto creado con exito", "", WIDTH);
-        } else {
-            JOptionPane.showMessageDialog(null, " Producto no creado", "", WIDTH);
-        }
 
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
@@ -484,7 +488,15 @@ public class VentanaModificarProducto extends Fondo {
             evt.consume();
         }
     }//GEN-LAST:event_txtCostoDeCompraKeyTyped
-
+    public void volverAtras() {
+        this.setVisible(false);
+        frame.remove(this);
+        VentanaProductos i = new VentanaProductos(frame);
+        frame.getContentPane().add(i);
+        frame.setSize(603, 402);
+        i.setVisible(true);
+        i.setSize(603, 402);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrar;

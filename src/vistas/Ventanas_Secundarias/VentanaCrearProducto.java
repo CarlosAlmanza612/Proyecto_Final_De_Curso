@@ -321,8 +321,8 @@ public class VentanaCrearProducto extends Fondo {
                 Talla tP = tb.obtenerTalla(id);
                 Marca mP = mb.obtenerMarca(id_marca);
                 if (tP.getNombreTalla().equalsIgnoreCase(tallaNombre) && mP.getNombreMarca().equalsIgnoreCase(marcaNombre)) {
-                    if (u.getDisponible()) {
-                        noExiste = false;
+                    noExiste = false;
+                    if (u.getDisponible()) {                        
                         JOptionPane.showMessageDialog(null, "El Producto ya existe", "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
                         u.setDisponible(true);
