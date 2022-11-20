@@ -129,24 +129,29 @@ public class VentanaCrearCliente extends Fondo {
         String ciudad = comboCiudad.getSelectedItem().toString();
         ClienteBean cb = new ClienteBean();
         List listClientes = cb.listCliente(nombre);
-        boolean existe = false;
+        boolean noExiste = true;
         if (listClientes != null) {
             for (Iterator iterator = listClientes.iterator(); iterator.hasNext();) {
                 Cliente cl = (Cliente) iterator.next();
-                System.out.println(cl.getApellidos());
-                System.out.println(cl.getCiudad());
                 if (cl.getApellidos().equalsIgnoreCase(apellidos) && cl.getCiudad().equals(ciudad)) {
+                    noExiste = false;
                     if (cl.getDisponible()) {
-                        existe = true;
+                        JOptionPane.showMessageDialog(null, "El Cliente ya existe", "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
+                        cl.setDisponible(true);
+                        cb.actualizarCliente(cl);
                         JOptionPane.showMessageDialog(null, " Cualquiera creado con exito", "", WIDTH);
                     }
                 }
             }
-            if (existe) {
-                JOptionPane.showMessageDialog(null, " Usuario creado con exito", "", WIDTH);
+            if (noExiste) {
+                Cliente nuevo = new Cliente(nombre, apellidos, telefono, ciudad);
+                cb.guardarCliente(nuevo);
+                JOptionPane.showMessageDialog(null, " Cliente " + nuevo.getNombre() + " creado con exito", "", WIDTH);
             }
         } else {
+            Cliente nuevo = new Cliente(nombre, apellidos, telefono, ciudad);
+            cb.guardarCliente(nuevo);
             JOptionPane.showMessageDialog(null, " Cliente creado con exito", "", WIDTH);
         }
 

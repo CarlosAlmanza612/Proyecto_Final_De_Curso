@@ -6,12 +6,12 @@
 package vistas.Ventanas_Secundarias;
 
 import controladores.ClienteBean;
-import controladores.UsuarioBean;
-import modelos.Usuario;
+import controladores.TallaBean;
 import vistas.Fondo;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.Cliente;
 import vistas.VentanasPrincipales.VentanaAdmin;
@@ -27,7 +27,7 @@ public class VentanaClientes extends Fondo {
     public VentanaClientes(JFrame jframe) {
         initComponents();
         frame = jframe;
-        cargarProductos();
+        cargarClientes();
     }
 
     /**
@@ -41,9 +41,9 @@ public class VentanaClientes extends Fondo {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnVolverAtras = new javax.swing.JButton();
         btnRegistrar = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -58,17 +58,18 @@ public class VentanaClientes extends Fondo {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setPreferredSize(new java.awt.Dimension(400, 64));
         jScrollPane1.setViewportView(jTable1);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 64, 375, 191));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 64, 430, 191));
 
-        jButton1.setText("Volver Atras");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnVolverAtras.setText("Volver Atras");
+        btnVolverAtras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnVolverAtrasActionPerformed(evt);
             }
         });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, -1));
+        add(btnVolverAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, -1));
 
         btnRegistrar.setText("Registrar");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -78,11 +79,16 @@ public class VentanaClientes extends Fondo {
         });
         add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, -1, -1));
 
-        jButton4.setText("Eliminar");
-        add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, -1, -1));
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnVolverAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverAtrasActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         frame.remove(this);
@@ -91,7 +97,7 @@ public class VentanaClientes extends Fondo {
         frame.setSize(603, 402);
         i.setVisible(true);
         i.setSize(603, 402);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnVolverAtrasActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
 
@@ -105,31 +111,56 @@ public class VentanaClientes extends Fondo {
 
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
-    public void cargarProductos() {
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        String nombre;
+        nombre = JOptionPane.showInputDialog("Ingrese el codigo de la talla que desea eliminar");
+        if (nombre != null && !nombre.isEmpty()) {
+            if (nombre.matches("[0-9]*")) {
+                int codigo = Integer.parseInt(nombre);
+                ClienteBean t = new ClienteBean();
+                Cliente cl = t.obtenerCliente(codigo);
+                if (cl != null && cl.getDisponible()) {
+                    cl.setDisponible(false);
+                    t.actualizarCliente(cl);
+                    JOptionPane.showMessageDialog(null, "Talla Eliminada Correctamente");
+                    cargarClientes();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Codigo no existente, ingrese un codigo correcto", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese un codigo correcto", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+    public void cargarClientes() {
         ClienteBean op = new ClienteBean();
         List listUsuarios = op.listCliente();
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Codigo");
         modelo.addColumn("Nombre");
+        modelo.addColumn("Apellidos");
         modelo.addColumn("Telefono");
         modelo.addColumn("Ciudad");
-        Iterator it = listUsuarios.iterator();
-        while (it.hasNext()) {
-            Cliente u = (Cliente) it.next();
-            Object[] fila = new Object[4];
-            fila[0] = u.getCodCliente();
-            fila[1] = u.getNombre();
-            fila[2] = u.getTelefono();
-            fila[3] = u.getCiudad();
-            modelo.addRow(fila);
+        for (Iterator iterator = listUsuarios.iterator(); iterator.hasNext();) {
+            Cliente u = (Cliente) iterator.next();
+            if (u.getDisponible()) {
+                Object[] fila = new Object[5];
+                fila[0] = u.getCodCliente();
+                fila[1] = u.getNombre();
+                fila[2] = u.getApellidos();
+                fila[3] = u.getTelefono();
+                fila[4] = u.getCiudad();
+                modelo.addRow(fila);
+            }
         }
         jTable1.setModel(modelo);
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnRegistrar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnVolverAtras;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

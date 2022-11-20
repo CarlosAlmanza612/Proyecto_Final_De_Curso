@@ -11,7 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import modelos.Marca;
 import modelos.Producto;
 import modelos.Talla;
@@ -356,8 +355,6 @@ public class VentanaModificarProducto extends Fondo {
         p.setDisponible(disponible);
         pb.actualizarProducto(p);
         volverAtras();
-
-
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void checkDisponibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkDisponibleActionPerformed
