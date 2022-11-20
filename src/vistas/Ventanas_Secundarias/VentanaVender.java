@@ -5,33 +5,31 @@
  */
 package vistas.Ventanas_Secundarias;
 
-import controladores.ClienteBean;
+import controladores.MarcaBean;
 import controladores.ProductoBean;
-import controladores.VentaBean;
+import controladores.TallaBean;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import vistas.Fondo;
-import java.util.Iterator;
-import java.util.List;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelos.Cliente;
+import modelos.Marca;
 import modelos.Producto;
-import modelos.Venta;
+import modelos.Talla;
 import vistas.VentanasPrincipales.VentanaAdmin;
 
-public class VentanaVentas extends Fondo {
+public class VentanaVender extends Fondo {
 
     JFrame frame = new JFrame();
 
-    public VentanaVentas() {
+    public VentanaVender() {
         initComponents();
     }
 
-    public VentanaVentas(JFrame jframe) {
+    public VentanaVender(JFrame jframe, ArrayList carrito) {
         initComponents();
         frame = jframe;
-        cargarVentas();
+        cargarCarrito(carrito);
     }
 
     /**
@@ -110,34 +108,37 @@ public class VentanaVentas extends Fondo {
 
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
-    public void cargarVentas() {
+    public void cargarCarrito(ArrayList carrito) {
         DecimalFormat df = new DecimalFormat("#");
-        VentaBean vb = new VentaBean();
         ProductoBean pb = new ProductoBean();
-        ClienteBean cb = new ClienteBean();
+        TallaBean tb = new TallaBean();
+        MarcaBean mb = new MarcaBean();
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Codigo");
-        modelo.addColumn("Cod Producto");
-        modelo.addColumn("Cod Cliente");
+        modelo.addColumn("Producto");
         modelo.addColumn("Precio");
-        modelo.addColumn("Fecha");
-        List listVenta = vb.listVenta();
-        if (listVenta != null) {
-            for (Iterator iterator = listVenta.iterator(); iterator.hasNext();) {
-                Venta v = (Venta) iterator.next();
-                Producto p = v.getProducto();
-                Cliente cl = v.getCliente();
-                int id_Producto = p.getCodigo();
-                int id_Cliente = cl.getCodCliente();
-                Producto pN = pb.obtenerProducto(id_Producto);
-                Cliente clN = cb.obtenerCliente(id_Cliente);
-                if (clN != null) {
-                    JOptionPane.showMessageDialog(null, "Ingrese un Producto correcto", "Error", JOptionPane.ERROR_MESSAGE);
+        modelo.addColumn("Talla");
+        modelo.addColumn("Marca");
+        if (carrito != null) {
+            for (int i = 0; i < carrito.size(); i++) {
+                Producto p = pb.obtenerProducto(Integer.parseInt(carrito.get(i).toString()));
+                Talla t = p.getTalla();
+                Marca m = p.getMarca();
+                int id = t.getIdTalla();
+                int id_marca = m.getIdMarca();
+                Talla talla = tb.obtenerTalla(id);
+                Marca marca = mb.obtenerMarca(id_marca);
+                    Object[] fila = new Object[5];
+                    fila[0] = p.getCodigo();
+                    fila[1] = p.getNombre();
+                    fila[2] = p.getPrecioDeVenta();
+                    fila[3] = talla.getNombreTalla();
+                    fila[4] = marca.getNombreMarca();
+                    modelo.addRow(fila);
+                
 
-                } else {
-                    JOptionPane.showMessageDialog(null, "Ingrese un codigo correcto", "Error", JOptionPane.ERROR_MESSAGE);
-                }
             }
+
         }
         jTable1.setModel(modelo);
     }

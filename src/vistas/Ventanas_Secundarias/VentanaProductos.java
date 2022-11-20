@@ -166,7 +166,6 @@ public class VentanaProductos extends Fondo {
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         String dato = String.valueOf(dtm.getValueAt(jTable1.getSelectedRow(), 0));
         int id = Integer.parseInt(dato);
-
         VentanaModificarProducto productos = new VentanaModificarProducto(frame, id);
         frame.getContentPane().add(productos);
         frame.setSize(603, 402);
@@ -186,26 +185,26 @@ public class VentanaProductos extends Fondo {
         modelo.addColumn("Marca");
         modelo.addColumn("Precio");
         List listaProductos = op.listProducto();
-        for (Iterator iterator = listaProductos.iterator(); iterator.hasNext();) {
-            Producto p = (Producto) iterator.next();
-            Talla t = p.getTalla();
-            Marca m = p.getMarca();
-            int id = t.getIdTalla();
-            int id_marca = m.getIdMarca();
-            Talla talla = tb.obtenerTalla(id);
-            Marca marca = mb.obtenerMarca(id_marca);
-            if (p.getDisponible()) {
-                Object[] fila = new Object[5];
-                fila[0] = p.getCodigo();
-                fila[1] = p.getNombre();
-                fila[2] = talla.getNombreTalla();
-                fila[3] = marca.getNombreMarca();
-                fila[4] = df.format(p.getPrecioDeVenta());
-                modelo.addRow(fila);
+        if (listaProductos != null) {
+            for (Iterator iterator = listaProductos.iterator(); iterator.hasNext();) {
+                Producto p = (Producto) iterator.next();
+                Talla t = p.getTalla();
+                Marca m = p.getMarca();
+                int id = t.getIdTalla();
+                int id_marca = m.getIdMarca();
+                Talla talla = tb.obtenerTalla(id);
+                Marca marca = mb.obtenerMarca(id_marca);
+                if (p.getDisponible()) {
+                    Object[] fila = new Object[5];
+                    fila[0] = p.getCodigo();
+                    fila[1] = p.getNombre();
+                    fila[2] = talla.getNombreTalla();
+                    fila[3] = marca.getNombreMarca();
+                    fila[4] = df.format(p.getPrecioDeVenta());
+                    modelo.addRow(fila);
+                }
             }
-
         }
-
         jTable1.setModel(modelo);
     }
 

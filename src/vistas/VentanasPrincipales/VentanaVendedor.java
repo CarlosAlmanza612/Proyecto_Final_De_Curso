@@ -4,12 +4,22 @@
  */
 package vistas.VentanasPrincipales;
 
+import controladores.MarcaBean;
+import controladores.ProductoBean;
+import controladores.TallaBean;
+import controladores.VentaBean;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import modelos.Producto;
 import vistas.Fondo;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelos.Marca;
+import modelos.Talla;
+import modelos.Venta;
 
 /**
  *
@@ -18,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
 public class VentanaVendedor extends Fondo {
 
     JFrame frame = new JFrame();
+    ArrayList<Integer> carrito = new ArrayList();
 
     /**
      * Creates new form Venta
@@ -30,6 +41,9 @@ public class VentanaVendedor extends Fondo {
 
         initComponents();
         frame = jframe;
+        cargarProductos();
+        btnVender.setEnabled(false);
+
     }
 
     /**
@@ -45,8 +59,10 @@ public class VentanaVendedor extends Fondo {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         txtIdProducto = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnVender = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
+        btnCrearCliente = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 0, 102));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -70,6 +86,11 @@ public class VentanaVendedor extends Fondo {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, -1, 178));
@@ -85,10 +106,20 @@ public class VentanaVendedor extends Fondo {
                 txtIdProductoActionPerformed(evt);
             }
         });
+        txtIdProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIdProductoKeyTyped(evt);
+            }
+        });
         add(txtIdProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, -1, -1));
 
-        jButton1.setText("jButton1");
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 330, -1, -1));
+        btnVender.setText("Agregar al Carrito");
+        btnVender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVenderActionPerformed(evt);
+            }
+        });
+        add(btnVender, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, -1, -1));
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
         jLabel13.setFont(new java.awt.Font("Arial Black", 3, 18)); // NOI18N
@@ -99,9 +130,49 @@ public class VentanaVendedor extends Fondo {
         jLabel13.setMinimumSize(new java.awt.Dimension(623, 36));
         jLabel13.setPreferredSize(new java.awt.Dimension(643, 70));
         add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 300, 50));
+
+        btnCrearCliente.setText("Crear Cliente");
+        add(btnCrearCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 110, -1, -1));
+
+        jButton1.setText("Ir Al Carrito");
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 330, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        if (!txtIdProducto.getText().isEmpty() && txtIdProducto.getText() != null) {
+            DecimalFormat df = new DecimalFormat("#");
+            ProductoBean op = new ProductoBean();
+            TallaBean tb = new TallaBean();
+            MarcaBean mb = new MarcaBean();
+            Producto p = op.obtenerProducto(Integer.parseInt(txtIdProducto.getText()));
+            if (p != null) {
+                Talla t = p.getTalla();
+                Marca m = p.getMarca();
+                int id = t.getIdTalla();
+                int id_marca = m.getIdMarca();
+                DefaultTableModel modelo = new DefaultTableModel();
+                Talla talla = tb.obtenerTalla(id);
+                Marca marca = mb.obtenerMarca(id_marca);
+                modelo.addColumn("Codigo");
+                modelo.addColumn("Nombre");
+                modelo.addColumn("Talla");
+                modelo.addColumn("Marca");
+                modelo.addColumn("Precio");
+                if (p.getDisponible()) {
+                    Object[] fila = new Object[5];
+                    fila[0] = p.getCodigo();
+                    fila[1] = p.getNombre();
+                    fila[2] = talla.getNombreTalla();
+                    fila[3] = marca.getNombreMarca();
+                    fila[4] = df.format(p.getPrecioDeVenta());
+                    modelo.addRow(fila);
+                    jTable1.setModel(modelo);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "El Codigo no existe", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtIdProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdProductoActionPerformed
@@ -111,48 +182,72 @@ public class VentanaVendedor extends Fondo {
     private void txtIdProductoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdProductoFocusGained
         // TODO add your handling code here:
         txtIdProducto.setText("");
+
     }//GEN-LAST:event_txtIdProductoFocusGained
 
- /*   public void cargarTablaProductos() {
-        OperacionesCRUD op = new OperacionesCRUD();
-        List<Producto> productos = (List<Producto>) op.listProducto();
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        btnVender.setEnabled(true);
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void txtIdProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdProductoKeyTyped
+        int key = evt.getKeyChar();
+
+        boolean numeros = key >= 48 && key <= 57;
+
+        if (!numeros) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtIdProductoKeyTyped
+
+    private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        String dato = String.valueOf(dtm.getValueAt(jTable1.getSelectedRow(), 0));
+        int id = Integer.parseInt(dato);
+        if (!carrito.contains(id)) {
+            carrito.add(id);
+        }
+
+    }//GEN-LAST:event_btnVenderActionPerformed
+    public void cargarProductos() {
+        DecimalFormat df = new DecimalFormat("#");
+        ProductoBean op = new ProductoBean();
+        TallaBean tb = new TallaBean();
+        MarcaBean mb = new MarcaBean();
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Codigo");
         modelo.addColumn("Nombre");
         modelo.addColumn("Talla");
+        modelo.addColumn("Marca");
         modelo.addColumn("Precio");
-        Iterator it = productos.iterator();
-        while (it.hasNext()) {
-            Producto u = (Producto) it.next();
-            Object[] fila = new Object[3];
-            fila[0] = u.getCodigo();
-            fila[1] = u.getNombre();
-            fila[2] = u.getTalla();
-            fila[3] = u.getPrecioDeVenta();
-            modelo.addRow(fila);
+        List listaProductos = op.listProducto();
+        if (listaProductos != null) {
+            for (Iterator iterator = listaProductos.iterator(); iterator.hasNext();) {
+                Producto p = (Producto) iterator.next();
+                Talla t = p.getTalla();
+                Marca m = p.getMarca();
+                int id = t.getIdTalla();
+                int id_marca = m.getIdMarca();
+                Talla talla = tb.obtenerTalla(id);
+                Marca marca = mb.obtenerMarca(id_marca);
+                if (p.getDisponible()) {
+                    Object[] fila = new Object[5];
+                    fila[0] = p.getCodigo();
+                    fila[1] = p.getNombre();
+                    fila[2] = talla.getNombreTalla();
+                    fila[3] = marca.getNombreMarca();
+                    fila[4] = df.format(p.getPrecioDeVenta());
+                    modelo.addRow(fila);
+                }
+            }
         }
         jTable1.setModel(modelo);
-
     }
-/*        public void filtrarProducto(int id) {
-        OperacionesCRUD op = new OperacionesCRUD();
-        Producto producto =(Producto) op.obtenerProducto(id);
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Codigo");
-        modelo.addColumn("Nombre");
-        modelo.addColumn("Talla");
-        modelo.addColumn("Precio");
-            Object[] fila = new Object[3];
-            fila[0] = producto.getCodigo();
-            fila[1] = producto.getNombre();
-            fila[2] = producto.getTalla();
-            fila[3] = producto.getPrecioDeVenta();
-            modelo.addRow(fila);
-        jTable1.setModel(modelo);
 
-    }*/
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCrearCliente;
+    private javax.swing.JButton btnVender;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JScrollPane jScrollPane1;
