@@ -4,7 +4,6 @@
  */
 package vistas.VentanasPrincipales;
 
-import vistas.Ventanas_Secundarias.VentanaCrearUsuario;
 import javax.swing.JFrame;
 import vistas.Fondo;
 import vistas.Ventanas_Secundarias.VentanaClientes;

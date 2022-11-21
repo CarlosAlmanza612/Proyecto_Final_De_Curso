@@ -152,7 +152,7 @@ public class VentanaTallas extends Fondo {
             if (u.getDisponible()) {
                 Object[] fila = new Object[2];
                 fila[0] = u.getIdTalla();
-                fila[1] = u.getNombreTalla();
+                fila[1] = u.getNombreTalla().toUpperCase();
                 modelo.addRow(fila);
             }
         }

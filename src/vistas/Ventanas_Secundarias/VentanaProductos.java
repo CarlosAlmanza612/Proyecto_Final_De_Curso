@@ -197,9 +197,9 @@ public class VentanaProductos extends Fondo {
                 if (p.getDisponible()) {
                     Object[] fila = new Object[5];
                     fila[0] = p.getCodigo();
-                    fila[1] = p.getNombre();
-                    fila[2] = talla.getNombreTalla();
-                    fila[3] = marca.getNombreMarca();
+                    fila[1] = p.getNombre().toUpperCase();
+                    fila[2] = talla.getNombreTalla().toUpperCase();
+                    fila[3] = marca.getNombreMarca().toUpperCase();
                     fila[4] = df.format(p.getPrecioDeVenta());
                     modelo.addRow(fila);
                 }

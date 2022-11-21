@@ -5,22 +5,28 @@
  */
 package vistas.Ventanas_Secundarias;
 
+import controladores.ClienteBean;
 import controladores.MarcaBean;
 import controladores.ProductoBean;
 import controladores.TallaBean;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import vistas.Fondo;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
+import modelos.Cliente;
 import modelos.Marca;
 import modelos.Producto;
 import modelos.Talla;
-import vistas.VentanasPrincipales.VentanaAdmin;
+import vistas.VentanasPrincipales.VentanaVendedor;
 
 public class VentanaVender extends Fondo {
 
     JFrame frame = new JFrame();
+    ArrayList carrito;
+    int cantidadProductos = 0;
+    double precioTotal = 0;
 
     public VentanaVender() {
         initComponents();
@@ -29,7 +35,9 @@ public class VentanaVender extends Fondo {
     public VentanaVender(JFrame jframe, ArrayList carrito) {
         initComponents();
         frame = jframe;
+        this.carrito = carrito;
         cargarCarrito(carrito);
+        btnQuitar.setEnabled(false);
     }
 
     /**
@@ -44,8 +52,17 @@ public class VentanaVender extends Fondo {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
+        btnQuitar = new javax.swing.JButton();
         btnRegistrar = new javax.swing.JButton();
+        labelTotalProductos = new javax.swing.JLabel();
+        totalPrecios = new javax.swing.JLabel();
+        txtEnvio = new javax.swing.JTextField();
+        txtTotalPrecios = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        checkOnline = new javax.swing.JCheckBox();
+        totalPrecios1 = new javax.swing.JLabel();
+        txtTotalProductos = new javax.swing.JTextField();
+        txtCodCliente = new javax.swing.JTextField();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -60,9 +77,15 @@ public class VentanaVender extends Fondo {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 64, 375, 191));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 450, 191));
 
         jButton1.setText("Volver Atras");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -70,46 +93,156 @@ public class VentanaVender extends Fondo {
                 jButton1ActionPerformed(evt);
             }
         });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, -1, -1));
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, -1, -1));
 
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+        btnQuitar.setText("Quitar Del Carrito");
+        btnQuitar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
+                btnQuitarActionPerformed(evt);
             }
         });
-        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 270, -1, -1));
+        add(btnQuitar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 360, -1, -1));
 
-        btnRegistrar.setText("Registrar");
+        btnRegistrar.setText("Finaliza y Pagar");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarActionPerformed(evt);
             }
         });
-        add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 270, -1, -1));
+        add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 360, -1, -1));
+
+        labelTotalProductos.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        labelTotalProductos.setText("Cantidad de Productos");
+        add(labelTotalProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, -1, -1));
+
+        totalPrecios.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        totalPrecios.setText("Precio Total");
+        add(totalPrecios, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 330, -1, -1));
+
+        txtEnvio.setBackground(new java.awt.Color(153, 255, 255));
+        txtEnvio.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtEnvio.setEnabled(false);
+        txtEnvio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEnvioActionPerformed(evt);
+            }
+        });
+        add(txtEnvio, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, 70, -1));
+
+        txtTotalPrecios.setBackground(new java.awt.Color(153, 255, 255));
+        txtTotalPrecios.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtTotalPrecios.setEnabled(false);
+        add(txtTotalPrecios, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 330, 70, -1));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel2.setText("Cod Cliente");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, -1, -1));
+
+        checkOnline.setText("OnLine");
+        checkOnline.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkOnlineActionPerformed(evt);
+            }
+        });
+        add(checkOnline, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, -1, -1));
+
+        totalPrecios1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        totalPrecios1.setText("Costo de Envio");
+        add(totalPrecios1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 270, -1, -1));
+
+        txtTotalProductos.setBackground(new java.awt.Color(153, 255, 255));
+        txtTotalProductos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtTotalProductos.setEnabled(false);
+        add(txtTotalProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 300, 70, -1));
+
+        txtCodCliente.setBackground(new java.awt.Color(153, 255, 255));
+        txtCodCliente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtCodCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodClienteKeyTyped(evt);
+            }
+        });
+        add(txtCodCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, 50, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         frame.remove(this);
-        VentanaAdmin i = new VentanaAdmin(frame);
+        VentanaVendedor i = new VentanaVendedor(frame);
         frame.getContentPane().add(i);
         frame.setSize(603, 402);
         i.setVisible(true);
         i.setSize(603, 402);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-
-    }//GEN-LAST:event_btnEliminarActionPerformed
+    private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        String dato = String.valueOf(dtm.getValueAt(jTable1.getSelectedRow(), 0));
+        int id = Integer.parseInt(dato);
+        for (int i = 0; i < carrito.size(); i++) {
+            if (carrito.get(i).equals(id)) {
+                carrito.remove(i);
+            }
+        }
+        cantidadProductos = 0;
+        precioTotal = 0;
+        cargarCarrito(carrito);
+        if (carrito.isEmpty()) {
+            btnRegistrar.setEnabled(false);
+            btnQuitar.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnQuitarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        if (!txtCodCliente.getText().isEmpty() && txtCodCliente.getText() != null) {
+            ClienteBean cb = new ClienteBean();
+            if (cb.verificarCliente(Integer.parseInt(txtCodCliente.getText()))) {
+                Cliente cl = cb.obtenerCliente(Integer.parseInt(txtCodCliente.getText()));
+                for (int i = 0; i < modelo.getRowCount(); i++) {
+                    String dato = String.valueOf(modelo.getValueAt(i, 0));
+                    int id = Integer.parseInt(dato);
+                    System.out.println(id);
+                }
+
+            }
+        }
+
 
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
+    private void txtEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnvioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEnvioActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        btnQuitar.setEnabled(true);
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void checkOnlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOnlineActionPerformed
+        cantidadProductos = 0;
+        precioTotal = 0;
+        cargarCarrito(carrito);
+        if (checkOnline.isSelected() && (txtCodCliente.getText().isEmpty() || txtCodCliente.getText() == null)) {
+            btnRegistrar.setEnabled(false);
+        } else {
+            btnRegistrar.setEnabled(true);
+        }
+    }//GEN-LAST:event_checkOnlineActionPerformed
+
+    private void txtCodClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodClienteKeyTyped
+        int key = evt.getKeyChar();
+
+        boolean numeros = key >= 48 && key <= 57;
+
+        if (!numeros) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodClienteKeyTyped
+
     public void cargarCarrito(ArrayList carrito) {
-        DecimalFormat df = new DecimalFormat("#");
+        DecimalFormat df = new DecimalFormat("#.00");
         ProductoBean pb = new ProductoBean();
         TallaBean tb = new TallaBean();
         MarcaBean mb = new MarcaBean();
@@ -119,7 +252,7 @@ public class VentanaVender extends Fondo {
         modelo.addColumn("Precio");
         modelo.addColumn("Talla");
         modelo.addColumn("Marca");
-        if (carrito != null) {
+        if (carrito != null && !carrito.isEmpty()) {
             for (int i = 0; i < carrito.size(); i++) {
                 Producto p = pb.obtenerProducto(Integer.parseInt(carrito.get(i).toString()));
                 Talla t = p.getTalla();
@@ -128,27 +261,62 @@ public class VentanaVender extends Fondo {
                 int id_marca = m.getIdMarca();
                 Talla talla = tb.obtenerTalla(id);
                 Marca marca = mb.obtenerMarca(id_marca);
-                    Object[] fila = new Object[5];
-                    fila[0] = p.getCodigo();
-                    fila[1] = p.getNombre();
-                    fila[2] = p.getPrecioDeVenta();
-                    fila[3] = talla.getNombreTalla();
-                    fila[4] = marca.getNombreMarca();
-                    modelo.addRow(fila);
-                
-
+                precioTotal += p.getPrecioDeVenta();
+                cantidadProductos++;
+                Object[] fila = new Object[5];
+                fila[0] = p.getCodigo();
+                fila[1] = p.getNombre().toUpperCase();
+                fila[2] = df.format(p.getPrecioDeVenta());
+                fila[3] = talla.getNombreTalla().toUpperCase();
+                fila[4] = marca.getNombreMarca().toUpperCase();
+                modelo.addRow(fila);
             }
+            if (!txtCodCliente.getText().isEmpty() && txtCodCliente.getText() != null) {
 
+                if (checkOnline.isSelected()) {
+                    calcularEnvio();
+                } else {
+                    txtEnvio.setText("");
+                    txtTotalProductos.setText(String.valueOf(cantidadProductos));
+                    txtTotalPrecios.setText(String.format("%.1f", precioTotal));
+                }
+            } else {
+                txtEnvio.setText("");
+                txtTotalProductos.setText(String.valueOf(cantidadProductos));
+                txtTotalPrecios.setText(String.format("%.1f", precioTotal));
+            }
         }
         jTable1.setModel(modelo);
     }
 
+    public void calcularEnvio() {
+        if (cantidadProductos <= 2) {
+            txtEnvio.setText("10");
+            precioTotal += 10;
+            txtTotalPrecios.setText(String.format("%.1f", precioTotal));
+        } else if (cantidadProductos >= 5) {
+            txtEnvio.setText("0");
+        } else {
+            txtEnvio.setText("5");
+            precioTotal += 5;
+            txtTotalPrecios.setText(String.format("%.1f", precioTotal));
+        }
 
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnQuitar;
     private javax.swing.JButton btnRegistrar;
+    private javax.swing.JCheckBox checkOnline;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel labelTotalProductos;
+    private javax.swing.JLabel totalPrecios;
+    private javax.swing.JLabel totalPrecios1;
+    private javax.swing.JTextField txtCodCliente;
+    private javax.swing.JTextField txtEnvio;
+    private javax.swing.JTextField txtTotalPrecios;
+    private javax.swing.JTextField txtTotalProductos;
     // End of variables declaration//GEN-END:variables
 }

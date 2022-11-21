@@ -96,26 +96,27 @@ public class VentanaCrearUsuario extends Fondo {
         char[] arrayC = txtPass.getPassword();
         String password = new String(arrayC);
         boolean admin = checkAdmin.isSelected();
-        List listUsuario=ub.listUsuario(nombre);
-        if (listUsuario != null) {
+        List listUsuario = ub.listUsuario(nombre);
+        if (listUsuario != null&& !listUsuario.isEmpty()) {
             for (Iterator iterator = listUsuario.iterator(); iterator.hasNext();) {
                 Usuario u = (Usuario) iterator.next();
-                if (u.getUsuario().equalsIgnoreCase(nombre)&&u.getPassword().equalsIgnoreCase(password)) {
+                if (u.getUsuario().equalsIgnoreCase(nombre) && u.getPassword().equalsIgnoreCase(password)) {
                     if (u.getDisponible()) {
                         JOptionPane.showMessageDialog(null, "El Usuario ya existe", "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
                         u.setDisponible(true);
+                        u.setPassword(password);
                         ub.actualizarUsuario(u);
                         JOptionPane.showMessageDialog(null, " Usuario creado con exito", "", WIDTH);
                     }
                 }
             }
         } else {
-            {
-                Usuario usuario = new Usuario(nombre, password, admin);
-                ub.guardarUsuario(usuario);
-                JOptionPane.showMessageDialog(null, " Usuario creado con exito", "", WIDTH);
-            }
+
+            Usuario usuario = new Usuario(nombre, password, admin);
+            ub.guardarUsuario(usuario);
+            JOptionPane.showMessageDialog(null, " Usuario creado con exito", "", WIDTH);
+
         }
         txtUsuario.setText("");
         txtPass.setText("");

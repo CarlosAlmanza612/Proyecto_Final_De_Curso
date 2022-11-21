@@ -141,7 +141,7 @@ public class VentanaUsuarios extends Fondo {
             if (u.getDisponible()) {
                 Object[] fila = new Object[3];
                 fila[0] = u.getIdUsuario();
-                fila[1] = u.getUsuario();
+                fila[1] = u.getUsuario().toUpperCase();
                 fila[2] = u.getAdmin();
                 modelo.addRow(fila);
             }

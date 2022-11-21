@@ -47,7 +47,7 @@ public class VentanaCrearProducto extends Fondo {
         for (Iterator iterator = lisTallas.iterator(); iterator.hasNext();) {
             Talla u = (Talla) iterator.next();
             if (u.getDisponible()) {
-                dtm.addElement(u.getNombreTalla());
+                dtm.addElement(u.getNombreTalla().toUpperCase());
             }
         }
         listTalla.setModel(dtm);
@@ -61,7 +61,7 @@ public class VentanaCrearProducto extends Fondo {
         for (Iterator iterator = lisMarcas.iterator(); iterator.hasNext();) {
             Marca u = (Marca) iterator.next();
             if (u.getDisponible()) {
-                dtm.addElement(u.getNombreMarca());
+                dtm.addElement(u.getNombreMarca().toUpperCase());
             }
         }
         listMarca.setModel(dtm);

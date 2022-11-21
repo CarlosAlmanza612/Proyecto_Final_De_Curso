@@ -6,7 +6,6 @@
 package vistas.Ventanas_Secundarias;
 
 import controladores.ClienteBean;
-import controladores.TallaBean;
 import vistas.Fondo;
 import java.util.Iterator;
 import java.util.List;
@@ -146,10 +145,10 @@ public class VentanaClientes extends Fondo {
             if (u.getDisponible()) {
                 Object[] fila = new Object[5];
                 fila[0] = u.getCodCliente();
-                fila[1] = u.getNombre();
-                fila[2] = u.getApellidos();
+                fila[1] = u.getNombre().toUpperCase();
+                fila[2] = u.getApellidos().toUpperCase();
                 fila[3] = u.getTelefono();
-                fila[4] = u.getCiudad();
+                fila[4] = u.getCiudad().toUpperCase();
                 modelo.addRow(fila);
             }
         }

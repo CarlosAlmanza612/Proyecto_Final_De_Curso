@@ -6,9 +6,6 @@
 package vistas.Ventanas_Secundarias;
 
 import controladores.MarcaBean;
-import controladores.TallaBean;
-import controladores.UsuarioBean;
-import modelos.Usuario;
 import vistas.Fondo;
 import java.util.Iterator;
 import java.util.List;
@@ -16,7 +13,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.Marca;
-import modelos.Talla;
 import vistas.VentanasPrincipales.VentanaAdmin;
 
 public class VentanaMarcas extends Fondo {
@@ -156,7 +152,7 @@ public class VentanaMarcas extends Fondo {
             if (u.getDisponible()) {
                 Object[] fila = new Object[2];
                 fila[0] = u.getIdMarca();
-                fila[1] = u.getNombreMarca();
+                fila[1] = u.getNombreMarca().toUpperCase();
                 modelo.addRow(fila);
             }
         }

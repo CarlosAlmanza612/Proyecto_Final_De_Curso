@@ -13,7 +13,6 @@ import vistas.Fondo;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.Cliente;
 import modelos.Producto;
@@ -122,7 +121,7 @@ public class VentanaVentas extends Fondo {
         modelo.addColumn("Precio");
         modelo.addColumn("Fecha");
         List listVenta = vb.listVenta();
-        if (listVenta != null) {
+        if (listVenta != null && !listVenta.isEmpty()) {
             for (Iterator iterator = listVenta.iterator(); iterator.hasNext();) {
                 Venta v = (Venta) iterator.next();
                 Producto p = v.getProducto();
@@ -132,10 +131,21 @@ public class VentanaVentas extends Fondo {
                 Producto pN = pb.obtenerProducto(id_Producto);
                 Cliente clN = cb.obtenerCliente(id_Cliente);
                 if (clN != null) {
-                    JOptionPane.showMessageDialog(null, "Ingrese un Producto correcto", "Error", JOptionPane.ERROR_MESSAGE);
-
+                    Object[] fila = new Object[5];
+                    fila[0] = v.getCodVenta();
+                    fila[1] = pN.getCodigo();
+                    fila[2] = clN.getCodCliente();
+                    fila[3] = df.format(pN.getPrecioDeVenta());
+                    fila[4] = v.getFecha().toString();
+                    modelo.addRow(fila);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ingrese un codigo correcto", "Error", JOptionPane.ERROR_MESSAGE);
+                    Object[] fila = new Object[5];
+                    fila[0] = v.getCodVenta();
+                    fila[1] = pN.getCodigo();
+                    fila[2] = "";
+                    fila[3] = df.format(pN.getPrecioDeVenta());
+                    fila[4] = v.getFecha().toString();
+                    modelo.addRow(fila);
                 }
             }
         }

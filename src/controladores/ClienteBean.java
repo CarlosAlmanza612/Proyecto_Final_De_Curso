@@ -57,6 +57,20 @@ public class ClienteBean {
         return cliente;
     }
 
+    public boolean verificarCliente(int id) {
+        iniciarOperacion();
+        Cliente cliente = null;
+        cliente = (Cliente) session.get(Cliente.class, id);
+        if (cliente != null) {
+            terminarOperacion();
+            return true;
+        } else {
+            terminarOperacion();
+            return false;
+        }
+
+    }
+
     public Cliente buscarCliente(String nombre_Cliente) {
         Cliente cliente = null;
         iniciarOperacion();
@@ -72,10 +86,11 @@ public class ClienteBean {
         terminarOperacion();
         return listClientes;
     }
-        public List listCliente(String nombre) {
+
+    public List listCliente(String nombre) {
         List listClientes = null;
         iniciarOperacion();
-        listClientes = session.createQuery("from Cliente where nombre= '"+nombre+"'").list();
+        listClientes = session.createQuery("from Cliente where nombre= '" + nombre + "'").list();
         terminarOperacion();
         return listClientes;
     }
