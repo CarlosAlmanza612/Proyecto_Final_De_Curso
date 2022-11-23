@@ -21,19 +21,20 @@ public class Venta implements java.io.Serializable {
     }
 
     public Venta(Producto producto) {
+        this.producto=producto;
     }
 
     public Venta(Producto producto, Cliente cliente) {
+        this.producto=producto;
+        this.cliente = cliente;
     }
 
-    public Venta(Cliente cliente, Producto producto, Date fecha, Boolean online, String ciudad, Integer costoDeEnvio, Boolean estado) {
+    public Venta(Cliente cliente, Producto producto, Boolean online, String ciudad, Integer costoDeEnvio) {
         this.cliente = cliente;
         this.producto = producto;
-        this.fecha = fecha;
         this.online = online;
         this.ciudad = ciudad;
         this.costoDeEnvio = costoDeEnvio;
-        this.estado = estado;
     }
 
     public Integer getCodVenta() {

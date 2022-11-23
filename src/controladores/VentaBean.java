@@ -5,6 +5,9 @@
  */
 package controladores;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import modelos.Venta;
 import org.hibernate.Session;
@@ -18,7 +21,8 @@ import org.hibernate.cfg.AnnotationConfiguration;
 public class VentaBean {
 
     private Session session;
-
+    private final ZoneId defaultZoneId = ZoneId.systemDefault();
+    LocalDate localDate = LocalDate.now();    
     private void iniciarOperacion() {
         SessionFactory sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
         session = sessionFactory.openSession();
@@ -32,13 +36,8 @@ public class VentaBean {
 
     public void guardarVenta(Venta venta) {
         iniciarOperacion();
+        venta.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
         session.save(venta);
-        terminarOperacion();
-    }
-
-    public void actualizarVenta(Venta venta) {
-        iniciarOperacion();
-        session.update(venta);
         terminarOperacion();
     }
 

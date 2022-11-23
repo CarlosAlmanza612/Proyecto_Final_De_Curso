@@ -9,16 +9,18 @@ import controladores.ClienteBean;
 import controladores.MarcaBean;
 import controladores.ProductoBean;
 import controladores.TallaBean;
+import controladores.VentaBean;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
 import vistas.Fondo;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.Cliente;
 import modelos.Marca;
 import modelos.Producto;
 import modelos.Talla;
+import modelos.Venta;
 import vistas.VentanasPrincipales.VentanaVendedor;
 
 public class VentanaVender extends Fondo {
@@ -37,7 +39,9 @@ public class VentanaVender extends Fondo {
         frame = jframe;
         this.carrito = carrito;
         cargarCarrito(carrito);
+        cargarComboBox();
         btnQuitar.setEnabled(false);
+        comboCiudad.setEnabled(false);
     }
 
     /**
@@ -63,6 +67,8 @@ public class VentanaVender extends Fondo {
         totalPrecios1 = new javax.swing.JLabel();
         txtTotalProductos = new javax.swing.JTextField();
         txtCodCliente = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        comboCiudad = new javax.swing.JComboBox<>();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -121,22 +127,20 @@ public class VentanaVender extends Fondo {
 
         txtEnvio.setBackground(new java.awt.Color(153, 255, 255));
         txtEnvio.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtEnvio.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtEnvio.setEnabled(false);
-        txtEnvio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEnvioActionPerformed(evt);
-            }
-        });
+        txtEnvio.setSelectedTextColor(new java.awt.Color(255, 0, 0));
         add(txtEnvio, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, 70, -1));
 
         txtTotalPrecios.setBackground(new java.awt.Color(153, 255, 255));
         txtTotalPrecios.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtTotalPrecios.setDisabledTextColor(new java.awt.Color(255, 0, 0));
         txtTotalPrecios.setEnabled(false);
         add(txtTotalPrecios, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 330, 70, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel2.setText("Cod Cliente");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, -1, -1));
+        jLabel2.setText("Ciudad");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, -1, -1));
 
         checkOnline.setText("OnLine");
         checkOnline.addActionListener(new java.awt.event.ActionListener() {
@@ -144,7 +148,7 @@ public class VentanaVender extends Fondo {
                 checkOnlineActionPerformed(evt);
             }
         });
-        add(checkOnline, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, -1, -1));
+        add(checkOnline, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 270, -1, -1));
 
         totalPrecios1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         totalPrecios1.setText("Costo de Envio");
@@ -152,6 +156,7 @@ public class VentanaVender extends Fondo {
 
         txtTotalProductos.setBackground(new java.awt.Color(153, 255, 255));
         txtTotalProductos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtTotalProductos.setDisabledTextColor(new java.awt.Color(255, 0, 0));
         txtTotalProductos.setEnabled(false);
         add(txtTotalProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 300, 70, -1));
 
@@ -163,6 +168,13 @@ public class VentanaVender extends Fondo {
             }
         });
         add(txtCodCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, 50, -1));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel3.setText("Cod Cliente");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, -1, -1));
+
+        comboCiudad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        add(comboCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 310, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -196,25 +208,52 @@ public class VentanaVender extends Fondo {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        VentaBean vb = new VentaBean();
+        ProductoBean pb = new ProductoBean();
+        ClienteBean cb = new ClienteBean();
         if (!txtCodCliente.getText().isEmpty() && txtCodCliente.getText() != null) {
-            ClienteBean cb = new ClienteBean();
             if (cb.verificarCliente(Integer.parseInt(txtCodCliente.getText()))) {
                 Cliente cl = cb.obtenerCliente(Integer.parseInt(txtCodCliente.getText()));
-                for (int i = 0; i < modelo.getRowCount(); i++) {
-                    String dato = String.valueOf(modelo.getValueAt(i, 0));
-                    int id = Integer.parseInt(dato);
-                    System.out.println(id);
+                if (checkOnline.isSelected()) {
+                    boolean isOnline = checkOnline.isSelected();
+                    int costoEnvio = Integer.parseInt(txtEnvio.getText());
+                    String ciudad = comboCiudad.getSelectedItem().toString();
+                    for (int i = 0; i < modelo.getRowCount(); i++) {
+                        String dato = String.valueOf(modelo.getValueAt(i, 0));
+                        int id = Integer.parseInt(dato);
+                        Producto p = pb.obtenerProducto(id);
+                        Venta v = new Venta(cl, p, isOnline, ciudad, costoEnvio);
+                        vb.guardarVenta(v);
+                        p.setDisponible(false);
+                        pb.actualizarProducto(p);
+                    }
+                } else {
+                    for (int i = 0; i < modelo.getRowCount(); i++) {
+                        String codProducto = String.valueOf(modelo.getValueAt(i, 0));
+                        int id = Integer.parseInt(codProducto);
+                        Producto p = pb.obtenerProducto(id);
+                        Venta v = new Venta(p, cl);
+                        vb.guardarVenta(v);
+                        p.setDisponible(false);
+                        pb.actualizarProducto(p);
+                    }
                 }
-
+            }
+        } else {
+            for (int i = 0; i < modelo.getRowCount(); i++) {
+                String codProducto = String.valueOf(modelo.getValueAt(i, 0));
+                int id = Integer.parseInt(codProducto);
+                Producto p = pb.obtenerProducto(id);
+                Venta v = new Venta(p);
+                vb.guardarVenta(v);
+                p.setDisponible(false);
+                pb.actualizarProducto(p);
             }
         }
-
+        JOptionPane.showMessageDialog(null, "Venta Realizada Correctamente");
+        ventaFinalizada();
 
     }//GEN-LAST:event_btnRegistrarActionPerformed
-
-    private void txtEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnvioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEnvioActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         btnQuitar.setEnabled(true);
@@ -223,12 +262,21 @@ public class VentanaVender extends Fondo {
     private void checkOnlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOnlineActionPerformed
         cantidadProductos = 0;
         precioTotal = 0;
-        cargarCarrito(carrito);
-        if (checkOnline.isSelected() && (txtCodCliente.getText().isEmpty() || txtCodCliente.getText() == null)) {
-            btnRegistrar.setEnabled(false);
+
+        if (checkOnline.isSelected()) {
+            if ((!txtCodCliente.getText().isEmpty() && txtCodCliente.getText() != null)) {
+                btnRegistrar.setEnabled(true);
+                cargarCarrito(carrito);
+            } else {
+                btnRegistrar.setEnabled(false);
+            }
+            comboCiudad.setEnabled(true);
         } else {
             btnRegistrar.setEnabled(true);
+            comboCiudad.setEnabled(false);
+            cargarCarrito(carrito);
         }
+
     }//GEN-LAST:event_checkOnlineActionPerformed
 
     private void txtCodClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodClienteKeyTyped
@@ -303,12 +351,36 @@ public class VentanaVender extends Fondo {
         }
 
     }
+
+    public void cargarComboBox() {
+        comboCiudad.removeAllItems();
+        comboCiudad.addItem("Pando");
+        comboCiudad.addItem("Beni");
+        comboCiudad.addItem("Potosi");
+        comboCiudad.addItem("Santa Cruz");
+        comboCiudad.addItem("Oruro");
+        comboCiudad.addItem("La Paz");
+        comboCiudad.addItem("Sucre");
+        comboCiudad.addItem("Tarija");
+    }
+
+    public void ventaFinalizada() {
+        this.setVisible(false);
+        frame.remove(this);
+        VentanaVendedor vd = new VentanaVendedor(frame);
+        frame.getContentPane().add(vd);
+        frame.setSize(603, 425);
+        vd.setVisible(true);
+        vd.setSize(603, 425);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnQuitar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JCheckBox checkOnline;
+    private javax.swing.JComboBox<String> comboCiudad;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelTotalProductos;

@@ -46,7 +46,7 @@ public class VentanaAdmin extends Fondo {
         btnClientes = new javax.swing.JButton();
         btnTallas = new javax.swing.JButton();
         btnMarcas = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         java.awt.GridBagLayout layout = new java.awt.GridBagLayout();
@@ -127,17 +127,17 @@ public class VentanaAdmin extends Fondo {
         gridBagConstraints.gridy = 4;
         add(btnMarcas, gridBagConstraints);
 
-        jButton8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton8.setText("Salir");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        btnSalir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                btnSalirActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 10;
-        add(jButton8, gridBagConstraints);
+        add(btnSalir, gridBagConstraints);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/admin.png"))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -146,10 +146,15 @@ public class VentanaAdmin extends Fondo {
         add(jLabel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_jButton8ActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.setVisible(false);
+        frame.remove(this);
+        Login i = new Login(frame);
+        frame.getContentPane().add(i);
+        frame.setSize(300, 300);
+        i.setVisible(true);
+        i.setSize(300, 300);
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
         // TODO add your handling code here:
@@ -201,9 +206,9 @@ public class VentanaAdmin extends Fondo {
         frame.remove(this);
         VentanaVentas usuario = new VentanaVentas(frame);
         frame.getContentPane().add(usuario);
-        frame.setSize(603, 402);
+        frame.setSize(623, 402);
         usuario.setVisible(true);
-        usuario.setSize(603, 402);
+        usuario.setSize(623, 402);
     }//GEN-LAST:event_btnVentasActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
@@ -222,10 +227,10 @@ public class VentanaAdmin extends Fondo {
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnMarcas;
     private javax.swing.JButton btnProductos;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnTallas;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JButton btnVentas;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

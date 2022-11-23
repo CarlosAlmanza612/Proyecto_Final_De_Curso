@@ -88,7 +88,6 @@ public class VentanaClientes extends Fondo {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVolverAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverAtrasActionPerformed
-        // TODO add your handling code here:
         this.setVisible(false);
         frame.remove(this);
         VentanaAdmin i = new VentanaAdmin(frame);

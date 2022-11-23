@@ -63,7 +63,7 @@ public class VentanaVentas extends Fondo {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 64, 375, 191));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 64, 440, 191));
 
         jButton1.setText("Volver Atras");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -125,12 +125,14 @@ public class VentanaVentas extends Fondo {
             for (Iterator iterator = listVenta.iterator(); iterator.hasNext();) {
                 Venta v = (Venta) iterator.next();
                 Producto p = v.getProducto();
-                Cliente cl = v.getCliente();
+
                 int id_Producto = p.getCodigo();
-                int id_Cliente = cl.getCodCliente();
+
                 Producto pN = pb.obtenerProducto(id_Producto);
-                Cliente clN = cb.obtenerCliente(id_Cliente);
-                if (clN != null) {
+                Cliente cl = v.getCliente();
+                if (cl != null) {
+                    int id_Cliente = cl.getCodCliente();
+                    Cliente clN = cb.obtenerCliente(id_Cliente);
                     Object[] fila = new Object[5];
                     fila[0] = v.getCodVenta();
                     fila[1] = pN.getCodigo();
@@ -142,7 +144,7 @@ public class VentanaVentas extends Fondo {
                     Object[] fila = new Object[5];
                     fila[0] = v.getCodVenta();
                     fila[1] = pN.getCodigo();
-                    fila[2] = "";
+                    fila[2] = "---";
                     fila[3] = df.format(pN.getPrecioDeVenta());
                     fila[4] = v.getFecha().toString();
                     modelo.addRow(fila);
