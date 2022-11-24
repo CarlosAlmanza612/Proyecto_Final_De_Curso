@@ -51,6 +51,8 @@ public class VentanaProductos extends Fondo {
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        txtCodProducto = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -72,7 +74,7 @@ public class VentanaProductos extends Fondo {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 64, 375, 191));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 375, 160));
 
         btnVolverAtras.setText("Volver Atras");
         btnVolverAtras.addActionListener(new java.awt.event.ActionListener() {
@@ -107,7 +109,35 @@ public class VentanaProductos extends Fondo {
         add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(307, 266, -1, -1));
 
         jButton5.setText("Buscar Producto");
-        add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 35, -1, -1));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 110, -1));
+
+        txtCodProducto.setText("Ingrese el codigo");
+        txtCodProducto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCodProductoFocusGained(evt);
+            }
+        });
+        txtCodProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodProductoKeyTyped(evt);
+            }
+        });
+        add(txtCodProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, -1, -1));
+
+        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel13.setFont(new java.awt.Font("Arial Black", 3, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("Lista de Productos");
+        jLabel13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel13.setMinimumSize(new java.awt.Dimension(623, 36));
+        jLabel13.setPreferredSize(new java.awt.Dimension(643, 70));
+        add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 300, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVolverAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverAtrasActionPerformed
@@ -127,13 +157,14 @@ public class VentanaProductos extends Fondo {
         frame.remove(this);
         VentanaCrearProducto productos = new VentanaCrearProducto(frame);
         frame.getContentPane().add(productos);
-        frame.setSize(603, 402);
+        frame.setSize(623, 402);
         productos.setVisible(true);
-        productos.setSize(603, 402);
+        productos.setSize(623, 402);
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         String nombre;
+        
         nombre = JOptionPane.showInputDialog("Ingrese el codigo del Producto que desea eliminar");
         if (nombre != null && !nombre.isEmpty()) {
             if (nombre.matches("[0-9]*")) {
@@ -168,10 +199,70 @@ public class VentanaProductos extends Fondo {
         int id = Integer.parseInt(dato);
         VentanaModificarProducto productos = new VentanaModificarProducto(frame, id);
         frame.getContentPane().add(productos);
-        frame.setSize(603, 402);
+        frame.setSize(623, 402);
         productos.setVisible(true);
-        productos.setSize(603, 402);
+        productos.setSize(623, 402);
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        if (!txtCodProducto.getText().equalsIgnoreCase("Ingrese el codigo")) {
+            if (!txtCodProducto.getText().isEmpty() && txtCodProducto.getText() != null) {
+                DecimalFormat df = new DecimalFormat("#");
+                ProductoBean op = new ProductoBean();
+                TallaBean tb = new TallaBean();
+                MarcaBean mb = new MarcaBean();
+                Producto p = op.obtenerProducto(Integer.parseInt(txtCodProducto.getText()));
+                if (p != null && p.getDisponible()) {
+                    Talla t = p.getTalla();
+                    Marca m = p.getMarca();
+                    int id = t.getIdTalla();
+                    int id_marca = m.getIdMarca();
+                    DefaultTableModel modelo = new DefaultTableModel();
+                    Talla talla = tb.obtenerTalla(id);
+                    Marca marca = mb.obtenerMarca(id_marca);
+                    modelo.addColumn("Codigo");
+                    modelo.addColumn("Nombre");
+                    modelo.addColumn("Talla");
+                    modelo.addColumn("Marca");
+                    modelo.addColumn("Precio");
+                    if (p.getDisponible()) {
+                        Object[] fila = new Object[5];
+                        fila[0] = p.getCodigo();
+                        fila[1] = p.getNombre().toUpperCase();
+                        fila[2] = talla.getNombreTalla().toUpperCase();
+                        fila[3] = marca.getNombreMarca().toUpperCase();
+                        fila[4] = df.format(p.getPrecioDeVenta());
+                        modelo.addRow(fila);
+                        jTable1.setModel(modelo);
+                    }
+                } else {
+                    cargarProductos();
+                    JOptionPane.showMessageDialog(null, "El Codigo no existe", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            } else {
+                cargarProductos();
+            }
+            txtCodProducto.setText("Ingrese el codigo");
+        }else{
+            cargarProductos();
+        }
+
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void txtCodProductoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodProductoFocusGained
+        txtCodProducto.setText("");
+    }//GEN-LAST:event_txtCodProductoFocusGained
+
+    private void txtCodProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodProductoKeyTyped
+        int key = evt.getKeyChar();
+
+        boolean numeros = key >= 48 && key <= 57;
+
+        if (!numeros) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodProductoKeyTyped
 
     public void cargarProductos() {
         DecimalFormat df = new DecimalFormat("#");
@@ -214,7 +305,9 @@ public class VentanaProductos extends Fondo {
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnVolverAtras;
     private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField txtCodProducto;
     // End of variables declaration//GEN-END:variables
 }

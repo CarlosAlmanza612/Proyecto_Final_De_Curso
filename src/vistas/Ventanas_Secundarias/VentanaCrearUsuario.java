@@ -50,6 +50,7 @@ public class VentanaCrearUsuario extends Fondo {
         jLabel2 = new javax.swing.JLabel();
         txtPass = new javax.swing.JPasswordField();
         jButton2 = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -88,6 +89,16 @@ public class VentanaCrearUsuario extends Fondo {
             }
         });
         add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
+
+        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel13.setFont(new java.awt.Font("Arial Black", 3, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("Registro de Usuario");
+        jLabel13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel13.setMinimumSize(new java.awt.Dimension(623, 36));
+        jLabel13.setPreferredSize(new java.awt.Dimension(643, 70));
+        add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 300, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUsuarioActionPerformed
@@ -153,6 +164,7 @@ public class VentanaCrearUsuario extends Fondo {
     private javax.swing.JCheckBox checkAdmin;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUsuario;

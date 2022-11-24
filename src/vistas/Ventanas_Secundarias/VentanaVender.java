@@ -69,6 +69,7 @@ public class VentanaVender extends Fondo {
         txtCodCliente = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         comboCiudad = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -175,6 +176,16 @@ public class VentanaVender extends Fondo {
 
         comboCiudad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         add(comboCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 310, -1, -1));
+
+        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel13.setFont(new java.awt.Font("Arial Black", 3, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("Factura-Proforma");
+        jLabel13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel13.setMinimumSize(new java.awt.Dimension(623, 36));
+        jLabel13.setPreferredSize(new java.awt.Dimension(643, 70));
+        add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 310, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -379,6 +390,7 @@ public class VentanaVender extends Fondo {
     private javax.swing.JCheckBox checkOnline;
     private javax.swing.JComboBox<String> comboCiudad;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;

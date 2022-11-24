@@ -45,6 +45,7 @@ public class VentanaUsuarios extends Fondo {
         jButton1 = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnRegistrar = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -61,7 +62,7 @@ public class VentanaUsuarios extends Fondo {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 64, 375, 191));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 375, 191));
 
         jButton1.setText("Volver Atras");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -69,7 +70,7 @@ public class VentanaUsuarios extends Fondo {
                 jButton1ActionPerformed(evt);
             }
         });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, -1, -1));
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 270, -1, -1));
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -77,7 +78,7 @@ public class VentanaUsuarios extends Fondo {
                 btnEliminarActionPerformed(evt);
             }
         });
-        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 270, -1, -1));
+        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 270, -1, -1));
 
         btnRegistrar.setText("Registrar");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -85,7 +86,17 @@ public class VentanaUsuarios extends Fondo {
                 btnRegistrarActionPerformed(evt);
             }
         });
-        add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 270, -1, -1));
+        add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 270, -1, -1));
+
+        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel13.setFont(new java.awt.Font("Arial Black", 3, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("Lista de Usuarios");
+        jLabel13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel13.setMinimumSize(new java.awt.Dimension(623, 36));
+        jLabel13.setPreferredSize(new java.awt.Dimension(643, 70));
+        add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 300, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -153,6 +164,7 @@ public class VentanaUsuarios extends Fondo {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

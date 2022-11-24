@@ -54,6 +54,7 @@ public class VentanaCrearCliente extends Fondo {
         comboCiudad = new javax.swing.JComboBox<>();
         txtUsuario1 = new javax.swing.JTextField();
         txtApellidos1 = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -120,6 +121,16 @@ public class VentanaCrearCliente extends Fondo {
             }
         });
         add(txtApellidos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 80, -1));
+
+        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel13.setFont(new java.awt.Font("Arial Black", 3, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("Registro de Clientes");
+        jLabel13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel13.setMinimumSize(new java.awt.Dimension(623, 36));
+        jLabel13.setPreferredSize(new java.awt.Dimension(643, 70));
+        add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 300, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearClienteActionPerformed
@@ -219,6 +230,7 @@ public class VentanaCrearCliente extends Fondo {
     private javax.swing.JComboBox<String> comboCiudad;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

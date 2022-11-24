@@ -304,7 +304,7 @@
           <Color blue="33" green="33" red="33" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Registro de Producto"/>
+        <Property name="text" type="java.lang.String" value="Modificar Producto"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[623, 36]"/>

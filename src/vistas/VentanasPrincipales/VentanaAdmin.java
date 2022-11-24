@@ -162,9 +162,9 @@ public class VentanaAdmin extends Fondo {
         frame.remove(this);
         VentanaUsuarios usuario = new VentanaUsuarios(frame);
         frame.getContentPane().add(usuario);
-        frame.setSize(603, 402);
+        frame.setSize(503, 402);
         usuario.setVisible(true);
-        usuario.setSize(603, 402);
+        usuario.setSize(503, 402);
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void btnMarcasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarcasActionPerformed
@@ -173,9 +173,9 @@ public class VentanaAdmin extends Fondo {
         frame.remove(this);
         VentanaMarcas usuario = new VentanaMarcas(frame);
         frame.getContentPane().add(usuario);
-        frame.setSize(603, 402);
+        frame.setSize(503, 402);
         usuario.setVisible(true);
-        usuario.setSize(603, 402);
+        usuario.setSize(503, 402);
     }//GEN-LAST:event_btnMarcasActionPerformed
 
     private void btnTallasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTallasActionPerformed
@@ -184,9 +184,9 @@ public class VentanaAdmin extends Fondo {
         frame.remove(this);
         VentanaTallas usuario = new VentanaTallas(frame);
         frame.getContentPane().add(usuario);
-        frame.setSize(603, 402);
+        frame.setSize(503, 402);
         usuario.setVisible(true);
-        usuario.setSize(603, 402);
+        usuario.setSize(503, 402);
     }//GEN-LAST:event_btnTallasActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
@@ -195,9 +195,9 @@ public class VentanaAdmin extends Fondo {
         frame.remove(this);
         VentanaClientes usuario = new VentanaClientes(frame);
         frame.getContentPane().add(usuario);
-        frame.setSize(603, 402);
+        frame.setSize(533, 402);
         usuario.setVisible(true);
-        usuario.setSize(603, 402);
+        usuario.setSize(533, 402);
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
@@ -206,9 +206,9 @@ public class VentanaAdmin extends Fondo {
         frame.remove(this);
         VentanaVentas usuario = new VentanaVentas(frame);
         frame.getContentPane().add(usuario);
-        frame.setSize(623, 402);
+        frame.setSize(523, 402);
         usuario.setVisible(true);
-        usuario.setSize(623, 402);
+        usuario.setSize(523, 402);
     }//GEN-LAST:event_btnVentasActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
@@ -217,9 +217,9 @@ public class VentanaAdmin extends Fondo {
         frame.remove(this);
         VentanaProductos productos = new VentanaProductos(frame);
         frame.getContentPane().add(productos);
-        frame.setSize(603, 402);
+        frame.setSize(503, 402);
         productos.setVisible(true);
-        productos.setSize(603, 402);
+        productos.setSize(503, 402);
     }//GEN-LAST:event_btnProductosActionPerformed
 
 

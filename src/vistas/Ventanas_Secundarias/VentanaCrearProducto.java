@@ -12,7 +12,6 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import modelos.Marca;
 import modelos.Producto;
 import modelos.Talla;
@@ -328,7 +327,7 @@ public class VentanaCrearProducto extends Fondo {
                         u.setDisponible(true);
                         pb.actualizarProducto(u);
                         resetForm();
-                        JOptionPane.showMessageDialog(null, " Producto Creado con exito", "", WIDTH);
+                        JOptionPane.showMessageDialog(null, " Producto creado con exito", "", WIDTH);
                     }
                 }
             }
@@ -336,7 +335,7 @@ public class VentanaCrearProducto extends Fondo {
                 Producto producto = new Producto(marca, talla, nombre, costoDeCompra, peso, costoDelPeso, costoTotal, precioDeVenta, tipoDeCambio, disponible);
                 pb.guardarProducto(producto);
                 resetForm();
-                JOptionPane.showMessageDialog(null, " Producto kreado con exito", "", WIDTH);
+                JOptionPane.showMessageDialog(null, " Producto creado con exito", "", WIDTH);
             }
         } else {
             Producto producto = new Producto(marca, talla, nombre, costoDeCompra, peso, costoDelPeso, costoTotal, precioDeVenta, tipoDeCambio, disponible);

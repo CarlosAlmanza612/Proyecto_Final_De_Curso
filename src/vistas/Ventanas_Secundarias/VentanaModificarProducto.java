@@ -257,7 +257,7 @@ public class VentanaModificarProducto extends Fondo {
         jLabel13.setFont(new java.awt.Font("Arial Black", 3, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(51, 51, 51));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("Registro de Producto");
+        jLabel13.setText("Modificar Producto");
         jLabel13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel13.setMinimumSize(new java.awt.Dimension(623, 36));
         jLabel13.setPreferredSize(new java.awt.Dimension(643, 70));
@@ -368,7 +368,6 @@ public class VentanaModificarProducto extends Fondo {
     private void txtPesoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPesoFocusLost
         // TODO add your handling code here:
         if (!txtPeso.getText().isEmpty()) {
-
             double peso = Double.parseDouble(txtPeso.getText());
             double costoDelPeso = (peso * 0.001) * 16;
             txtCostoDelPeso.setText(String.valueOf(costoDelPeso));
@@ -458,6 +457,20 @@ public class VentanaModificarProducto extends Fondo {
 
     private void txtTipoDeCambioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoDeCambioFocusLost
         // TODO add your handling code here:
+        if (!txtPeso.getText().isEmpty()) {
+            double peso = Double.parseDouble(txtPeso.getText());
+            double costoDelPeso = (peso * 0.001) * 16;
+            txtCostoDelPeso.setText(String.valueOf(costoDelPeso));
+        }
+        if (!txtCostoDeCompra.getText().isEmpty()) {
+            double costoPeso = Double.parseDouble(txtCostoDelPeso.getText());
+            double costoCompra = Double.parseDouble(txtCostoDeCompra.getText());
+            double tipoDeCambio = Double.parseDouble(txtTipoDeCambio.getText());
+            double costoTotal = tipoDeCambio * (costoPeso + costoCompra);
+            txtCostoTotal.setText(String.valueOf(costoTotal));
+            double precioDeVenta = costoTotal * 1.5;
+            txtPrecioDeVenta.setText(String.valueOf(precioDeVenta));
+        }
         habilitarBotonRegistrar();
     }//GEN-LAST:event_txtTipoDeCambioFocusLost
 
