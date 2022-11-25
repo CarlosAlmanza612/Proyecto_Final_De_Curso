@@ -8,19 +8,23 @@ package vistas.Ventanas_Secundarias;
 import controladores.ClienteBean;
 import controladores.ProductoBean;
 import controladores.VentaBean;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
 import vistas.Fondo;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.Cliente;
 import modelos.Producto;
 import modelos.Venta;
+import reports.CrearInforme;
 import vistas.VentanasPrincipales.VentanaAdmin;
 
 public class VentanaVentas extends Fondo {
@@ -57,7 +61,7 @@ public class VentanaVentas extends Fondo {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnInformeFecha = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -91,7 +95,7 @@ public class VentanaVentas extends Fondo {
                 btnResetActionPerformed(evt);
             }
         });
-        add(btnReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, -1, -1));
+        add(btnReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, -1, -1));
 
         btnFiltrar.setText("Filtrar");
         btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
@@ -99,7 +103,7 @@ public class VentanaVentas extends Fondo {
                 btnFiltrarActionPerformed(evt);
             }
         });
-        add(btnFiltrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 310, -1, -1));
+        add(btnFiltrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 310, -1, -1));
 
         codProducto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -131,8 +135,13 @@ public class VentanaVentas extends Fondo {
         jLabel3.setText("Fecha");
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, -1, -1));
 
-        jButton2.setText("Informe");
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 310, -1, -1));
+        btnInformeFecha.setText("Informe por Fecha");
+        btnInformeFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInformeFechaActionPerformed(evt);
+            }
+        });
+        add(btnInformeFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 310, -1, -1));
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
         jLabel13.setFont(new java.awt.Font("Arial Black", 3, 18)); // NOI18N
@@ -206,11 +215,6 @@ public class VentanaVentas extends Fondo {
                 }
             }
         }
-
-        /* 
-            JOptionPane.showMessageDialog(null, listVentas.size());
-        }*/
-
     }//GEN-LAST:event_btnFiltrarActionPerformed
 
     private void codProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codProductoKeyTyped
@@ -232,6 +236,23 @@ public class VentanaVentas extends Fondo {
             evt.consume();
         }
     }//GEN-LAST:event_codClienteKeyTyped
+
+    private void btnInformeFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeFechaActionPerformed
+        if (chooseFecha.getDate() != null) {
+            Date date = chooseFecha.getDate();
+            long d = date.getTime();
+            java.sql.Date fecha2 = new java.sql.Date(d);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String stringDate = dateFormat.format(fecha2);
+            System.out.println(stringDate);
+            String consulta = "where fecha = '" + stringDate + "'";
+            CrearInforme pepe = new CrearInforme();
+            Map<String, Object> mapita = new HashMap<>();
+            mapita.put("FILTRO", consulta);
+            pepe.metodoGenerarInforme(mapita);
+        }
+
+    }//GEN-LAST:event_btnInformeFechaActionPerformed
 
     public void cargarVentasCliente(int idCliente) {
         DecimalFormat df = new DecimalFormat("#");
@@ -517,7 +538,6 @@ public class VentanaVentas extends Fondo {
                     fila[1] = pN.getCodigo();
                     fila[2] = "---";
                     fila[3] = df.format(pN.getPrecioDeVenta());
-                    System.out.println(v.getFecha().toString());
                     String fechad = convertToLocalDateViaInstant(v.getFecha()).toString();
                     fila[4] = fechad;
                     modelo.addRow(fila);
@@ -535,12 +555,12 @@ public class VentanaVentas extends Fondo {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFiltrar;
+    private javax.swing.JButton btnInformeFecha;
     private javax.swing.JButton btnReset;
     private com.toedter.calendar.JDateChooser chooseFecha;
     private javax.swing.JTextField codCliente;
     private javax.swing.JTextField codProducto;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
