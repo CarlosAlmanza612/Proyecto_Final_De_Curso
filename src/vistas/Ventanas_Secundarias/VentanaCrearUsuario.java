@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package vistas.Ventanas_Secundarias;
 
 import controladores.UsuarioBean;
@@ -13,20 +9,26 @@ import javax.swing.JOptionPane;
 import vistas.Fondo;
 
 /**
+ * Clase VentanaCrearUsuario extiende de la Clase Fondo se abrira luego de
+ * pulsar en Registrar Usuario
  *
- * @author Usuario
+ * @author Carlos Halberth Almanza Lopez
  */
 public class VentanaCrearUsuario extends Fondo {
 
     JFrame frame = new JFrame();
 
     /**
-     * Creates new form VentanaUsuario
+     * Creates new form VentanaCrearUsuario
      */
     public VentanaCrearUsuario() {
         initComponents();
     }
-
+    /**
+     * Creates new form VentanaCrearUsuario
+     *
+     * @param jframe
+     */
     public VentanaCrearUsuario(JFrame jframe) {
 
         initComponents();
@@ -102,6 +104,7 @@ public class VentanaCrearUsuario extends Fondo {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUsuarioActionPerformed
+        //Evento para crear un usuario        
         UsuarioBean ub = new UsuarioBean();
         String nombre = txtUsuario.getText();
         char[] arrayC = txtPass.getPassword();
@@ -137,12 +140,12 @@ public class VentanaCrearUsuario extends Fondo {
     }//GEN-LAST:event_btnCrearUsuarioActionPerformed
 
     private void txtUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyReleased
-        // TODO add your handling code here:
+        //Evento que ejecuta el metodo habilitarBoton, al precionar la tecla
         habilitarBoton();
     }//GEN-LAST:event_txtUsuarioKeyReleased
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        // Evento para volver a la ventana anterior
         this.setVisible(false);
         frame.remove(this);
         VentanaUsuarios i = new VentanaUsuarios(frame);
@@ -151,6 +154,8 @@ public class VentanaCrearUsuario extends Fondo {
         i.setVisible(true);
         i.setSize(603, 402);
     }//GEN-LAST:event_jButton2ActionPerformed
+    
+    //Metodo para habilitar el boton, si las condiciones se cumplen
     public void habilitarBoton() {
         if (!txtUsuario.getText().isEmpty()) {
             btnCrearUsuario.setEnabled(true);

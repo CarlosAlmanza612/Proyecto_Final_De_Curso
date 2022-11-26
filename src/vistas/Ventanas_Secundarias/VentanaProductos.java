@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package vistas.Ventanas_Secundarias;
 
 import controladores.MarcaBean;
@@ -20,6 +16,13 @@ import modelos.Producto;
 import modelos.Talla;
 import vistas.VentanasPrincipales.VentanaAdmin;
 
+/**
+ * Clase VentanaProductos extiende de la Clase Fondo Se abrira luego de pulsar el
+ * boton productos en la ventana Admin presenta la lista de productos existente,
+ * permite crear nuevos productos, modificar o eliminar existentes
+ *
+ * @author Carlos Halberth Almanza Lopez
+ */
 public class VentanaProductos extends Fondo {
 
     JFrame frame = new JFrame();
@@ -28,13 +31,17 @@ public class VentanaProductos extends Fondo {
         initComponents();
     }
 
+    /**
+     * Creates new form VentanaProductos
+     *
+     * @param jframe
+     */
     public VentanaProductos(JFrame jframe) {
         initComponents();
         frame = jframe;
         cargarProductos();
         btnModificar.setEnabled(false);
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -137,7 +144,7 @@ public class VentanaProductos extends Fondo {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVolverAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverAtrasActionPerformed
-        // TODO add your handling code here:
+        // Evento para volver a la ventana anterior
         this.setVisible(false);
         frame.remove(this);
         VentanaAdmin i = new VentanaAdmin(frame);
@@ -148,7 +155,7 @@ public class VentanaProductos extends Fondo {
     }//GEN-LAST:event_btnVolverAtrasActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-
+        //Evento para pasar a la ventana de crear producto
         this.setVisible(false);
         frame.remove(this);
         VentanaCrearProducto productos = new VentanaCrearProducto(frame);
@@ -159,8 +166,10 @@ public class VentanaProductos extends Fondo {
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        //Evento ejecuta un JOptionPane que recibe un numero que elimina un Producto con ese
+        //numero de codigo si existe
         String nombre;
-        
+
         nombre = JOptionPane.showInputDialog("Ingrese el codigo del Producto que desea eliminar");
         if (nombre != null && !nombre.isEmpty()) {
             if (nombre.matches("[0-9]*")) {
@@ -184,10 +193,12 @@ public class VentanaProductos extends Fondo {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        //Evento para activar un boton cuando se de click en la tabla
         btnModificar.setEnabled(true);
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        //Evento para pasar a la ventana de modificar producto, lleva por parametro el id del producto a modificar
         this.setVisible(false);
         frame.remove(this);
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
@@ -201,6 +212,8 @@ public class VentanaProductos extends Fondo {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        //Evento para buscar un producto en base al codigo del producto
+        //que se recibe en un textfield        
         if (!txtCodProducto.getText().equalsIgnoreCase("Ingrese el codigo")) {
             if (!txtCodProducto.getText().isEmpty() && txtCodProducto.getText() != null) {
                 DecimalFormat df = new DecimalFormat("#");
@@ -240,17 +253,19 @@ public class VentanaProductos extends Fondo {
                 cargarProductos();
             }
             txtCodProducto.setText("Ingrese el codigo");
-        }else{
+        } else {
             cargarProductos();
         }
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void txtCodProductoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodProductoFocusGained
+        //Evento para dejar vacio un textfield al ganar este el target
         txtCodProducto.setText("");
     }//GEN-LAST:event_txtCodProductoFocusGained
 
     private void txtCodProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodProductoKeyTyped
+         //Evento para restringir la escritura de solo numeros
         int key = evt.getKeyChar();
 
         boolean numeros = key >= 48 && key <= 57;
@@ -259,7 +274,8 @@ public class VentanaProductos extends Fondo {
             evt.consume();
         }
     }//GEN-LAST:event_txtCodProductoKeyTyped
-
+    
+    //Metodo que carga la lista de productos disponibles
     public void cargarProductos() {
         DecimalFormat df = new DecimalFormat("#");
         ProductoBean op = new ProductoBean();

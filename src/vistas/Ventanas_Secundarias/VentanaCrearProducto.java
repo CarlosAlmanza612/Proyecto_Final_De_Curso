@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package vistas.Ventanas_Secundarias;
 
 import controladores.MarcaBean;
@@ -18,6 +14,8 @@ import modelos.Talla;
 import vistas.Fondo;
 
 /**
+ * Clase VentanaCrearProducto extiende de la Clase Fondo se abrira luego de
+ * pulsar en Registrar Producto
  *
  * @author Carlos Halberth Almanza Lopez
  */
@@ -29,6 +27,11 @@ public class VentanaCrearProducto extends Fondo {
         initComponents();
     }
 
+    /**
+     * Creates new form VentanaCrearProducto
+     *
+     * @param jframe
+     */
     public VentanaCrearProducto(JFrame jframe) {
         initComponents();
         btnRegistrar.setEnabled(false);
@@ -38,6 +41,7 @@ public class VentanaCrearProducto extends Fondo {
 //        cargarTabla();
     }
 
+    //Metodo que carga las tallas disponibles
     public void cargarTallas() {
         TallaBean t = new TallaBean();
         List lisTallas = t.listTallas();
@@ -52,6 +56,7 @@ public class VentanaCrearProducto extends Fondo {
         listTalla.setModel(dtm);
     }
 
+    //Metodo que carga las marcas disponibles
     public void cargarMarcas() {
         MarcaBean t = new MarcaBean();
         List lisMarcas = t.listMarca();
@@ -152,11 +157,6 @@ public class VentanaCrearProducto extends Fondo {
 
         checkDisponible.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         checkDisponible.setText("Disponible");
-        checkDisponible.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkDisponibleActionPerformed(evt);
-            }
-        });
         add(checkDisponible, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -179,11 +179,6 @@ public class VentanaCrearProducto extends Fondo {
         add(txtCostoDeCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 110, 70, -1));
 
         txtCostoDelPeso.setEnabled(false);
-        txtCostoDelPeso.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                txtCostoDelPesoPropertyChange(evt);
-            }
-        });
         add(txtCostoDelPeso, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 80, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -253,16 +248,6 @@ public class VentanaCrearProducto extends Fondo {
                 txtPesoFocusLost(evt);
             }
         });
-        txtPeso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPesoActionPerformed(evt);
-            }
-        });
-        txtPeso.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                txtPesoPropertyChange(evt);
-            }
-        });
         txtPeso.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPesoKeyReleased(evt);
@@ -291,6 +276,7 @@ public class VentanaCrearProducto extends Fondo {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        //Evento que registra el producto con los valores de los componentes
         ProductoBean pb = new ProductoBean();
         TallaBean tb = new TallaBean();
         MarcaBean mb = new MarcaBean();
@@ -321,7 +307,7 @@ public class VentanaCrearProducto extends Fondo {
                 Marca mP = mb.obtenerMarca(id_marca);
                 if (tP.getNombreTalla().equalsIgnoreCase(tallaNombre) && mP.getNombreMarca().equalsIgnoreCase(marcaNombre)) {
                     noExiste = false;
-                    if (u.getDisponible()) {                        
+                    if (u.getDisponible()) {
                         JOptionPane.showMessageDialog(null, "El Producto ya existe", "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
                         u.setDisponible(true);
@@ -346,16 +332,8 @@ public class VentanaCrearProducto extends Fondo {
 
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
-    private void checkDisponibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkDisponibleActionPerformed
-
-    }//GEN-LAST:event_checkDisponibleActionPerformed
-
-    private void txtCostoDelPesoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtCostoDelPesoPropertyChange
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCostoDelPesoPropertyChange
-
     private void txtPesoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPesoFocusLost
-        // TODO add your handling code here:
+        // Evento que verifica y establece valores si se cumplen las condiciones, al perder el target
         if (!txtPeso.getText().isEmpty()) {
 
             double peso = Double.parseDouble(txtPeso.getText());
@@ -376,7 +354,7 @@ public class VentanaCrearProducto extends Fondo {
     }//GEN-LAST:event_txtPesoFocusLost
 
     private void txtCostoDeCompraFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCostoDeCompraFocusLost
-        // TODO add your handling code here:
+        // Evento que verifica y establece valores si se cumplen las condiciones, al perder el target
         if (!txtCostoDelPeso.getText().isEmpty()) {
             double costoPeso = Double.parseDouble(txtCostoDelPeso.getText());
             double costoCompra = Double.parseDouble(txtCostoDeCompra.getText());
@@ -389,27 +367,32 @@ public class VentanaCrearProducto extends Fondo {
     }//GEN-LAST:event_txtCostoDeCompraFocusLost
 
     private void btnResetearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetearActionPerformed
+        //Evento que ejecuta el metodo resetForm al pulsar el boton
         resetForm();
     }//GEN-LAST:event_btnResetearActionPerformed
 
     private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
+        //Evento que ejecuta el metodo habilitarBotonRegistrar, al presionar una tecla
         habilitarBotonRegistrar();
     }//GEN-LAST:event_txtNombreKeyReleased
 
     private void listTallaValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listTallaValueChanged
+        //Evento que ejecuta el metodo habilitarBotonRegistrar, al cambiar el valor de la lista tallas
         habilitarBotonRegistrar();
     }//GEN-LAST:event_listTallaValueChanged
 
     private void txtTipoDeCambioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTipoDeCambioKeyReleased
+        //Evento que ejecuta el metodo habilitarBotonRegistrar, al presionar una tecla
         habilitarBotonRegistrar();
     }//GEN-LAST:event_txtTipoDeCambioKeyReleased
 
     private void txtPesoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoKeyReleased
+        //Evento que ejecuta el metodo habilitarBotonRegistrar, al presionar una tecla
         habilitarBotonRegistrar();
     }//GEN-LAST:event_txtPesoKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // Evento para volver a la ventana anterior
         this.setVisible(false);
         frame.remove(this);
         VentanaProductos i = new VentanaProductos(frame);
@@ -422,39 +405,32 @@ public class VentanaCrearProducto extends Fondo {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtPrecioDeVentaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioDeVentaKeyReleased
-        // TODO add your handling code here:
+        //Evento que ejecuta el metodo habilitarBotonRegistrar, al presionar una tecla
         habilitarBotonRegistrar();
     }//GEN-LAST:event_txtPrecioDeVentaKeyReleased
 
     private void txtPesoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPesoFocusGained
-        // TODO add your handling code here:
+        //Evento que ejecuta el metodo habilitarBotonRegistrar, al obtener el target
         habilitarBotonRegistrar();
     }//GEN-LAST:event_txtPesoFocusGained
 
     private void txtCostoDeCompraFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCostoDeCompraFocusGained
-        // TODO add your handling code here:
+        //Evento que ejecuta el metodo habilitarBotonRegistrar, al obtener el target
         habilitarBotonRegistrar();
     }//GEN-LAST:event_txtCostoDeCompraFocusGained
 
     private void txtTipoDeCambioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoDeCambioFocusGained
-        // TODO add your handling code here:
+        //Evento que ejecuta el metodo habilitarBotonRegistrar, al obtener el target
         habilitarBotonRegistrar();
     }//GEN-LAST:event_txtTipoDeCambioFocusGained
 
-    private void txtPesoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtPesoPropertyChange
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPesoPropertyChange
-
     private void txtTipoDeCambioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoDeCambioFocusLost
-        // TODO add your handling code here:
+        //Evento que ejecuta el metodo habilitarBotonRegistrar, al perder el target
         habilitarBotonRegistrar();
     }//GEN-LAST:event_txtTipoDeCambioFocusLost
 
-    private void txtPesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPesoActionPerformed
-
     private void txtPesoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoKeyTyped
+        //Evento para restringir la escritura de solo numeros
         int key = evt.getKeyChar();
 
         boolean numeros = key >= 48 && key <= 57;
@@ -465,7 +441,7 @@ public class VentanaCrearProducto extends Fondo {
     }//GEN-LAST:event_txtPesoKeyTyped
 
     private void txtCostoDeCompraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCostoDeCompraKeyTyped
-        // TODO add your handling code here:
+        //Evento para restringir la escritura de solo numeros
         int key = evt.getKeyChar();
 
         boolean numeros = key >= 48 && key <= 57;
@@ -504,7 +480,9 @@ public class VentanaCrearProducto extends Fondo {
     private javax.swing.JTextField txtPrecioDeVenta;
     private javax.swing.JTextField txtTipoDeCambio;
     // End of variables declaration//GEN-END:variables
-public void resetForm() {
+
+//Metodo que estable a vacio o resetea los componentes dentro
+    public void resetForm() {
         txtPeso.setText("");
         txtCostoTotal.setText("");
         txtCostoDelPeso.setText("");
@@ -518,6 +496,7 @@ public void resetForm() {
         btnRegistrar.setEnabled(false);
     }
 
+    //Metodo que habilita un boton si se cumplen las condiciones
     public void habilitarBotonRegistrar() {
         if (!txtNombre.getText().isEmpty() && !txtPeso.getText().isEmpty() && !txtTipoDeCambio.getText().isEmpty()
                 && !txtCostoDeCompra.getText().isEmpty() && !txtPrecioDeVenta.getText().isEmpty()) {

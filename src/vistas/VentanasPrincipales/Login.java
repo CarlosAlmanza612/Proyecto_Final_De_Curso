@@ -12,8 +12,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
+ * Clase Login extienda de la Clase Fondo, es la primer ventana que inicia con
+ * el Frame
  *
- * @author Usuario
+ * @author Carlos Halberth Almanza Lopez
  */
 public class Login extends Fondo {
 
@@ -28,6 +30,11 @@ public class Login extends Fondo {
 
     }
 
+    /**
+     * Creates new form Login
+     *
+     * @param jframe
+     */
     public Login(JFrame jframe) {
 
         initComponents();
@@ -36,6 +43,9 @@ public class Login extends Fondo {
 
     }
 
+    /**
+     * Metodo para habilitar boton dependiendo de que un textfield no este vacio
+     */
     public void habilitarBoton() {
         if (!txtUser.getText().isEmpty()) {
             btnAceptar.setEnabled(true);
@@ -84,11 +94,6 @@ public class Login extends Fondo {
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, -1, 70));
 
         txtUser.setPreferredSize(new java.awt.Dimension(64, 25));
-        txtUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUserActionPerformed(evt);
-            }
-        });
         txtUser.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtUserKeyReleased(evt);
@@ -99,28 +104,35 @@ public class Login extends Fondo {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
+        /**
+         * Evento que verifica si el usuario ingresado ya existe
+         */
         String user = txtUser.getText();
         char[] c = txtPasswordField.getPassword();
         String pass = String.valueOf(c);
-        verificarUsuario(user,pass);
+        verificarUsuario(user, pass);
 
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        /**
+         * Evento que fuerza salir de la aplicacion
+         */
         System.exit(0);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtUserKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyReleased
+        /**
+         * Evento que al pulsar una tecla habilita un boton
+         */
         habilitarBoton();
     }//GEN-LAST:event_txtUserKeyReleased
-
-    private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUserActionPerformed
-
-    public void verificarUsuario( String user, String pass) {
+    /**
+     * Metodo para verificar si el usuario y password ingresados existen en la
+     * BBDD, si existen dependera de si el usuario es admin o no, para ingresar
+     * a una ventana u otra
+     */
+    public void verificarUsuario(String user, String pass) {
 
         UsuarioBean userBean = new UsuarioBean();
         List<Usuario> users = (List<Usuario>) userBean.listUsuario();

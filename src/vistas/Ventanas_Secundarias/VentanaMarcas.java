@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vistas.Ventanas_Secundarias;
 
 import controladores.MarcaBean;
@@ -15,6 +10,13 @@ import javax.swing.table.DefaultTableModel;
 import modelos.Marca;
 import vistas.VentanasPrincipales.VentanaAdmin;
 
+/**
+ * Clase VentanaMarcas extiende de la Clase Fondo Se abrira luego de pulsar el
+ * boton marcas en la ventana Admin presenta la lista de marcas existente,
+ * permite crear nuevas marcas o eliminar existentes
+ *
+ * @author Carlos Halberth Almanza Lopez
+ */
 public class VentanaMarcas extends Fondo {
 
     JFrame frame = new JFrame();
@@ -23,6 +25,11 @@ public class VentanaMarcas extends Fondo {
         initComponents();
     }
 
+    /**
+     * Creates new form VentanaMarcas
+     *
+     * @param jframe
+     */
     public VentanaMarcas(JFrame jframe) {
         initComponents();
         frame = jframe;
@@ -98,7 +105,7 @@ public class VentanaMarcas extends Fondo {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // Evento para volver a la ventana anterior
         this.setVisible(false);
         frame.remove(this);
         VentanaAdmin i = new VentanaAdmin(frame);
@@ -109,6 +116,8 @@ public class VentanaMarcas extends Fondo {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        //Evento ejecuta un JOptionPane que recibe un nombre que crea una marca con ese
+        //nombre si no existe
         String nombre;
         nombre = JOptionPane.showInputDialog("Ingrese el nombre de la Talla que desea crear");
         MarcaBean tb = new MarcaBean();
@@ -131,6 +140,8 @@ public class VentanaMarcas extends Fondo {
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        //Evento ejecuta un JOptionPane que recibe un numero que elimina una marca con ese
+        //numero de codigo si existe
         String nombre;
         nombre = JOptionPane.showInputDialog("Ingrese el codigo de la talla que desea eliminar");
         if (nombre != null && !nombre.isEmpty()) {
@@ -152,6 +163,7 @@ public class VentanaMarcas extends Fondo {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    //Metodo para cargar la lista con las marcas disponibles
     public void cargarMarcas() {
         MarcaBean t = new MarcaBean();
         List lisMarcas = t.listMarca();

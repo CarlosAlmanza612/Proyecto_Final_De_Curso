@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package vistas.Ventanas_Secundarias;
 
 import controladores.ClienteBean;
@@ -13,8 +9,10 @@ import modelos.Cliente;
 import vistas.Fondo;
 
 /**
- *
- * @author Usuario
+ * Clase VentanaCrearCliente extiende de la Clase Fondo
+ * se abrira luego de pulsar en Registrar Cliente 
+ * 
+ * @author Carlos Halberth Almanza Lopez
  */
 public class VentanaCrearCliente extends Fondo {
 
@@ -26,7 +24,11 @@ public class VentanaCrearCliente extends Fondo {
     public VentanaCrearCliente() {
         initComponents();
     }
-
+    /**
+     * Creates new form VentanaCrearCliente
+     *
+     * @param jframe
+     */
     public VentanaCrearCliente(JFrame jframe) {
 
         initComponents();
@@ -102,24 +104,7 @@ public class VentanaCrearCliente extends Fondo {
 
         comboCiudad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         add(comboCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, -1, -1));
-
-        txtUsuario1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsuario1ActionPerformed(evt);
-            }
-        });
-        txtUsuario1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtUsuario1KeyReleased(evt);
-            }
-        });
         add(txtUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 80, -1));
-
-        txtApellidos1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtApellidos1KeyReleased(evt);
-            }
-        });
         add(txtApellidos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 80, -1));
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
@@ -134,6 +119,7 @@ public class VentanaCrearCliente extends Fondo {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearClienteActionPerformed
+        //Evento para crear un cliente 
         String nombre = txtUsuario1.getText();
         String apellidos = txtApellidos1.getText();
         int telefono = Integer.parseInt(txtTelefono.getText());
@@ -169,12 +155,12 @@ public class VentanaCrearCliente extends Fondo {
     }//GEN-LAST:event_btnCrearClienteActionPerformed
 
     private void txtTelefonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyReleased
-        // TODO add your handling code here:
+        // Evento que activa un metodo cuando se presiona una tecla
         habilitarBoton();
     }//GEN-LAST:event_txtTelefonoKeyReleased
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        // Evento para volver atras
         this.setVisible(false);
         frame.remove(this);
         VentanaClientes i = new VentanaClientes(frame);
@@ -184,19 +170,8 @@ public class VentanaCrearCliente extends Fondo {
         i.setSize(603, 402);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void txtUsuario1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuario1KeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuario1KeyReleased
-
-    private void txtUsuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuario1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuario1ActionPerformed
-
-    private void txtApellidos1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidos1KeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtApellidos1KeyReleased
-
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        //Evento para restringir la escritura de solo numeros
         int key = evt.getKeyChar();
 
         boolean numeros = key >= 48 && key <= 57;
@@ -205,6 +180,7 @@ public class VentanaCrearCliente extends Fondo {
             evt.consume();
         }
     }//GEN-LAST:event_txtTelefonoKeyTyped
+    //Metodo que habilita un boton si se cumplen las condiciones
     public void habilitarBoton() {
         if (!txtTelefono.getText().isEmpty()) {
             btnCrearCliente.setEnabled(true);
@@ -212,7 +188,7 @@ public class VentanaCrearCliente extends Fondo {
             btnCrearCliente.setEnabled(false);
         }
     }
-
+    //Metodo para cargar un comboBox
     public void cargarComboBox() {
         comboCiudad.removeAllItems();
         comboCiudad.addItem("Pando");

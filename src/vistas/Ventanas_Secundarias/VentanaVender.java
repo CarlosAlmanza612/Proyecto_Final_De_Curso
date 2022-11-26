@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vistas.Ventanas_Secundarias;
 
 import controladores.ClienteBean;
@@ -23,8 +18,17 @@ import modelos.Talla;
 import modelos.Venta;
 import vistas.VentanasPrincipales.VentanaVendedor;
 
+/**
+ * Clase VentanaVender extiende de la Clase Fondo se abrira luego de
+ * pulsar en Ir Al Carrito
+ *
+ * @author Carlos Halberth Almanza Lopez
+ */
 public class VentanaVender extends Fondo {
-
+    
+    /*
+    *Propiedades
+    */
     JFrame frame = new JFrame();
     ArrayList carrito;
     int cantidadProductos = 0;
@@ -33,7 +37,12 @@ public class VentanaVender extends Fondo {
     public VentanaVender() {
         initComponents();
     }
-
+    /**
+     * Creates new form VentanaVender
+     *  constructor que recibe un arraylist con los productos que se agregan al carrito para la venta
+     * @param jframe
+     * @param carrito
+     */
     public VentanaVender(JFrame jframe, ArrayList carrito) {
         initComponents();
         frame = jframe;
@@ -189,7 +198,7 @@ public class VentanaVender extends Fondo {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // Evento para volver a la ventana anterior
         this.setVisible(false);
         frame.remove(this);
         VentanaVendedor i = new VentanaVendedor(frame);
@@ -200,6 +209,8 @@ public class VentanaVender extends Fondo {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
+        //Evento para quitar un producto del carrito
+        
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         String dato = String.valueOf(dtm.getValueAt(jTable1.getSelectedRow(), 0));
         int id = Integer.parseInt(dato);
@@ -218,6 +229,7 @@ public class VentanaVender extends Fondo {
     }//GEN-LAST:event_btnQuitarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+       //Evento para finalizar la venta, se registra la venta y se establecen los productos vendidos
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         VentaBean vb = new VentaBean();
         ProductoBean pb = new ProductoBean();
@@ -267,10 +279,12 @@ public class VentanaVender extends Fondo {
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        //Evento que activa un boton al hacer click en la lista de la tabla
         btnQuitar.setEnabled(true);
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void checkOnlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOnlineActionPerformed
+        //Evento para comprobar ciertas condiciones, al pulsar en el checkbox
         cantidadProductos = 0;
         precioTotal = 0;
 
@@ -291,6 +305,7 @@ public class VentanaVender extends Fondo {
     }//GEN-LAST:event_checkOnlineActionPerformed
 
     private void txtCodClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodClienteKeyTyped
+         //Evento para restringir la escritura de solo numeros
         int key = evt.getKeyChar();
 
         boolean numeros = key >= 48 && key <= 57;
@@ -300,6 +315,7 @@ public class VentanaVender extends Fondo {
         }
     }//GEN-LAST:event_txtCodClienteKeyTyped
 
+    //Metodo para cargar la lista de productos que hay en el carrito
     public void cargarCarrito(ArrayList carrito) {
         DecimalFormat df = new DecimalFormat("#.00");
         ProductoBean pb = new ProductoBean();
@@ -347,7 +363,8 @@ public class VentanaVender extends Fondo {
         }
         jTable1.setModel(modelo);
     }
-
+    
+    //Metodo para establecer el costo de envio, dependiendo de la cantidad de productos vendidos
     public void calcularEnvio() {
         if (cantidadProductos <= 2) {
             txtEnvio.setText("10");
@@ -362,7 +379,7 @@ public class VentanaVender extends Fondo {
         }
 
     }
-
+    //Metodo para cargar el combobox de ciudades
     public void cargarComboBox() {
         comboCiudad.removeAllItems();
         comboCiudad.addItem("Pando");
@@ -374,7 +391,7 @@ public class VentanaVender extends Fondo {
         comboCiudad.addItem("Sucre");
         comboCiudad.addItem("Tarija");
     }
-
+    //metodo para volver a la ventana anterior luego de registrar la venta
     public void ventaFinalizada() {
         this.setVisible(false);
         frame.remove(this);

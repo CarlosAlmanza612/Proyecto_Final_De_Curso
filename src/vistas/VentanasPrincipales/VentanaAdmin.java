@@ -14,8 +14,10 @@ import vistas.Ventanas_Secundarias.VentanaUsuarios;
 import vistas.Ventanas_Secundarias.VentanaVentas;
 
 /**
- *
- * @author Usuario
+ * Clase Admin extiende de la Clase Fondo, si el usuario ingresado en el login
+ * es admin, se iniciara esta ventana,
+ * presenta varios botones, los cuales te llevan a la ventana que tienen en el texto del boton
+ * @author Carlos Halberth Almanza Lopez
  */
 public class VentanaAdmin extends Fondo {
 
@@ -24,7 +26,11 @@ public class VentanaAdmin extends Fondo {
     public VentanaAdmin() {
         initComponents();
     }
-
+    /**
+     * Creates new form VentanaAdmin
+     *
+     * @param jframe
+     */
     public VentanaAdmin(JFrame jframe) {
         initComponents();
         frame = jframe;
@@ -147,6 +153,7 @@ public class VentanaAdmin extends Fondo {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        //Evento para volver al login
         this.setVisible(false);
         frame.remove(this);
         Login i = new Login(frame);
@@ -157,7 +164,7 @@ public class VentanaAdmin extends Fondo {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
-        // TODO add your handling code here:
+        //Evento para pasar a la ventana Usuarios
         this.setVisible(false);
         frame.remove(this);
         VentanaUsuarios usuario = new VentanaUsuarios(frame);
@@ -168,7 +175,7 @@ public class VentanaAdmin extends Fondo {
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void btnMarcasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarcasActionPerformed
-        // TODO add your handling code here:
+        //Evento para pasar a la ventana Marcas
         this.setVisible(false);
         frame.remove(this);
         VentanaMarcas usuario = new VentanaMarcas(frame);
@@ -179,7 +186,7 @@ public class VentanaAdmin extends Fondo {
     }//GEN-LAST:event_btnMarcasActionPerformed
 
     private void btnTallasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTallasActionPerformed
-        // TODO add your handling code here:
+        //Evento para pasar a la ventana Tallas
         this.setVisible(false);
         frame.remove(this);
         VentanaTallas usuario = new VentanaTallas(frame);
@@ -190,7 +197,7 @@ public class VentanaAdmin extends Fondo {
     }//GEN-LAST:event_btnTallasActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        // TODO add your handling code here:
+        //Evento para pasar a la ventana Clientes
         this.setVisible(false);
         frame.remove(this);
         VentanaClientes usuario = new VentanaClientes(frame);
@@ -201,7 +208,7 @@ public class VentanaAdmin extends Fondo {
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
-        // TODO add your handling code here:
+        //Evento para pasar a la ventana Ventas
         this.setVisible(false);
         frame.remove(this);
         VentanaVentas usuario = new VentanaVentas(frame);
@@ -212,7 +219,7 @@ public class VentanaAdmin extends Fondo {
     }//GEN-LAST:event_btnVentasActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
-        // TODO add your handling code here:
+        //Evento para pasar a la ventana Productos
         this.setVisible(false);
         frame.remove(this);
         VentanaProductos productos = new VentanaProductos(frame);

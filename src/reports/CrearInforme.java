@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package reports;
 
 import java.sql.Connection;
@@ -23,14 +18,26 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
- *
- * @author DAM2
+ * Clase CrearInforme, en esta clase se establece una conexion a la BBDD para
+ * generar reportes de las tablas que se desee mediante un Map que contiene la
+ * consulta para BBDD
+ * @author Carlos Halberth Almanza Lopez 
  */
 public class CrearInforme {
-        Connection conexion;
+
+    /*
+*   Propiedades
+     */
+    private Connection conexion;
+
+    /*
+    *Constructor
+    *dentro del constructor se especifica el Driver de conexion,
+    *y la los datos para la conexion a la BBDD url,user,pass
+     */
     public CrearInforme() {
-        
-         conexion = null;
+
+        conexion = null;
         try {
             Class.forName("org.mariadb.jdbc.Driver");
             conexion = DriverManager.getConnection("jdbc:mariadb://localhost:3306/dbentremarcas", "root", "root");
@@ -40,10 +47,12 @@ public class CrearInforme {
             Logger.getLogger(CrearInforme.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        
-
     }
 
+    /*
+*   Metodo para generar el reporte, recibe un Map por parametro el cual contendra una consulta para la BBDD
+    *dentro del metodo se define la ruta del proyecto, el reporte que se generara, atravez del jasper    
+     */
     public void metodoGenerarInforme(Map mapa) {
         String ruta;
         InputStream vinculoarchivo = null;
@@ -65,25 +74,5 @@ public class CrearInforme {
         }
 
     }
-    public void metodoGenerarInforme2(Map mapa) {
-        String ruta;
-        InputStream vinculoarchivo = null;
-        File miDir = new File(".");//Permite obtener la ruta actual del proyecto
-        try {
-            ruta = miDir.getCanonicalPath() + "\\src\\proyecto_unidad_05\\Informe2.jrxml";
-            vinculoarchivo = new FileInputStream(ruta);
-        } catch (IOException ex) {
-            Logger.getLogger(CrearInforme.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        JasperReport jr = null;
-        try {
-            jr = JasperCompileManager.compileReport(vinculoarchivo);
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jr, mapa, conexion);
-            JasperViewer visor = new JasperViewer(jasperPrint, false);
-            visor.setVisible(true);
-        } catch (JRException ex) {
-            Logger.getLogger(CrearInforme.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
-    }
 }

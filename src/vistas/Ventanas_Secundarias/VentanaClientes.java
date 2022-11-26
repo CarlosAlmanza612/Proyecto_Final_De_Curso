@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vistas.Ventanas_Secundarias;
 
 import controladores.ClienteBean;
@@ -15,6 +10,13 @@ import javax.swing.table.DefaultTableModel;
 import modelos.Cliente;
 import vistas.VentanasPrincipales.VentanaAdmin;
 
+/**
+ * Clase VentanaClientes extiende de la Clase Fondo Se abrira luego de pulsar el
+ * boton clientes en la ventana Admin presenta la lista de clientes existente,
+ * permite crear nuevos clientes o eliminar existentes
+ *
+ * @author Carlos Halberth Almanza Lopez
+ */
 public class VentanaClientes extends Fondo {
 
     JFrame frame = new JFrame();
@@ -23,6 +25,11 @@ public class VentanaClientes extends Fondo {
         initComponents();
     }
 
+    /**
+     * Creates new form VentanaClientes
+     *
+     * @param jframe
+     */
     public VentanaClientes(JFrame jframe) {
         initComponents();
         frame = jframe;
@@ -99,6 +106,7 @@ public class VentanaClientes extends Fondo {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVolverAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverAtrasActionPerformed
+        //Evento vuelve la ventana anterior
         this.setVisible(false);
         frame.remove(this);
         VentanaAdmin i = new VentanaAdmin(frame);
@@ -109,7 +117,7 @@ public class VentanaClientes extends Fondo {
     }//GEN-LAST:event_btnVolverAtrasActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-
+        //Evento genera la ventana para crear Cliente
         this.setVisible(false);
         frame.remove(this);
         VentanaCrearCliente cl = new VentanaCrearCliente(frame);
@@ -121,8 +129,10 @@ public class VentanaClientes extends Fondo {
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        //Evento ejecuta un JOptionPane que recibe un numero que elimina un cliente con ese
+        //numero de codigo si existe
         String nombre;
-        nombre = JOptionPane.showInputDialog("Ingrese el codigo de la talla que desea eliminar");
+        nombre = JOptionPane.showInputDialog("Ingrese el codigo del Cliente que desea eliminar");
         if (nombre != null && !nombre.isEmpty()) {
             if (nombre.matches("[0-9]*")) {
                 int codigo = Integer.parseInt(nombre);
@@ -131,7 +141,7 @@ public class VentanaClientes extends Fondo {
                 if (cl != null && cl.getDisponible()) {
                     cl.setDisponible(false);
                     t.actualizarCliente(cl);
-                    JOptionPane.showMessageDialog(null, "Talla Eliminada Correctamente");
+                    JOptionPane.showMessageDialog(null, "Cliente Eliminada Correctamente");
                     cargarClientes();
                 } else {
                     JOptionPane.showMessageDialog(null, "Codigo no existente, ingrese un codigo correcto", "Error", JOptionPane.ERROR_MESSAGE);
@@ -141,6 +151,10 @@ public class VentanaClientes extends Fondo {
             }
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    /*
+    *Metodo para cargar la lista de clientes existente, que estan disponibles
+     */
     public void cargarClientes() {
         ClienteBean op = new ClienteBean();
         List listUsuarios = op.listCliente();

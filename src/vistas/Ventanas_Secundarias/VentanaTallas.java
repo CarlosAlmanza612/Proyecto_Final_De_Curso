@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vistas.Ventanas_Secundarias;
 
 import controladores.TallaBean;
@@ -15,6 +10,13 @@ import javax.swing.table.DefaultTableModel;
 import modelos.Talla;
 import vistas.VentanasPrincipales.VentanaAdmin;
 
+/**
+ * Clase VentanaTallas extiende de la Clase Fondo Se abrira luego de pulsar el
+ * boton tallas en la ventana Admin presenta la lista de tallas existente,
+ * permite crear nuevas tallas o eliminar existentes
+ *
+ * @author Carlos Halberth Almanza Lopez
+ */
 public class VentanaTallas extends Fondo {
 
     JFrame frame = new JFrame();
@@ -23,6 +25,11 @@ public class VentanaTallas extends Fondo {
         initComponents();
     }
 
+    /**
+     * Creates new form VentanaTallas
+     *
+     * @param jframe
+     */
     public VentanaTallas(JFrame jframe) {
         initComponents();
         frame = jframe;
@@ -98,7 +105,7 @@ public class VentanaTallas extends Fondo {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // Evento para volver a la ventana anterior
         this.setVisible(false);
         frame.remove(this);
         VentanaAdmin i = new VentanaAdmin(frame);
@@ -109,6 +116,8 @@ public class VentanaTallas extends Fondo {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        //Evento ejecuta un JOptionPane que recibe un numero que elimina una talla con ese
+        //numero de codigo si existe
         String nombre;
         nombre = JOptionPane.showInputDialog("Ingrese el codigo de la talla que desea eliminar");
         if (nombre != null && !nombre.isEmpty()) {
@@ -131,7 +140,8 @@ public class VentanaTallas extends Fondo {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-
+        //Evento ejecuta un JOptionPane que recibe un nombre que crea una talla con ese
+        //nombre si no existe
         String nombre;
         nombre = JOptionPane.showInputDialog("Ingrese el nombre de la Talla que desea crear");
         TallaBean tb = new TallaBean();
@@ -152,6 +162,8 @@ public class VentanaTallas extends Fondo {
             JOptionPane.showMessageDialog(null, "Talla Creada Correctamente");
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    //Metodo para cargar la lista con las tallas disponibles
     public void cargarTallas() {
         TallaBean t = new TallaBean();
         List lisTallas = t.listTallas();

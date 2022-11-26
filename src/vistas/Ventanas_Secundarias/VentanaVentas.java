@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vistas.Ventanas_Secundarias;
 
 import controladores.ClienteBean;
@@ -27,6 +22,14 @@ import modelos.Venta;
 import reports.CrearInforme;
 import vistas.VentanasPrincipales.VentanaAdmin;
 
+/**
+ * Clase VentanaVentas extiende de la Clase Fondo Se abrira luego de pulsar el
+ * boton ventas en la ventana Admin presenta la lista de ventas existente,
+ * permite filtrar por cliente,producto o fecha las ventas existentes, y generar
+ * reportes por fecha de las ventas.
+ *
+ * @author Carlos Halberth Almanza Lopez
+ */
 public class VentanaVentas extends Fondo {
 
     JFrame frame = new JFrame();
@@ -35,6 +38,11 @@ public class VentanaVentas extends Fondo {
         initComponents();
     }
 
+    /**
+     * Creates new form VentanaVentas
+     *
+     * @param jframe
+     */
     public VentanaVentas(JFrame jframe) {
         initComponents();
         frame = jframe;
@@ -155,7 +163,7 @@ public class VentanaVentas extends Fondo {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // Evento para volver a la ventana anterior
         this.setVisible(false);
         frame.remove(this);
         VentanaAdmin i = new VentanaAdmin(frame);
@@ -166,11 +174,12 @@ public class VentanaVentas extends Fondo {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        //Evento que ejecuta el reset del formulario
         cargarVentas();
-        chooseFecha.setToolTipText("");
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
+        //Evento para filtrar la lista de ventas, en base a las condiciones cumplidas
         if (chooseFecha.getDate() != null) {
             Date date = chooseFecha.getDate();
             long d = date.getTime();
@@ -209,7 +218,8 @@ public class VentanaVentas extends Fondo {
                 }
             } else {
                 if (codCliente.getText() != null && !codCliente.getText().isEmpty()) {
-
+                    int idClien = Integer.parseInt(codCliente.getText());
+                    cargarVentasCliente(idClien);
                 } else {
 
                 }
@@ -218,6 +228,7 @@ public class VentanaVentas extends Fondo {
     }//GEN-LAST:event_btnFiltrarActionPerformed
 
     private void codProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codProductoKeyTyped
+        //Evento para restringir la escritura de solo numeros
         int key = evt.getKeyChar();
 
         boolean numeros = key >= 48 && key <= 57;
@@ -228,6 +239,7 @@ public class VentanaVentas extends Fondo {
     }//GEN-LAST:event_codProductoKeyTyped
 
     private void codClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codClienteKeyTyped
+        //Evento para restringir la escritura de solo numeros
         int key = evt.getKeyChar();
 
         boolean numeros = key >= 48 && key <= 57;
@@ -238,6 +250,7 @@ public class VentanaVentas extends Fondo {
     }//GEN-LAST:event_codClienteKeyTyped
 
     private void btnInformeFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeFechaActionPerformed
+        //Evento para generar el report en base a la fecha establecida
         if (chooseFecha.getDate() != null) {
             Date date = chooseFecha.getDate();
             long d = date.getTime();
@@ -254,6 +267,7 @@ public class VentanaVentas extends Fondo {
 
     }//GEN-LAST:event_btnInformeFechaActionPerformed
 
+    //Metodo para cargar la lista de ventas basada en un cliente
     public void cargarVentasCliente(int idCliente) {
         DecimalFormat df = new DecimalFormat("#");
         VentaBean vb = new VentaBean();
@@ -287,7 +301,7 @@ public class VentanaVentas extends Fondo {
         }
         jTable1.setModel(modelo);
     }
-
+ //Metodo para cargar la lista de ventas basada en un producto y un cliente
     public void cargarVentasProductoCliente(int idProduc, int idCliente) {
         DecimalFormat df = new DecimalFormat("#");
         VentaBean vb = new VentaBean();
@@ -326,7 +340,7 @@ public class VentanaVentas extends Fondo {
         }
         jTable1.setModel(modelo);
     }
-
+ //Metodo para cargar la lista de ventas basada en un producto
     public void cargarVentasProducto(int idProduc) {
         DecimalFormat df = new DecimalFormat("#");
         VentaBean vb = new VentaBean();
@@ -356,7 +370,7 @@ public class VentanaVentas extends Fondo {
         }
         jTable1.setModel(modelo);
     }
-
+ //Metodo para cargar la lista de ventas basada en una fecha
     public void cargarVentasFecha(List listVenta) {
         DecimalFormat df = new DecimalFormat("#");
         ProductoBean pb = new ProductoBean();
@@ -400,7 +414,7 @@ public class VentanaVentas extends Fondo {
 
         jTable1.setModel(modelo);
     }
-
+ //Metodo para cargar la lista de ventas en base a una fecha y un producto
     public void cargarVentasFechaProducto(List listVenta, int idProducto) {
         DecimalFormat df = new DecimalFormat("#");
         ProductoBean pb = new ProductoBean();
@@ -430,7 +444,7 @@ public class VentanaVentas extends Fondo {
         }
         jTable1.setModel(modelo);
     }
-
+ //Metodo para cargar la lista de ventas en base a una fecha, producto y cliente
     public void cargarVentasFechaProductoCliente(List listVenta, int idProducto, int idCliente) {
         DecimalFormat df = new DecimalFormat("#");
         ProductoBean pb = new ProductoBean();
@@ -466,7 +480,7 @@ public class VentanaVentas extends Fondo {
         }
         jTable1.setModel(modelo);
     }
-
+ //Metodo para cargar la lista de ventas en base a una fecha y un id de cliente
     public void cargarVentasFechaCliente(List listVenta, int idCliente) {
         DecimalFormat df = new DecimalFormat("#");
         ProductoBean pb = new ProductoBean();
@@ -501,7 +515,7 @@ public class VentanaVentas extends Fondo {
         }
         jTable1.setModel(modelo);
     }
-
+ //Metodo para cargar la lista de ventas existentes
     public void cargarVentas() {
         DecimalFormat df = new DecimalFormat("#");
         VentaBean vb = new VentaBean();
@@ -547,6 +561,7 @@ public class VentanaVentas extends Fondo {
         jTable1.setModel(modelo);
     }
 
+    //Metodo para converitr un Date a LocalDate
     public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
         return dateToConvert.toInstant()
                 .atZone(ZoneId.systemDefault())

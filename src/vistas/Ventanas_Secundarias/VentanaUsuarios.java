@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vistas.Ventanas_Secundarias;
 
-import controladores.ClienteBean;
 import controladores.UsuarioBean;
 import modelos.Usuario;
 import vistas.Fondo;
@@ -14,9 +8,15 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelos.Cliente;
 import vistas.VentanasPrincipales.VentanaAdmin;
 
+/**
+ * Clase VentanaUsuarios extiende de la Clase Fondo Se abrira luego de pulsar el
+ * boton usuarios en la ventana Admin presenta la lista de usuarios existente,
+ * permite crear nuevos usuarios o eliminar existentes
+ *
+ * @author Carlos Halberth Almanza Lopez
+ */
 public class VentanaUsuarios extends Fondo {
 
     JFrame frame = new JFrame();
@@ -24,7 +24,11 @@ public class VentanaUsuarios extends Fondo {
     public VentanaUsuarios() {
         initComponents();
     }
-
+    /**
+     * Creates new form VentanaUsuarios
+     *
+     * @param jframe
+     */
     public VentanaUsuarios(JFrame jframe) {
         initComponents();
         frame = jframe;
@@ -100,6 +104,7 @@ public class VentanaUsuarios extends Fondo {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //Evento para volver a la ventana anterior
         this.setVisible(false);
         frame.remove(this);
         VentanaAdmin i = new VentanaAdmin(frame);
@@ -110,6 +115,8 @@ public class VentanaUsuarios extends Fondo {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        //Evento ejecuta un JOptionPane que recibe un numero que elimina un usuario con ese
+        //numero de codigo si existe
         String id;
         id = JOptionPane.showInputDialog("Ingrese el codigo del usuario que desea eliminar");
         if (id != null && !id.isEmpty()) {
@@ -132,6 +139,7 @@ public class VentanaUsuarios extends Fondo {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        //Evento para pasar a la ventana crear usuario
         this.setVisible(false);
         frame.remove(this);
         VentanaCrearUsuario i = new VentanaCrearUsuario(frame);
@@ -140,6 +148,8 @@ public class VentanaUsuarios extends Fondo {
         i.setVisible(true);
         i.setSize(603, 402);
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    //Metodo para cargar la lista con los usuarios disponibles
     public void cargarUsuarios() {
         UsuarioBean op = new UsuarioBean();
         List listUsuarios = op.listUsuario();

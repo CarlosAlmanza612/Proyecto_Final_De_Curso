@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controladores;
 
 import java.util.List;
@@ -13,36 +8,53 @@ import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.criterion.Restrictions;
 
 /**
+ * Clase para gestionar las operaciones que realize la entidad Talla
  *
- * @author Usuario
+ * @author Carlos Halberth Almanza Lopez
+ *
  */
 public class TallaBean {
-
+    /*
+    * Objeto Session 
+     */
     private Session session;
-
+    /*
+    * Metodo para iniciar una operacion en la BBDD 
+     */
     private void iniciarOperacion() {
         SessionFactory sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
         session = sessionFactory.openSession();
         session.getTransaction().begin();
     }
-
+    /*
+    * Metodo para finalizar una operacion en la BBDD  y cerrar la conexion
+     */
     private void terminarOperacion() {
         session.getTransaction().commit();
         session.close();
     }
-
+    /*
+    * Metodo para guardar el objeto Talla en la BBDD 
+    * @param Talla
+     */
     public void guardarTalla(Talla talla) {
         iniciarOperacion();
         session.save(talla);
         terminarOperacion();
     }
-
+    /*
+     * Metodo para actualizar el objeto Talla en la BBDD 
+    * @param Talla
+     */
     public void actualizarTalla(Talla talla) {
         iniciarOperacion();
         session.update(talla);
         terminarOperacion();
     }
-
+    /*
+    * Metodo para eliminar fisicamente el objeto Talla en la BBDD 
+    * @param Talla
+     */
     public void eliminarTalla(Talla talla) {
         iniciarOperacion();
         session.delete(talla);
@@ -50,14 +62,25 @@ public class TallaBean {
     }
 
 
-
+    /*
+     * Metodo para recoger el objeto Talla en la BBDD mediante un atributo de la clase
+    * @param int
+    * @return Talla
+     */
     public Talla obtenerTalla(int id) {
         Talla object = null;
         iniciarOperacion();
         object = (Talla) session.get(Talla.class, id);
         terminarOperacion();
         return object;
-    }
+    } 
+
+    /*
+    * Metodo para buscar si existe el objeto Talla en la BBDD
+    * mediante el atributo nombre_talla de la clase.
+    * @param String
+    * @return Talla 
+     */
     public Talla buscarTalla(String nombre_talla) {
         Talla user = null;
         iniciarOperacion();
@@ -65,7 +88,10 @@ public class TallaBean {
         terminarOperacion();
         return user;
     }
-
+    /*
+    * Metodo para recoger todas las Tallas en una Lista de la tabla Talla en la BBDD
+    * @return List 
+     */
     public List listTallas() {
         List listObjects = null;
         iniciarOperacion();

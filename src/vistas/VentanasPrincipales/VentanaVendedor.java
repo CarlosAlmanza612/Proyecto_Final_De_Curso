@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package vistas.VentanasPrincipales;
 
 import controladores.MarcaBean;
@@ -21,8 +17,12 @@ import modelos.Talla;
 import vistas.Ventanas_Secundarias.VentanaVender;
 
 /**
+ * Clase VentanaVendedor extiende de la Clase Fondo, si el usuario ingresado en el login
+ * no es admin, se iniciara esta ventana, presenta una lista de productos
+ * disponibles, los cuales podra agregar al carrito y abrir la ventana carrito
+ * si este no se encuentra vacio
  *
- * @author Usuario
+ * @author Carlos Halberth Almanza Lopez
  */
 public class VentanaVendedor extends Fondo {
 
@@ -36,6 +36,11 @@ public class VentanaVendedor extends Fondo {
         initComponents();
     }
 
+    /**
+     * Creates new form VentanaVendedor
+     *
+     * @param jframe
+     */
     public VentanaVendedor(JFrame jframe) {
 
         initComponents();
@@ -143,6 +148,10 @@ public class VentanaVendedor extends Fondo {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        /**
+         * Evento para buscar un Producto y mostrarlo en la tabla, si esta
+         * disponible.
+         */
         if (!txtIdProducto.getText().equalsIgnoreCase("Ingrese el codigo")) {
             if (!txtIdProducto.getText().isEmpty() && txtIdProducto.getText() != null) {
                 DecimalFormat df = new DecimalFormat("#");
@@ -189,16 +198,18 @@ public class VentanaVendedor extends Fondo {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtIdProductoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdProductoFocusGained
-        // TODO add your handling code here:
+        //Evento para establecer el textfield a vacio
         txtIdProducto.setText("");
 
     }//GEN-LAST:event_txtIdProductoFocusGained
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        //Evento que activa el boton agregar al dar click en un elemento de la tabla
         btnAgregarProducto.setEnabled(true);
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void txtIdProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdProductoKeyTyped
+        //Evento para restringir la escritura de solo numeros
         int key = evt.getKeyChar();
 
         boolean numeros = key >= 48 && key <= 57;
@@ -209,6 +220,7 @@ public class VentanaVendedor extends Fondo {
     }//GEN-LAST:event_txtIdProductoKeyTyped
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
+        //Evento para agregar un producto de la lista al carrito
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         String dato = String.valueOf(dtm.getValueAt(jTable1.getSelectedRow(), 0));
         int id = Integer.parseInt(dato);
@@ -222,6 +234,7 @@ public class VentanaVendedor extends Fondo {
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //Evento para ir a la ventana del carrito si este no esta vacio
         if (!carrito.isEmpty() && carrito != null) {
             this.setVisible(false);
             frame.remove(this);
@@ -236,6 +249,7 @@ public class VentanaVendedor extends Fondo {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        //Evento para volver a la ventana del Login
         this.setVisible(false);
         frame.remove(this);
         Login i = new Login(frame);
@@ -244,6 +258,11 @@ public class VentanaVendedor extends Fondo {
         i.setVisible(true);
         i.setSize(300, 300);
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    /**
+     * Metodo para cargar la tabla con los productos, solo se cargaran los
+     * productos disponibles
+     */
     public void cargarProductos() {
         DecimalFormat df = new DecimalFormat("#");
         ProductoBean op = new ProductoBean();
