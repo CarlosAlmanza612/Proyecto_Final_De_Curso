@@ -120,6 +120,7 @@ public class VentanaCrearUsuario extends Fondo {
                     } else {
                         u.setDisponible(true);
                         u.setPassword(password);
+                        u.setAdmin(admin);
                         ub.actualizarUsuario(u);
                         JOptionPane.showMessageDialog(null, " Usuario creado con exito", "", WIDTH);
                     }
