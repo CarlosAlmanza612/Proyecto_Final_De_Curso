@@ -58,7 +58,7 @@ public class CrearInforme {
         InputStream vinculoarchivo = null;
         File miDir = new File(".");//Permite obtener la ruta actual del proyecto
         try {
-            ruta = miDir.getCanonicalPath() + "\\src\\reports\\Informe1.jrxml";
+            ruta = miDir.getCanonicalPath() + "\\src\\reports\\Informe1.jrxml"; 
             vinculoarchivo = new FileInputStream(ruta);
         } catch (IOException ex) {
             Logger.getLogger(CrearInforme.class.getName()).log(Level.SEVERE, null, ex);

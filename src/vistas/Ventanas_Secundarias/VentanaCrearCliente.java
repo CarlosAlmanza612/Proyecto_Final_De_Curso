@@ -79,7 +79,7 @@ public class VentanaCrearCliente extends Fondo {
         add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 80, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel1.setText("Usuario");
+        jLabel1.setText("Nombres");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
