@@ -275,7 +275,7 @@ public class VentanaVendedor extends Fondo {
         modelo.addColumn("Marca");
         modelo.addColumn("Precio");
         List listaProductos = op.listProducto();
-        if (listaProductos != null) {
+        if (listaProductos != null&& !listaProductos.isEmpty()) {
             for (Iterator iterator = listaProductos.iterator(); iterator.hasNext();) {
                 Producto p = (Producto) iterator.next();
                 Talla t = p.getTalla();

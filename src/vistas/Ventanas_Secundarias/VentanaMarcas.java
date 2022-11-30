@@ -170,13 +170,15 @@ public class VentanaMarcas extends Fondo {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Codigo");
         modelo.addColumn("Marca");
-        for (Iterator iterator = lisMarcas.iterator(); iterator.hasNext();) {
-            Marca u = (Marca) iterator.next();
-            if (u.getDisponible()) {
-                Object[] fila = new Object[2];
-                fila[0] = u.getIdMarca();
-                fila[1] = u.getNombreMarca().toUpperCase();
-                modelo.addRow(fila);
+        if (!lisMarcas.isEmpty() && lisMarcas != null) {
+            for (Iterator iterator = lisMarcas.iterator(); iterator.hasNext();) {
+                Marca u = (Marca) iterator.next();
+                if (u.getDisponible()) {
+                    Object[] fila = new Object[2];
+                    fila[0] = u.getIdMarca();
+                    fila[1] = u.getNombreMarca().toUpperCase();
+                    modelo.addRow(fila);
+                }
             }
         }
         jTable1.setModel(modelo);

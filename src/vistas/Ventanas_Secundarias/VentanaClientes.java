@@ -164,16 +164,18 @@ public class VentanaClientes extends Fondo {
         modelo.addColumn("Apellidos");
         modelo.addColumn("Telefono");
         modelo.addColumn("Ciudad");
-        for (Iterator iterator = listUsuarios.iterator(); iterator.hasNext();) {
-            Cliente u = (Cliente) iterator.next();
-            if (u.getDisponible()) {
-                Object[] fila = new Object[5];
-                fila[0] = u.getCodCliente();
-                fila[1] = u.getNombre().toUpperCase();
-                fila[2] = u.getApellidos().toUpperCase();
-                fila[3] = u.getTelefono();
-                fila[4] = u.getCiudad().toUpperCase();
-                modelo.addRow(fila);
+        if (!listUsuarios.isEmpty() && listUsuarios != null) {
+            for (Iterator iterator = listUsuarios.iterator(); iterator.hasNext();) {
+                Cliente u = (Cliente) iterator.next();
+                if (u.getDisponible()) {
+                    Object[] fila = new Object[5];
+                    fila[0] = u.getCodCliente();
+                    fila[1] = u.getNombre().toUpperCase();
+                    fila[2] = u.getApellidos().toUpperCase();
+                    fila[3] = u.getTelefono();
+                    fila[4] = u.getCiudad().toUpperCase();
+                    modelo.addRow(fila);
+                }
             }
         }
         jTable1.setModel(modelo);

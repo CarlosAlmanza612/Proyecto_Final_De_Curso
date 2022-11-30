@@ -170,13 +170,15 @@ public class VentanaTallas extends Fondo {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Codigo");
         modelo.addColumn("Talla");
-        for (Iterator iterator = lisTallas.iterator(); iterator.hasNext();) {
-            Talla u = (Talla) iterator.next();
-            if (u.getDisponible()) {
-                Object[] fila = new Object[2];
-                fila[0] = u.getIdTalla();
-                fila[1] = u.getNombreTalla().toUpperCase();
-                modelo.addRow(fila);
+        if (lisTallas != null && !lisTallas.isEmpty()) {
+            for (Iterator iterator = lisTallas.iterator(); iterator.hasNext();) {
+                Talla u = (Talla) iterator.next();
+                if (u.getDisponible()) {
+                    Object[] fila = new Object[2];
+                    fila[0] = u.getIdTalla();
+                    fila[1] = u.getNombreTalla().toUpperCase();
+                    modelo.addRow(fila);
+                }
             }
         }
         jTable1.setModel(modelo);

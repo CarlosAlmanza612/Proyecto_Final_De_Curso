@@ -24,6 +24,7 @@ public class VentanaUsuarios extends Fondo {
     public VentanaUsuarios() {
         initComponents();
     }
+
     /**
      * Creates new form VentanaUsuarios
      *
@@ -157,14 +158,16 @@ public class VentanaUsuarios extends Fondo {
         modelo.addColumn("Id");
         modelo.addColumn("Usuario");
         modelo.addColumn("Administrador");
-        for (Iterator iterator = listUsuarios.iterator(); iterator.hasNext();) {
-            Usuario u = (Usuario) iterator.next();
-            if (u.getDisponible()) {
-                Object[] fila = new Object[3];
-                fila[0] = u.getIdUsuario();
-                fila[1] = u.getUsuario().toUpperCase();
-                fila[2] = u.getAdmin();
-                modelo.addRow(fila);
+        if (!listUsuarios.isEmpty() && listUsuarios != null) {
+            for (Iterator iterator = listUsuarios.iterator(); iterator.hasNext();) {
+                Usuario u = (Usuario) iterator.next();
+                if (u.getDisponible()) {
+                    Object[] fila = new Object[3];
+                    fila[0] = u.getIdUsuario();
+                    fila[1] = u.getUsuario().toUpperCase();
+                    fila[2] = u.getAdmin();
+                    modelo.addRow(fila);
+                }
             }
         }
         jTable1.setModel(modelo);
